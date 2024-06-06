@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #FFE7C3; /* Color de fondo */
+            display: flex;
+            justify-content: center; /* Centra horizontalmente */
+            align-items: center; /* Centra verticalmente */
+            height: 100vh; /* Establece la altura del contenedor al 100% del viewport */
+        }
+
+        form {
+            position: relative; /* Posiciona de manera relativa para que los pseudoelementos sean relativos a este */
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #EBDFCC;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column; /* Coloca los elementos en columna */
+            align-items: center; /* Centra los elementos horizontalmente */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #E6B267;
+            background-color: #E6B267;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #C49E66;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #C49E66;
+        }
+
+        .circle-img {
+            width: 150px; /* Ajusta el tamaño de la imagen */
+            height: 150px; /* Ajusta el tamaño de la imagen */
+            border-radius: 50%; /* Hace que la imagen tenga forma circular */
+            margin-bottom: 20px; /* Espacio entre la imagen y el formulario */
+        }
+
+        /* Pseudoelementos para formas detrás del formulario */
+        form::before,
+        form::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: #C49E66; /* Color de las formas */
+            border-radius: 50%; /* Hace que las formas tengan forma circular */
+            opacity: 0.3; /* Opacidad de las formas */
+        }
+
+        form::before {
+            top: -50px;
+            left: -50px;
+        }
+
+        form::after {
+            bottom: -50px;
+            right: -50px;
+        }
+    </style>
+</head>
+<body>
+    <form id="registroForm">
+        <img src="img/portada.jpg" alt="Imagen" class="circle-img">
+
+        <label for="usuario">Usuario:</label><br>
+        <input type="text" id="usuario" name="usuario" required><br>
+
+        <label for="correo">Correo:</label><br>
+        <input type="email" id="correo" name="correo" required><br>
+        
+        <label for="contraseña">Contraseña:</label><br>
+        <input type="password" id="contraseña" name="contraseña" required minlength="5"><br>
+        
+        <button type="button" onclick="guardarYEnviar()">Registrar</button>
+    </form>
+
+    <script>
+        function guardarYEnviar() {
+            // Obtiene los valores del formulario
+            var usuario = document.getElementById("usuario").value;
+            var correo = document.getElementById("correo").value;
+            var contraseña = document.getElementById("contraseña").value;
+
+            // Guarda los datos en el almacenamiento local del navegador
+            localStorage.setItem("usuario", usuario);
+            localStorage.setItem("correo", correo);
+            localStorage.setItem("contraseña", contraseña);
+
+            // Redirige a la siguiente página
+            window.location.href = "index2.html";
+        }
+    </script>
+</body>
+</html>
