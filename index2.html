@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Ensigna · Cafeteria</title>
+    <title>Inicio · Cafeteria</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
 
@@ -94,6 +94,13 @@
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
       }
+      .icon-img {
+  width: 65px; /* Establece el ancho de la imagen */
+  height: 65px; /* Establece la altura de la imagen */
+  border-radius: 40%; /* Aplica bordes redondeados para que la imagen sea circular */
+  object-fit: cover; /* Ajusta el tamaño de la imagen para que cubra completamente su contenedor */
+}
+
     </style>
 
     
@@ -182,39 +189,40 @@
 
   <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 20%;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      <img src="img/portada.png" alt="Logo" class="icon-img me-2">
       <span class="fs-4">Ensigna</span>
     </a>
+    
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
         <a href="#" class="nav-link active" aria-current="page">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-          Home
+          Inicio
         </a>
       </li>
-      <li>
+      <!--<li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Dashboard
         </a>
-      </li>
+      </li>-->
       <li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-          Orders
+          Compras
         </a>
       </li>
       <li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Products
+          Productos
         </a>
       </li>
       <li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-          Customers
+          Perfil
         </a>
       </li>
     </ul>
@@ -239,60 +247,60 @@
 
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 40%;">
     <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
-      <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+      <img src="img/portada.png" alt="Icono" class="icon-img me-2">
       <span class="fs-5 fw-semibold">Cafes</span>
     </a>
+    
     <div class="list-group list-group-flush border-bottom scrollarea">
       <a href="#" class="list-group-item list-group-item-action active py-3 lh-sm" aria-current="true">
         <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">Tortas de milanesa</strong>
+          <strong class="mb-1">Cafe Capuchino</strong>
           <small>Añadir</small>
         </div>
         <div lass="col-10 mb-1 small">
-        <img src="img/tortademilanesa.jpeg" alt="tortademilanesa" width="100" class="me-3"> 
-        Torta de milanesa a tan solo $40 
+        <img src="img/capuchino.jpg" alt="cafecapuchino" width="100" class="me-3"> 
+        Costo $40 
       </div>
       </a>
       <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
         <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">Chilaquiles con pollo</strong>
+          <strong class="mb-1">Cafe Americano</strong>
           <small class="text-body-secondary">Añadir</small>
         </div>
         <div lass="col-10 mb-1 small">
-          <img src="img/chilaquiles.webp" alt="chilaquiles" width="100" class="me-3">
-        Chilaquiles verdes acompañados de pollo a tan solo $45
+          <img src="img/americano.jpg" alt="chilaquiles" width="100" class="me-3">
+        Costo $45
       </div>
       </a>
       <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
         <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">Sopes sencillos</strong>
+          <strong class="mb-1">Cafe Latte</strong>
           <small class="text-body-secondary">Añadir</small>
         </div>
-        <div lass="col-10 mb-1 small">{
-           }
-          <img src="img/sopes.png" alt="sopes" width="100" class="me-3">
-        Sopes sencillos con frijoles crema y queso a tan solo $25
+        <div lass="col-10 mb-1 small">
+          <img src="img/latte-cafe.webp" alt="sopes" width="100" class="me-3">
+       Costo $55
       </div>
       </a>
 
       <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
         <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">Galletas Principes</strong>
+          <strong class="mb-1">Cafe Espresso</strong>
           <small class="text-body-secondary">Añadir</small>
         </div>
         <div lass="col-10 mb-1 small">
-          <img src="img/galletas.webp" alt="sopes" width="100" class="me-3">
-        Galletas de chocolate a tan solo $22
+          <img src="img/espresso.webp" alt="sopes" width="100" class="me-3">
+        Costo $30
       </div>
       </a>
       <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
         <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">Taco Acorazado</strong>
+          <strong class="mb-1">Cafe Irlandes</strong>
           <small class="text-body-secondary">Añadir</small>
         </div>
         <div lass="col-10 mb-1 small">
-          <img src="img/tacosacorazados.jpeg" alt="sopes" width="100" class="me-3">
-        Taco Acorazado Acompañados con frijoles a tan solo $30
+          <img src="img/irlandes.webp" alt="sopes" width="100" class="me-3">
+        Costo $50
       </div>
       </a>
       <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">

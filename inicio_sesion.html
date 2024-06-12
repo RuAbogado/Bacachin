@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Usuario</title>
+    <title>Inicio de sesion</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin: 20px; /* Ajusta el margen alrededor del formulario */
             padding: 0;
             box-sizing: border-box;
             background-color: #FFE7C3; /* Color de fondo */
             display: flex;
             justify-content: center; /* Centra horizontalmente */
             align-items: center; /* Centra verticalmente */
-            height: 100vh; /* Establece la altura del contenedor al 100% del viewport */
+            min-height: 100vh; /* Establece la altura mínima del contenedor al 100% del viewport */
         }
 
         form {
@@ -22,7 +22,7 @@
             max-width: 400px;
             padding: 20px;
             border: 1px solid #EBDFCC;
-            border-radius: 8px;
+            border-radius: 15px;
             background-color: #f9f9f9;
             display: flex;
             flex-direction: column; /* Coloca los elementos en columna */
@@ -34,36 +34,35 @@
             font-weight: bold;
         }
 
-        input[type="text"],
         input[type="email"],
         input[type="password"] {
             width: 100%;
             padding: 8px;
             margin: 5px 0;
-            border: 1px solid #E6B267;
-            background-color: #E6B267;
+            border: 1px solid #e9bf81;
+            background-color: #e9bf81;
             border-radius: 4px;
             box-sizing: border-box;
         }
+    
+    button[type="button"] {
+        background-color: #C49E66; 
+        color: white; 
+        padding: 10px 20px; 
+        border: none; 
+        border-radius: 4px; 
+        cursor: pointer; 
+        transition: background-color 0.3s; 
+    }
 
-        button[type="submit"] {
-            background-color: #C49E66;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+    button[type="button"]:hover {
+        background-color: #A17A3D; /* Cambia el color de fondo al pasar el ratón */
+    }
 
-        button[type="submit"]:hover {
-            background-color: #C49E66;
-        }
 
         .circle-img {
             width: 150px; /* Ajusta el tamaño de la imagen */
             height: 150px; /* Ajusta el tamaño de la imagen */
-            border-radius: 50%; /* Hace que la imagen tenga forma circular */
             margin-bottom: 20px; /* Espacio entre la imagen y el formulario */
         }
 
@@ -88,14 +87,21 @@
             bottom: -50px;
             right: -50px;
         }
+
+        /* Estilo para el enlace al final del formulario */
+        #registro-link {
+            margin-top: 20px; /* Ajusta el margen superior */
+            text-align: center; /* Centra el texto horizontalmente */
+            color: #C49E66; /* Color del texto */
+            font-size: 14px;
+            text-decoration: underline; /* Subraya el texto */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el enlace */
+        }
     </style>
 </head>
 <body>
-    <form id="registroForm">
-        <img src="img/portada.jpg" alt="Imagen" class="circle-img">
-
-        <label for="usuario">Usuario:</label><br>
-        <input type="text" id="usuario" name="usuario" required><br>
+    <form id="inicioSesionForm">
+        <img src="img/portada.png" alt="Imagen" class="circle-img">
 
         <label for="correo">Correo:</label><br>
         <input type="email" id="correo" name="correo" required><br>
@@ -103,24 +109,37 @@
         <label for="contraseña">Contraseña:</label><br>
         <input type="password" id="contraseña" name="contraseña" required minlength="5"><br>
         
-        <button type="button" onclick="guardarYEnviar()">Registrar</button>
+        <button type="button" onclick="guardarYEnviar()">Iniciar sesión</button>
+        
+        <!-- Enlace para registrar usuario -->
+        <div id="registro-link" onclick="irARegistro()">Crear nueva cuenta</div>
     </form>
 
     <script>
         function guardarYEnviar() {
             // Obtiene los valores del formulario
-            var usuario = document.getElementById("usuario").value;
-            var correo = document.getElementById("correo").value;
-            var contraseña = document.getElementById("contraseña").value;
+            var correo = document.getElementById("correo").value.trim();
+            var contraseña = document.getElementById("contraseña").value.trim();
+
+            // Verifica si los campos están vacíos
+            if (correo === "" || contraseña === "") {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
 
             // Guarda los datos en el almacenamiento local del navegador
-            localStorage.setItem("usuario", usuario);
             localStorage.setItem("correo", correo);
             localStorage.setItem("contraseña", contraseña);
 
             // Redirige a la siguiente página
             window.location.href = "index2.html";
         }
+
+        // Función para redirigir a la página de registro de usuario
+        function irARegistro() {
+            window.location.href = "registro.html";
+        }
     </script>
 </body>
 </html>
+

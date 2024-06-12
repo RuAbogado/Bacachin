@@ -7,34 +7,7 @@
     <!-- Enlace a Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.css">
     <style>
-        body {
-            background-color: #f8f9fa; /* Color de fondo */
-        }
-
-        .container {
-            background-color: #fff; /* Fondo del contenedor */
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
-            padding: 30px; /* Espaciado interno */
-        }
-
-        h2 {
-            color: #343a40; /* Color del texto */
-        }
-
-        .btn-warning {
-            background-color: #ffc107; /* Color de fondo del botón de modificar */
-            border-color: #ffc107; /* Borde del botón de modificar */
-        }
-
-        .btn-danger {
-            background-color: #dc3545; /* Color de fondo del botón de eliminar */
-            border-color: #dc3545; /* Borde del botón de eliminar */
-        }
-
-        .btn-warning:hover, .btn-danger:hover {
-            color: #fff; /* Color del texto al pasar el ratón sobre los botones */
-        }
+        
     </style>
 </head>
 <body>
@@ -60,7 +33,43 @@
     <script src="js/bootstrap.js"></script>
     <!-- Código JavaScript para llenar la tabla y manejar operaciones -->
     <script>
-        // JavaScript para llenar la tabla y manejar operaciones
+        // Datos de ejemplo para llenar la tabla
+        const peluches = [
+            { nombre: "Osito", tipo: "Oso", precio: "10.99" },
+            { nombre: "Gatito", tipo: "Gato", precio: "15.99" }
+        ];
+
+        // Función para llenar la tabla con los peluches
+        function llenarTabla() {
+            const tablaPeluches = document.getElementById("tablaPeluches");
+            peluches.forEach(peluche => {
+                const fila = document.createElement("tr");
+                fila.innerHTML = `
+                    <td>${peluche.nombre}</td>
+                    <td>${peluche.tipo}</td>
+                    <td>${peluche.precio}</td>
+                    <td><button class="btn btn-warning" onclick="modificarPeluche('${peluche.nombre}', '${peluche.tipo}', '${peluche.precio}')">Modificar</button></td>
+                    <td><button class="btn btn-danger" onclick="eliminarPeluche(this)">Eliminar</button></td>
+                `;
+                tablaPeluches.appendChild(fila);
+            });
+        }
+
+        // Función para eliminar un peluche
+        function eliminarPeluche(boton) {
+            const fila = boton.closest("tr");
+            fila.remove();
+        }
+
+        // Función para modificar un peluche
+        function modificarPeluche(nombre, tipo, precio) {
+            window.location.href = `registroPersona.html?nombre=${nombre}&tipo=${tipo}&precio=${precio}`;
+        }
+
+        // Llenar la tabla cuando se cargue la página
+        document.addEventListener("DOMContentLoaded", function() {
+            llenarTabla();
+        });
     </script>
 </body>
 </html>

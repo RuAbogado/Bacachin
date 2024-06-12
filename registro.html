@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFE7C3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #EBDFCC;
+            border-radius: 15px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 0 0 calc(50% - 20px);
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: calc(100% - 10px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #E6B267;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        
+        button[type="button"] {
+            margin-top: 20px;
+            background-color: #C49E66;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="button"]:hover {
+            background-color: #A17A3D;
+        }
+
+
+        form::before,
+        form::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: #C49E66;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        form::before {
+            top: -50px;
+            left: -50px;
+        }
+
+        form::after {
+            bottom: -50px;
+            right: -50px;
+        }
+
+    </style>
+</head>
+<body>
+    <form id="registroForm">
+        <div class="input-group">
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+
+        <div class="input-group">
+            <label for="apellido">Apellidos:</label>
+            <input type="text" id="apellido" name="apellido" required>
+        </div>
+
+        <div class="input-group">
+            <label for="usuario">Nombre de usuario:</label>
+            <input type="text" id="usuario" name="usuario" required>
+        </div>
+
+        <div class="input-group">
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+        </div>
+
+        <div class="input-group">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo">
+                <option value="otro">Otro</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
+        </div>
+        
+        <div class="input-group">
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña" required minlength="5">
+        </div>
+
+        <div class="input-group">
+            <label for="confirmarContraseña">Confirmar Contraseña:</label>
+            <input type="password" id="confirmarContraseña" name="confirmarContraseña" required minlength="5">
+        </div>
+        
+        <button type="button" onclick="validarYEnviar()">Registrar usuario</button>
+        <button type="button" onclick="borrarRegistro()">Borrar registro</button>
+    </form>
+
+    <script>
+        function validarYEnviar() {
+            var nombre = document.getElementById("nombre").value.trim();
+            var apellido = document.getElementById("apellido").value.trim();
+            var usuario = document.getElementById("usuario").value.trim();
+            var telefono = document.getElementById("telefono").value.trim();
+            var sexo = document.getElementById("sexo").value;
+            var correo = document.getElementById("correo").value.trim();
+            var contraseña = document.getElementById("contraseña").value;
+            var confirmarContraseña = document.getElementById("confirmarContraseña").value;
+
+            // Validar si algún campo está vacío
+            if (nombre === "" || apellido === "" || usuario === "" || telefono === "" || correo === "" || contraseña === "" || confirmarContraseña === "") {
+                alert("Por favor, rellene todos los campos.");
+                return; // Detener el envío del formulario si algún campo está vacío
+            }
+
+            // Validar si hay espacios en blanco en cualquier campo
+            if (nombre.includes(" ") || apellido.includes(" ") || telefono.includes(" ") || correo.includes(" ")) {
+                alert("No se permiten espacios en blanco en ningún campo.");
+                return; // Detener el envío del formulario si se encuentra un espacio en blanco
+            }
+
+            // Validar si las contraseñas coinciden
+            if (contraseña !== confirmarContraseña) {
+                alert("Las contraseñas no coinciden");
+                return; // Detener el envío del formulario si las contraseñas no coinciden
+            }
+
+            localStorage.setItem("nombre", nombre);
+            localStorage.setItem("apellido", apellido);
+            localStorage.setItem("usuario", usuario);
+            localStorage.setItem("telefono", telefono);
+            localStorage.setItem("sexo", sexo);
+            localStorage.setItem("correo", correo);
+            localStorage.setItem("contraseña", contraseña);
+
+            window.location.href = "inicio_sesion.html";
+        }
+
+        function borrarRegistro() { 
+            var confirmacion = confirm("¿Estás seguro de que deseas vaciar todos los registros? Esta acción no se puede deshacer.");
+            
+            if (confirmacion) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
