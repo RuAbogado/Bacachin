@@ -3,77 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Peluche</title>
-    <!-- Enlace a Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <title>Inicio de sesion</title>
     <style>
-        /* Estilos CSS personalizados */
         body {
-            background-color: #78b6f5; /* Color de fondo */
+            font-family: Arial, sans-serif;
+            margin: 20px; /* Ajusta el margen alrededor del formulario */
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #FFE7C3; /* Color de fondo */
+            display: flex;
+            justify-content: center; /* Centra horizontalmente */
+            align-items: center; /* Centra verticalmente */
+            min-height: 100vh; /* Establece la altura mínima del contenedor al 100% del viewport */
         }
 
-        .container {
-            background-color: #fff; /* Fondo del formulario */
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
-            padding: 30px; /* Espaciado interno */
+        form {
+            position: relative; /* Posiciona de manera relativa para que los pseudoelementos sean relativos a este */
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #EBDFCC;
+            border-radius: 15px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column; /* Coloca los elementos en columna */
+            align-items: center; /* Centra los elementos horizontalmente */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
         }
 
-        h2 {
-            color: #343a40; /* Color del texto */
+        label {
+            font-weight: bold;
         }
 
-        .form-control {
-            border: 1px solid #ced4da; /* Borde del input */
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #e9bf81;
+            background-color: #e9bf81;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    
+    button[type="button"] {
+        background-color: #C49E66; 
+        color: white; 
+        padding: 10px 20px; 
+        border: none; 
+        border-radius: 4px; 
+        cursor: pointer; 
+        transition: background-color 0.3s; 
+    }
+
+    button[type="button"]:hover {
+        background-color: #A17A3D; /* Cambia el color de fondo al pasar el ratón */
+    }
+
+
+        .circle-img {
+            width: 150px; /* Ajusta el tamaño de la imagen */
+            height: 150px; /* Ajusta el tamaño de la imagen */
+            margin-bottom: 20px; /* Espacio entre la imagen y el formulario */
         }
 
-        .btn-primary {
-            background-color: #007bff; /* Color de fondo del botón */
-            border-color: #007bff; /* Borde del botón */
+        /* Pseudoelementos para formas detrás del formulario */
+        form::before,
+        form::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: #C49E66; /* Color de las formas */
+            border-radius: 50%; /* Hace que las formas tengan forma circular */
+            opacity: 0.3; /* Opacidad de las formas */
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3; /* Color de fondo al pasar el ratón */
-            border-color: #0056b3; /* Borde al pasar el ratón */
+        form::before {
+            top: -50px;
+            left: -50px;
+        }
+
+        form::after {
+            bottom: -50px;
+            right: -50px;
+        }
+
+        /* Estilo para el enlace al final del formulario */
+        #registro-link {
+            margin-top: 20px; /* Ajusta el margen superior */
+            text-align: center; /* Centra el texto horizontalmente */
+            color: #C49E66; /* Color del texto */
+            font-size: 14px;
+            text-decoration: underline; /* Subraya el texto */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el enlace */
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Registrar Peluche</h2>
-        <form id="registroForm" method="GET" action="ver.html">
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="tipo">Tipo:</label>
-                <input type="text" class="form-control" id="tipo" name="tipo" required>
-            </div>
-            <div class="form-group">
-                <label for="precio">Precio:</label>
-                <input type="text" class="form-control" id="precio" name="precio" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Registrar</button>
-        </form>
-    </div>
+    <form id="inicioSesionForm">
+        <img src="img/portada.png" alt="Imagen" class="circle-img">
 
-    <!-- Enlace a Bootstrap JS -->
-    <script src="js/bootstrap.js"></script>
-    <!-- Código JavaScript para llenar el formulario con datos preexistentes si es necesario -->
+        <label for="correo">Correo:</label><br>
+        <input type="email" id="correo" name="correo" required><br>
+        
+        <label for="contraseña">Contraseña:</label><br>
+        <input type="password" id="contraseña" name="contraseña" required minlength="5"><br>
+        
+        <button type="button" onclick="guardarYEnviar()">Iniciar sesión</button>
+        
+        <!-- Enlace para registrar usuario -->
+        <div id="registro-link" onclick="irARegistro()">Crear nueva cuenta</div>
+    </form>
+
     <script>
-        // Obtener los parámetros de la URL si hay algún registro preexistente para modificar
-        const urlParams = new URLSearchParams(window.location.search);
-        const nombre = urlParams.get('nombre');
-        const tipo = urlParams.get('tipo');
-        const precio = urlParams.get('precio');
+        function guardarYEnviar() {
+            // Obtiene los valores del formulario
+            var correo = document.getElementById("correo").value.trim();
+            var contraseña = document.getElementById("contraseña").value.trim();
 
-        // Llenar los campos del formulario con los datos preexistentes, si los hay
-        if (nombre && tipo && precio) {
-            document.getElementById('nombre').value = nombre;
-            document.getElementById('tipo').value = tipo;
-            document.getElementById('precio').value = precio;
+            // Verifica si los campos están vacíos
+            if (correo === "" || contraseña === "") {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            // Guarda los datos en el almacenamiento local del navegador
+            localStorage.setItem("correo", correo);
+            localStorage.setItem("contraseña", contraseña);
+
+            // Redirige a la siguiente página
+            window.location.href = "index2.html";
+        }
+
+        // Función para redirigir a la página de registro de usuario
+        function irARegistro() {
+            window.location.href = "registro.html";
         }
     </script>
 </body>
 </html>
+
