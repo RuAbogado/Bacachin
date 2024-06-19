@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Peluche</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        /* Estilos CSS personalizados */
+        body {
+            background-color: #78b6f5; /* Color de fondo */
+        }
+
+        .container {
+            background-color: #fff; /* Fondo del formulario */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+            padding: 30px; /* Espaciado interno */
+        }
+
+        h2 {
+            color: #343a40; /* Color del texto */
+        }
+
+        .form-control {
+            border: 1px solid #ced4da; /* Borde del input */
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Color de fondo del botón */
+            border-color: #007bff; /* Borde del botón */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Color de fondo al pasar el ratón */
+            border-color: #0056b3; /* Borde al pasar el ratón */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Registrar Peluche</h2>
+        <form id="registroForm" method="GET" action="ver.html">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <input type="text" class="form-control" id="tipo" name="tipo" required>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="text" class="form-control" id="precio" name="precio" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
+
+    <!-- Enlace a Bootstrap JS -->
+    <script src="js/bootstrap.js"></script>
+    <!-- Código JavaScript para llenar el formulario con datos preexistentes si es necesario -->
+    <script>
+        // Obtener los parámetros de la URL si hay algún registro preexistente para modificar
+        const urlParams = new URLSearchParams(window.location.search);
+        const nombre = urlParams.get('nombre');
+        const tipo = urlParams.get('tipo');
+        const precio = urlParams.get('precio');
+
+        // Llenar los campos del formulario con los datos preexistentes, si los hay
+        if (nombre && tipo && precio) {
+            document.getElementById('nombre').value = nombre;
+            document.getElementById('tipo').value = tipo;
+            document.getElementById('precio').value = precio;
+        }
+    </script>
+</body>
+</html>
