@@ -3,193 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Usuario</title>
+    <title>Registro de persona</title>
+    <link rel="icon" type="image/png" href="images/icons/agregar.png"/>
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #FFE7C3;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            background: url('images/cafetería.webp') no-repeat center center fixed;
+            background-size: cover;
         }
 
-        form {
-            max-width: 600px;
-            padding: 20px;
-            border: 1px solid #EBDFCC;
-            border-radius: 15px;
-            background-color: #f9f9f9;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .container-login100 {
+            width: 100%;
+            min-height: 100vh;
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            justify-content: center;
+            padding: 15px;
+            position: relative;
         }
 
-        .input-group {
-            flex: 0 0 calc(50% - 20px);
+        .container-login100::before {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.5); /* Ajusta el valor de la opacidad aquí */
+        }
+
+        .wrap-login100 {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 55px 55px 37px 55px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .circle-img {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .wrap-input100 {
+            width: 100%;
+            position: relative;
             margin-bottom: 20px;
         }
 
-        label {
-            font-weight: bold;
+        .label-input100 {
+            font-family: 'Poppins-Regular', sans-serif;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            text-align: left;
+            display: block;
             margin-bottom: 5px;
         }
 
-        input[type="text"],
-        input[type="tel"],
-        input[type="email"],
-        input[type="password"],
-        select {
-            width: calc(100% - 10px);
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #E6B267;
-            border-radius: 10px;
+        .input100 {
+            font-family: 'Poppins-Medium', sans-serif;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.2;
+            display: block;
+            width: 100%;
+            height: 45px;
+            background: #f7f7f7;
+            padding: 0 10px;
+            border: 1px solid #e6e6e6;
+            border-radius: 5px;
             box-sizing: border-box;
         }
-        
-        button[type="button"] {
-            margin-top: 20px;
-            background-color: #C49E66;
-            color: white;
-            padding: 10px 20px;
+
+        .input100::placeholder {
+            color: #666;
+        }
+
+        .login100-form-btn {
+            font-family: 'Poppins-Medium', sans-serif;
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.2;
+            text-transform: uppercase;
+            width: 48%;
+            height: 45px;
+            border-radius: 5px;
+            background: #8B4513; /* Color café */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 25px;
+            transition: all 0.4s;
             border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            margin-top: 20px;
         }
 
-        button[type="button"]:hover {
-            background-color: #A17A3D;
+        .login100-form-btn:hover {
+            background: #5D3A00; /* Color café más oscuro */
+            color: #fff;
         }
 
-
-        form::before,
-        form::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background-color: #C49E66;
-            border-radius: 50%;
-            opacity: 0.3;
-        }
-
-        form::before {
-            top: -50px;
-            left: -50px;
-        }
-
-        form::after {
-            bottom: -50px;
-            right: -50px;
+        .container-login100-form-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
         }
 
     </style>
 </head>
 <body>
-    <form id="registroForm">
-        <div class="input-group">
-            <label for="nombre">Nombre completo:</label>
-            <input type="text" id="nombre" name="nombre" required>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form id="registroForm">
+                <img src="images/portada.png" alt="Imagen" class="circle-img">
+                <div class="wrap-input100">
+                    <label class="label-input100" for="nombre">Nombre completo:</label>
+                    <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba su nombre" required>
+                </div>
+
+                <div class="wrap-input100">
+                    <label class="label-input100" for="apellido">Apellidos:</label>
+                    <input class="input100" type="text" id="apellido" name="apellido" placeholder="Escriba su apellido" required>
+                </div>
+
+                <div class="wrap-input100">
+                    <label class="label-input100" for="usuario">Nombre de usuario:</label>
+                    <input class="input100" type="text" id="usuario" name="usuario" placeholder="Escriba su nombre de usuario" required>
+                </div>
+
+                <div class="wrap-input100">
+                    <label class="label-input100" for="telefono">Teléfono:</label>
+                    <input class="input100" type="tel" id="telefono" name="telefono" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                </div>
+
+                <div class="wrap-input100">
+                    <label class="label-input100" for="sexo">Sexo:</label>
+                    <select class="input100" id="sexo" name="sexo" required>
+                        <option value="">Seleccione su sexo</option>
+                        <option value="otro">Otro</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="femenino">Femenino</option>
+                    </select>
+                </div>
+
+                <div class="wrap-input100">
+                    <label class="label-input100" for="correo">Correo:</label>
+                    <input class="input100" type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required>
+                </div>
+
+                <div class="wrap-input100">
+                    <label class="label-input100" for="contraseña">Contraseña:</label>
+                    <input class="input100" type="password" id="contraseña" name="contraseña" placeholder="Escriba su contraseña" required minlength="5">
+                </div>
+
+                <div class="wrap-input100">
+                    <label class="label-input100" for="confirmarContraseña">Confirmar Contraseña:</label>
+                    <input class="input100" type="password" id="confirmarContraseña" name="confirmarContraseña" placeholder="Repita su contraseña" required minlength="5">
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="button" onclick="validarYEnviar()">Registrar usuario</button>
+                    <button class="login100-form-btn" type="button" onclick="borrarRegistro()">Borrar registro</button>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
 
-        <div class="input-group">
-            <label for="apellido">Apellidos:</label>
-            <input type="text" id="apellido" name="apellido" required>
-        </div>
+<script>
+    function validarYEnviar() {
+        var nombre = document.getElementById("nombre").value.trim();
+        var apellido = document.getElementById("apellido").value.trim();
+        var usuario = document.getElementById("usuario").value.trim();
+        var telefono = document.getElementById("telefono").value.trim();
+        var sexo = document.getElementById("sexo").value;
+        var correo = document.getElementById("correo").value.trim();
+        var contraseña = document.getElementById("contraseña").value;
+        var confirmarContraseña = document.getElementById("confirmarContraseña").value;
 
-        <div class="input-group">
-            <label for="usuario">Nombre de usuario:</label>
-            <input type="text" id="usuario" name="usuario" required>
-        </div>
-
-        <div class="input-group">
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-        </div>
-
-        <div class="input-group">
-            <label for="sexo">Sexo:</label>
-            <select id="sexo" name="sexo">
-                <option value="otro">Otro</option>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo" name="correo" required>
-        </div>
-        
-        <div class="input-group">
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña" required minlength="5">
-        </div>
-
-        <div class="input-group">
-            <label for="confirmarContraseña">Confirmar Contraseña:</label>
-            <input type="password" id="confirmarContraseña" name="confirmarContraseña" required minlength="5">
-        </div>
-        
-        <button type="button" onclick="validarYEnviar()">Registrar usuario</button>
-        <button type="button" onclick="borrarRegistro()">Borrar registro</button>
-    </form>
-
-    <script>
-        function validarYEnviar() {
-            var nombre = document.getElementById("nombre").value.trim();
-            var apellido = document.getElementById("apellido").value.trim();
-            var usuario = document.getElementById("usuario").value.trim();
-            var telefono = document.getElementById("telefono").value.trim();
-            var sexo = document.getElementById("sexo").value;
-            var correo = document.getElementById("correo").value.trim();
-            var contraseña = document.getElementById("contraseña").value;
-            var confirmarContraseña = document.getElementById("confirmarContraseña").value;
-
-            // Validar si algún campo está vacío
-            if (nombre === "" || apellido === "" || usuario === "" || telefono === "" || correo === "" || contraseña === "" || confirmarContraseña === "") {
-                alert("Por favor, rellene todos los campos.");
-                return; // Detener el envío del formulario si algún campo está vacío
-            }
-
-            // Validar si hay espacios en blanco en cualquier campo
-            if (nombre.includes(" ") || apellido.includes(" ") || telefono.includes(" ") || correo.includes(" ")) {
-                alert("No se permiten espacios en blanco en ningún campo.");
-                return; // Detener el envío del formulario si se encuentra un espacio en blanco
-            }
-
-            // Validar si las contraseñas coinciden
-            if (contraseña !== confirmarContraseña) {
-                alert("Las contraseñas no coinciden");
-                return; // Detener el envío del formulario si las contraseñas no coinciden
-            }
-
-            localStorage.setItem("nombre", nombre);
-            localStorage.setItem("apellido", apellido);
-            localStorage.setItem("usuario", usuario);
-            localStorage.setItem("telefono", telefono);
-            localStorage.setItem("sexo", sexo);
-            localStorage.setItem("correo", correo);
-            localStorage.setItem("contraseña", contraseña);
-
-            window.location.href = "registroPersona.html";
+        // Validar si algún campo está vacío
+        if (nombre === "" || apellido === "" || usuario === "" || telefono === "" || sexo === "" || correo === "" || contraseña === "" || confirmarContraseña === "") {
+            alert("Por favor, rellene todos los campos.");
+            return; // Detener el envío del formulario si algún campo está vacío
         }
 
-        function borrarRegistro() { 
-            var confirmacion = confirm("¿Estás seguro de que deseas vaciar todos los registros? Esta acción no se puede deshacer.");
-            
-            if (confirmacion) {
-                localStorage.clear();
-                location.reload();
-            }
+        // Validar si hay espacios en blanco en cualquier campo
+        if (nombre.includes(" ") || apellido.includes(" ") || telefono.includes(" ") || correo.includes(" ")) {
+            alert("No se permiten espacios en blanco en ningún campo.");
+            return; // Detener el envío del formulario si se encuentra un espacio en blanco
         }
-    </script>
+
+        // Validar si las contraseñas coinciden
+        if (contraseña !== confirmarContraseña) {
+            alert("Las contraseñas no coinciden");
+            return; // Detener el envío del formulario si las contraseñas no coinciden
+        }
+
+        localStorage.setItem("nombre", nombre);
+        localStorage.setItem("apellido", apellido);
+        localStorage.setItem("usuario", usuario);
+        localStorage.setItem("telefono", telefono);
+        localStorage.setItem("sexo", sexo);
+        localStorage.setItem("correo", correo);
+        localStorage.setItem("contraseña", contraseña);
+
+        window.location.href = "registroPersona.html";
+    }
+
+    function borrarRegistro() {
+        var confirmacion = confirm("¿Estás seguro de que deseas vaciar todos los registros? Esta acción no se puede deshacer.");
+
+        if (confirmacion) {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+</script>
 </body>
 </html>

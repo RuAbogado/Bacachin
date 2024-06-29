@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de sesión</title>
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <link rel="icon" type="image/png" href="img/icons/icon.png"/>
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
@@ -145,60 +145,60 @@
     </style>
 </head>
 <body>
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form id="inicioSesionForm" class="login100-form validate-form">
-                    <img src="images/portada.png" alt="Imagen" class="circle-img">
-                    <div class="wrap-input100 validate-input" data-validate="Correo es requerido">
-                        <label class="label-input100" for="correo">Correo</label>
-                        <input class="input100" type="email" id="correo" name="correo" placeholder="Escriba su correo" required>
-                    </div>
-                    <div class="wrap-input100 validate-input" data-validate="Contraseña es requerida">
-                        <label class="label-input100" for="contraseña">Contraseña</label>
-                        <input class="input100" type="password" id="contraseña" name="contraseña" placeholder="Escriba su contraseña" required minlength="5">
-                    </div>
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" type="button" onclick="guardarYEnviar()">Iniciar sesión</button>
-                    </div>
-                    <div id="registro-link" onclick="irARegistro()">Crear nueva cuenta</div>
-                </form>
-            </div>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form id="inicioSesionForm" class="login100-form validate-form">
+                <img src="img/portada.png" alt="Imagen" class="circle-img">
+                <div class="wrap-input100 validate-input" data-validate="Correo es requerido">
+                    <label class="label-input100" for="correo">Correo</label>
+                    <input class="input100" type="email" id="correo" name="correo" placeholder="Escriba su correo" required>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Contraseña es requerida">
+                    <label class="label-input100" for="contraseña">Contraseña</label>
+                    <input class="input100" type="password" id="contraseña" name="contraseña" placeholder="Escriba su contraseña" required minlength="5">
+                </div>
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="button" onclick="guardarYEnviar()">Iniciar sesión</button>
+                </div>
+                <div id="registro-link" onclick="irARegistro()">Crear nueva cuenta</div>
+            </form>
         </div>
     </div>
+</div>
 
-    <script>
-        function guardarYEnviar() {
-            // Obtiene los valores del formulario
-            var correo = document.getElementById("correo").value.trim();
-            var contraseña = document.getElementById("contraseña").value.trim();
+<script>
+    function guardarYEnviar() {
+        // Obtiene los valores del formulario
+        var correo = document.getElementById("correo").value.trim();
+        var contraseña = document.getElementById("contraseña").value.trim();
 
-            // Verifica si los campos están vacíos
-            if (correo === "" || contraseña === "") {
-                alert("Por favor, complete todos los campos.");
-                return;
-            }
-
-            // Guarda los datos en el almacenamiento local del navegador
-            localStorage.setItem("correo", correo);
-            localStorage.setItem("contraseña", contraseña);
-
-            // Redirige a la siguiente página
-            window.location.href = "index2.html";
+        // Verifica si los campos están vacíos
+        if (correo === "" || contraseña === "") {
+            alert("Por favor, complete todos los campos.");
+            return;
         }
 
-        function irARegistro() {
-            window.location.href = "registro.html";
-        }
-    </script>
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="vendor/animsition/js/animsition.min.js"></script>
-    <script src="vendor/bootstrap/js/popper.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/daterangepicker/moment.min.js"></script>
-    <script src="vendor/daterangepicker/daterangepicker.js"></script>
-    <script src="vendor/countdowntime/countdowntime.js"></script>
-    <script src="js/main.js"></script>
+        // Guarda los datos en el almacenamiento local del navegador
+        localStorage.setItem("correo", correo);
+        localStorage.setItem("contraseña", contraseña);
+
+        // Redirige a la siguiente página
+        window.location.href = "index2.html";
+    }
+
+    function irARegistro() {
+        window.location.href = "registro.html";
+    }
+</script>
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="vendor/animsition/js/animsition.min.js"></script>
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/select2/select2.min.js"></script>
+<script src="vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<script src="vendor/countdowntime/countdowntime.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
