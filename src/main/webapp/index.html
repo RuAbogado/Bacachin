@@ -36,9 +36,9 @@
         width: 100%;
         height: 3rem;
         background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
+        border: solid rgb(12, 12, 12);
         border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, 0.1);
       }
 
       .b-example-vr {
@@ -189,8 +189,9 @@
 
   <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 20%;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <!-- aqui puedo modificar la imagen del logo  -->
       <img src="img/portada.png" alt="Logo" class="icon-img me-2">
-      <span class="fs-4">Ensigna</span>
+      <span class="fs-4">GIUP</span>
     </a>
     
     <hr>
@@ -201,12 +202,12 @@
           Inicio
         </a>
       </li>
-      <!--<li>
+      <li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Dashboard
+          Clientes
         </a>
-      </li>-->
+      </li>
       <li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
@@ -222,7 +223,7 @@
       <li>
         <a href="#" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-          Perfil
+          Empleados
         </a>
       </li>
     </ul>
@@ -232,6 +233,7 @@
         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
         <strong>mdo</strong>
       </a>
+
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
         <li><a class="dropdown-item" href="#">New project...</a></li>
         <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -244,6 +246,7 @@
 
   <div class="b-example-divider b-example-vr"></div>
 
+  <!-- aqui es para la lista de productos  -->
 
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 40%;">
     <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
@@ -313,103 +316,13 @@
         Enchiladas suizas con pollo y queso a tan solo $50
       </div>
       </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-body-secondary">Wed</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-body-secondary">Tues</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-body-secondary">Mon</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-body-secondary">Wed</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-body-secondary">Tues</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-body-secondary">Mon</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
+
+
+
     </div>
   </div>
 
-  <div class="b-example-divider b-example-vr"></div>
 
-  <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center" style="width: 300%;">
-    <div class="list-group">
-      <label class="list-group-item d-flex gap-3">
-        <input class="form-check-input flex-shrink-0" type="checkbox" value="" checked style="font-size: 1.375em;">
-        <span class="pt-1 form-checked-content">
-          <img src="img/tacosdepastor.jpeg" alt="Tacos de pastor" width="100">
-          <strong>Tacos de pastor</strong>
-          <small class="d-block text-body-secondary">
-            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"/></svg>
-            Hora de entrega: 1:00–2:00pm
-          </small>
-        </span>
-      </label>
-      <label class="list-group-item d-flex gap-3">
-        <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-        <span class="pt-1 form-checked-content">
-          <img src="img/tortademilanesa.jpeg" alt="Tacos de pastor" width="100">
-          <strong>Torta de milanesa</strong>
-          <small class="d-block text-body-secondary">
-            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"/></svg>
-            Hora de entrega: 2:00–2:30pm
-          </small>
-        </span>
-      </label>
-      <label class="list-group-item d-flex gap-3">
-        <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
-        <span class="pt-1 form-checked-content">
-          <img src="img/galletas.webp" alt="Galletas Principes" width="100">
-          <strong>Galletas principes</strong>
-          <small class="d-block text-body-secondary">
-            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#alarm"/></svg>
-            Hora de entrega: 2:00-2:30pm
-          </small>
-        </span>
-      </label>
-
-      <label class="list-group-item d-flex gap-3 bg-body-tertiary">
-        <input class="form-check-input form-check-input-placeholder bg-body-tertiary flex-shrink-0 pe-none" disabled type="checkbox" value="" style="font-size: 1.375em;">
-        <span class="pt-1 form-checked-content">
-          <span contenteditable="true" class="w-100">Añadir mas alimentos...</span>
-          <small class="d-block text-body-secondary">
-            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#list-check"/></svg>
-            Escoge tu lista para comprar...
-          </small>
-        </span>
-      </label>
-    </div>
-  </div>
-  
-  <div class="b-example-divider b-example-vr"></div>
 </main>
 <script src="js/bootstrap.js"></script>
 
