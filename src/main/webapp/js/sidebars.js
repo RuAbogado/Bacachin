@@ -1,10 +1,11 @@
 /* global bootstrap: false */
 (() => {
-  'use strict'
-  const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  'use strict';
+
+  const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.forEach(tooltipTriggerEl => {
-    new bootstrap.Tooltip(tooltipTriggerEl)
-  })
+    new bootstrap.Tooltip(tooltipTriggerEl);
+  });
 
   document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
