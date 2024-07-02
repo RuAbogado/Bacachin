@@ -63,6 +63,6 @@ main {
 }
 
 .nav-link.active {
-  background-color: #ffae88; /* Cambia este color al que desees */
+  background-color: #ffe7c3; /* Cambia este color al que desees */
   color: black; /* Asegúrate de que el texto sea legible */
 }
