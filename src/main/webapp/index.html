@@ -14,6 +14,7 @@
   <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/sidebars.css" rel="stylesheet">
+  <link href="css/BotonAgregarProductos.css" rel="stylesheet">
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -154,6 +155,36 @@
     </div>
   </div>
   <div class="b-example-divider b-example-vr"></div>
+
+    <div class="container mt-5">
+      <button type="button" class="btn btn-primary btn-carrito">
+        <img src="img/carrito-de-compras.png">
+      </button>
+    </div>
+
+  <style>
+    .btn-carrito {
+      width: 100px; /* Ancho del botón */
+      height: 100px; /* Alto del botón */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0; /* Quitar padding por defecto */
+    }
+
+    .btn-carrito img {
+      max-width: 80%; /* Ajustar el tamaño de la imagen */
+      max-height: 80%; /* Ajustar el tamaño de la imagen */
+    }
+
+    .custom-position {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+
   <div class="flex-grow-1 p-3" id="content">
     <!-- Contenido dinámico cargado aquí -->
     <div id="inicio">
@@ -170,8 +201,17 @@
     </div>
     <div id="productos" style="display:none;">
       <h2>Productos</h2>
-      <p>Contenido de la página de productos.</p>
+      <!-- contenido de la pestaña productos -->
+
+      <div class="btn-2">
+       <!-- <h1>Lista de Productos</h1> --> <!-- Este es para aparezca cuando ya hay prodcutos-->
+        <h1>¡Agrega productos!</h1> <!-- Este es para que aparezca cuando no hay productos-->
+        <a href=""><span>Agregar Producto</span></a>
+      </div>
+
+      <!--hasta aqui llega el contenido de productos -->
     </div>
+
     <div id="empleados" style="display:none;">
       <h2>Empleados</h2>
       <p>Contenido de la página de empleados.</p>
