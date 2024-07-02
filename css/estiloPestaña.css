@@ -1,8 +1,0 @@
-/* funcionamiento básico del sistema de pestañas */
-.tab-content {
-    display: none;
-}
-
-.tab:target .tab-content, .tab:last-of-type .tab-content {
-    display: block;
-}

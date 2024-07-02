@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de persona</title>
-    <link rel="icon" type="image/png" href="img/icons/agregar.png"/>
+    <link rel="icon" type="image/png" href="img/icons/icono_2.png" />
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
@@ -147,28 +147,28 @@
                 <form id="registroForm">
                     <img src="images/portada.png" alt="Imagen" class="circle-img">
                     <div class="wrap-input100">
-                        <label class="label-input100" for="nombre">Nombre completo:</label>
-                        <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba su nombre" required>
+                        <label class="label-input100" for="nombre_datos">Nombre completo:</label>
+                        <input class="input100" type="text" id="nombre_datos" name="nombre" placeholder="Escriba su nombre" required>
                     </div>
 
                     <div class="wrap-input100">
-                        <label class="label-input100" for="apellido">Apellidos:</label>
-                        <input class="input100" type="text" id="apellido" name="apellido" placeholder="Escriba su apellido" required>
+                        <label class="label-input100" for="apellido_datos">Apellidos:</label>
+                        <input class="input100" type="text" id="apellido_datos" name="apellido" placeholder="Escriba su apellido" required>
                     </div>
 
                     <div class="wrap-input100">
-                        <label class="label-input100" for="usuario">Nombre de usuario:</label>
-                        <input class="input100" type="text" id="usuario" name="usuario" placeholder="Escriba su nombre de usuario" required>
+                        <label class="label-input100" for="usuario_datos">Nombre de usuario:</label>
+                        <input class="input100" type="text" id="usuario_datos" name="usuario" placeholder="Escriba su nombre de usuario" required>
                     </div>
 
                     <div class="wrap-input100">
-                        <label class="label-input100" for="telefono">Teléfono:</label>
-                        <input class="input100" type="tel" id="telefono" name="telefono" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                        <label class="label-input100" for="telefono_datos">Teléfono:</label>
+                        <input class="input100" type="tel" id="telefono_datos" name="telefono" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
                     </div>
 
                     <div class="wrap-input100">
-                        <label class="label-input100" for="sexo">Sexo:</label>
-                        <select class="input100" id="sexo" name="sexo" required>
+                        <label class="label-input100" for="sexo_datos">Sexo:</label>
+                        <select class="input100" id="sexo_datos" name="sexo" required>
                             <option value="">Seleccione su sexo</option>
                             <option value="otro">Otro</option>
                             <option value="masculino">Masculino</option>
@@ -177,18 +177,18 @@
                     </div>
 
                     <div class="wrap-input100">
-                        <label class="label-input100" for="correo">Correo:</label>
-                        <input class="input100" type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required>
+                        <label class="label-input100" for="correo_datos">Correo:</label>
+                        <input class="input100" type="email" id="correo_datos" name="correo" placeholder="correo@ejemplo.com" required>
                     </div>
                     
                     <div class="wrap-input100">
-                        <label class="label-input100" for="contraseña">Contraseña:</label>
-                        <input class="input100" type="password" id="contraseña" name="contraseña" placeholder="Escriba su contraseña" required minlength="5">
+                        <label class="label-input100" for="contraseña_datos">Contraseña:</label>
+                        <input class="input100" type="password" id="contraseña_datos" name="contraseña" placeholder="Escriba su contraseña" required minlength="5">
                     </div>
 
                     <div class="wrap-input100">
-                        <label class="label-input100" for="confirmarContraseña">Confirmar Contraseña:</label>
-                        <input class="input100" type="password" id="confirmarContraseña" name="confirmarContraseña" placeholder="Repita su contraseña" required minlength="5">
+                        <label class="label-input100" for="confirmarContraseña_datos">Confirmar Contraseña:</label>
+                        <input class="input100" type="password" id="confirmarContraseña_datos" name="confirmarContraseña" placeholder="Repita su contraseña" required minlength="5">
                     </div>
                     
                     <div class="container-login100-form-btn">
@@ -202,14 +202,14 @@
 
     <script>
         function validarYEnviar() {
-            var nombre = document.getElementById("nombre").value.trim();
-            var apellido = document.getElementById("apellido").value.trim();
-            var usuario = document.getElementById("usuario").value.trim();
-            var telefono = document.getElementById("telefono").value.trim();
-            var sexo = document.getElementById("sexo").value;
-            var correo = document.getElementById("correo").value.trim();
-            var contraseña = document.getElementById("contraseña").value;
-            var confirmarContraseña = document.getElementById("confirmarContraseña").value;
+            var nombre = document.getElementById("nombre_datos").value.trim();
+            var apellido = document.getElementById("apellido_datos").value.trim();
+            var usuario = document.getElementById("usuario_datos").value.trim();
+            var telefono = document.getElementById("telefono_datos").value.trim();
+            var sexo = document.getElementById("sexo_datos").value;
+            var correo = document.getElementById("correo_datos").value.trim();
+            var contraseña = document.getElementById("contraseña_datos").value;
+            var confirmarContraseña = document.getElementById("confirmarContraseña_datos").value;
 
             // Validar si algún campo está vacío
             if (nombre === "" || apellido === "" || usuario === "" || telefono === "" || sexo === "" || correo === "" || contraseña === "" || confirmarContraseña === "") {
