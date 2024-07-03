@@ -98,6 +98,15 @@
       background-color: #9C5D00; /* Color beige más oscuro para el hover */
       color: white;
     }
+    .label-input100 {
+      font-family: 'Poppins-Regular', sans-serif;
+      font-size: 15px;
+      color: #333;
+      line-height: 2;
+      text-align: left;
+      display: inline-block;
+      margin-bottom: 7px;
+    }
 
      .vertical-divider {
        border-left: 2px solid #000;
@@ -231,7 +240,10 @@
           </button>
         </div>
         <div class="modal-body">
-          ...
+          <div class="wrap-input100">
+            <label class="label-input100" for="nombre">Nombre del producto:</label>
+            <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba el nombre del producto" required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
