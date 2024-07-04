@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil</title>
+    <link rel="icon" type="image/png" href="img/icons/icono.png" />
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('images/cafetería.webp') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+        .container-login100 {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            position: relative;
+        }
+
+        .container-login100::before {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.5); /* Ajusta el valor de la opacidad aquí */
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .contenedor-perfil {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .circle-img {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .circle-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .boton-modificar,
+        .boton-guardar {
+            background-color: #8B4513;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .boton-modificar:hover,
+        .boton-guardar:hover {
+            background-color: #5D3A00;
+        }
+
+        .wrap-input100 {
+            width: 100%;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-file {
+            display: none;
+        }
+        
+        .label-input100 {
+            font-family: 'Poppins-Regular', sans-serif;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input100 {
+            font-family: 'Poppins-Medium', sans-serif;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.2;
+            display: block;
+            width: 100%;
+            height: 45px;
+            background: #f7f7f7;
+            padding: 0 10px;
+            border: 1px solid #e6e6e6;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .input100::placeholder {
+            color: #666;
+        }
+
+        .login100-form-btn {
+            font-family: 'Poppins-Medium', sans-serif;
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.2;
+            text-transform: uppercase;
+            width: 48%;
+            height: 45px;
+            border-radius: 5px;
+            background: #8B4513; /* Color café */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 25px;
+            transition: all 0.4s;
+            border: none;
+            margin-top: 20px;
+        }
+
+        .login100-form-btn:hover {
+            background: #5D3A00; /* Color café más oscuro */
+            color: #fff;
+        }
+        .container-login100-form-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <label for="file-upload" class="circle-img">
+                                <img id="foto-perfil" src="img/icons/imagen.png" alt="Foto de perfil">
+                            </label>
+                            <input type="file" id="file-upload" class="input-file" accept="image/*" onchange="cargarFoto(this)">
+                            
+                            <div>
+                                <span>Nombres: </span><span id="nombre" class="font-weight-bold"></span>
+                            </div>
+                            <div>
+                                <span>Apellidos: </span><span id="apellido" class="font-weight-bold"></span>
+                            </div>
+                            <div>
+                                <span>Nombre usuario: </span><span id="nombre_usuario" class="font-weight-bold"></span>
+                            </div>
+                            <div>
+                                <span>Teléfono: </span><span id="telefono" class="font-weight-bold"></span>
+                            </div>
+                            <div>
+                                <span>Sexo: </span><span id="sexo" class="font-weight-bold"></span>
+                            </div>
+                            <div>
+                                <span>E-mail: </span><span id="email-usuario" class="font-weight-bold"></span>
+                            </div>
+                            <p class="estado mt-3">Estado: <span id="estado-usuario"></span></p>
+                            <button class="boton-modificar" onclick="habilitarEdicion()">Modificar Todos</button>
+                            <button class="boton-guardar" onclick="guardarCambios()" style="display:none;">Guardar Cambios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y otras dependencias -->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarDatosUsuario();
+        });
+
+        const cargarDatosUsuario = () => {
+            fetch('obtener_usuario.php')
+                .then(response => response.json())
+                .then(usuario => {
+                    const { nombre, apellido, nombre_usuario, telefono, sexo, email, foto_perfil } = usuario;
+                    document.getElementById('nombre').textContent = nombre;
+                    document.getElementById('apellido').textContent = apellido;
+                    document.getElementById('nombre_usuario').textContent = nombre_usuario;
+                    document.getElementById('telefono').textContent = telefono;
+                    document.getElementById('sexo').textContent = sexo;
+                    document.getElementById('email-usuario').textContent = email;
+                    document.getElementById('estado-usuario').textContent = "Activo"; // Ejemplo de estado
+                    if (foto_perfil) {
+                        document.getElementById('foto-perfil').src = foto_perfil;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos del usuario:', error);
+                });
+        };
+
+        const habilitarEdicion = () => {
+            const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'sexo', 'email-usuario'];
+            campos.forEach(campo => {
+                const elemento = document.getElementById(campo);
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = `input-${campo}`;
+                input.value = elemento.textContent;
+                elemento.parentNode.replaceChild(input, elemento);
+            });
+            document.querySelector('.boton-modificar').style.display = 'none';
+            document.querySelector('.boton-guardar').style.display = 'inline-block';
+        };
+
+        const guardarCambios = () => {
+            const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'sexo', 'email-usuario'];
+            const datosNuevos = {};
+
+            campos.forEach(campo => {
+                const input = document.getElementById(`input-${campo}`);
+                if (input.value !== '') {
+                    datosNuevos[campo] = input.value;
+                }
+            });
+
+            if (Object.keys(datosNuevos).length > 0) {
+                const params = new URLSearchParams();
+                params.append('id_usuario', 1);
+                Object.entries(datosNuevos).forEach(([campo, valor]) => {
+                    params.append(campo, valor);
+                });
+
+                fetch('actualizar_usuario.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: params.toString()
+                })
+                .then(response => response.text())
+                .then(response => {
+                    console.log(response);
+                    Object.entries(datosNuevos).forEach(([campo, valor]) => {
+                        const input = document.getElementById(`input-${campo}`);
+                        const span = document.createElement('span');
+                        span.id = campo;
+                        span.textContent = valor;
+                        input.parentNode.replaceChild(span, input);
+                    });
+                    document.querySelector('.boton-modificar').style.display = 'inline-block';
+                    document.querySelector('.boton-guardar').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error al actualizar los datos:', error);
+                });
+            }
+        };
+
+        const cargarFoto = (input) => {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('foto-perfil').src = e.target.result;
+                    // Lógica para enviar la imagen al servidor y actualizarla en la base de datos
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+    </script>
+</body>
+
+</html>

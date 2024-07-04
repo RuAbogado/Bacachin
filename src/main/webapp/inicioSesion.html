@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de sesión</title>
-    <link rel="icon" type="image/png" href="img/icons/icon.png"/>
+    <link rel="icon" type="image/png" href="img/icons/icono.png"/>
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
@@ -49,8 +49,9 @@
             background-color: rgba(255,255,255,0.5); /* Ajusta el valor de la opacidad aquí */
         }
 
-        .wrap-login100 {
-            width: 400px;
+         .wrap-login100 {
+            width: 100%;
+            max-width: 400px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             overflow: hidden;
@@ -60,6 +61,7 @@
             flex-direction: column;
             align-items: center;
         }
+        
 
         .circle-img {
             width: 200px;
@@ -184,7 +186,7 @@
         localStorage.setItem("contraseña", contraseña);
 
         // Redirige a la siguiente página
-        window.location.href = "index2.html";
+        window.location.href = "home.html";
     }
 
     function irARegistro() {

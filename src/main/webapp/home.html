@@ -9,6 +9,8 @@
   <meta name="author" content="Mark Otto, Jacob Thornton, y Bootstrap contributors">
   <meta name="generator" content="Hugo 0.122.0">
   <title>Inicio Admin</title>
+  
+  <link rel="icon" type="image/png" href="img/icons/favicon.ico" />
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="css/bootstrap.css" rel="stylesheet">
@@ -95,6 +97,15 @@
     .nav-link:hover {
       background-color: #9C5D00; /* Color beige más oscuro para el hover */
       color: white;
+    }
+    .label-input100 {
+      font-family: 'Poppins-Regular', sans-serif;
+      font-size: 15px;
+      color: #333;
+      line-height: 2;
+      text-align: left;
+      display: inline-block;
+      margin-bottom: 7px;
     }
 
      .vertical-divider {
@@ -234,7 +245,10 @@
           </button>
         </div>
         <div class="modal-body">
-          ...
+          <div class="wrap-input100">
+            <label class="label-input100" for="nombre">Nombre del producto:</label>
+            <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba el nombre del producto" required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -247,8 +261,5 @@
 
 
 </main>
-<script src="js/bootstrap.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/sidebars.js"></script>
 </body>
 </html>
