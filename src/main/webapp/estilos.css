@@ -12,17 +12,24 @@
 		height: 100px;
 		position: fixed;
 		top: 0;left: 0;
+		background: black;
+		border-bottom: 2px solid #7a5d31;
+		border-bottom-left-radius: 5%;
+		border-bottom-right-radius: 5%;
 	}
 	.container{
 		width: 90%;
+		min-width: 800px;
 		max-width: 1200px;
 		margin: auto;
 	}
 	.container .btn-menu, .logo{
 		float: left;
 		line-height:100px;
+		color: #fff;
 	}
 	.container .btn-menu label{
+		margin-left: -100%;
 		color: #fff;
 		font-size: 25px;
 		cursor: pointer;
@@ -43,9 +50,16 @@
 		text-decoration: none;
 		color: #fff;
 		transition: all 0.3s ease;
+		border-radius:100% ;
 		border-bottom: 2px solid transparent;
 		font-size: 15px;
-		margin-right: 5px;
+		margin-left: 5px;
+		width: 80px;
+	}
+	.container .menu img{
+		width: 100%;
+		background: white;
+		border-radius: 100%
 	}
 	.container .menu a:hover{
 		border-bottom: 2px solid #c7c7c7;
@@ -74,7 +88,7 @@
 	.cont-menu{
 		width: 100%;
 		max-width: 250px;
-		background: #1c1c1c;
+		background: black;
 		height: 100vh;
 		position: relative;
 		transition: all 500ms ease;
