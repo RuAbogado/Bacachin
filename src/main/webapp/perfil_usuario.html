@@ -40,11 +40,12 @@
             height: 100%;
             top: 0;
             left: 0;
-            background-color: rgba(255, 255, 255, 0.5); /* Ajusta el valor de la opacidad aquí */
+            background-color: rgba(255, 255, 255, 0.5);
         }
 
         .container {
             padding: 20px;
+            position: relative;
         }
 
         .contenedor-perfil {
@@ -52,6 +53,7 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            position: relative;
         }
 
         .circle-img {
@@ -60,7 +62,7 @@
             margin-bottom: 20px;
             border-radius: 50%;
             display: block;
-            margin-left:-20px;
+            margin-left: -20px;
             margin-right: auto;
             overflow: hidden;
             cursor: pointer;
@@ -73,7 +75,8 @@
         }
 
         .boton-modificar,
-        .boton-guardar {
+        .boton-guardar,
+        .boton-cancelar {
             background-color: #8B4513;
             color: #fff;
             border: none;
@@ -85,7 +88,8 @@
         }
 
         .boton-modificar:hover,
-        .boton-guardar:hover {
+        .boton-guardar:hover,
+        .boton-cancelar:hover {
             background-color: #5D3A00;
         }
 
@@ -109,7 +113,8 @@
             margin-bottom: 5px;
         }
 
-        .input100 {
+        .input100,
+        .input-select {
             font-family: 'Poppins-Medium', sans-serif;
             font-size: 15px;
             color: #333;
@@ -124,7 +129,8 @@
             box-sizing: border-box;
         }
 
-        .input100::placeholder {
+        .input100::placeholder,
+        .input-select::placeholder {
             color: #666;
         }
 
@@ -137,7 +143,7 @@
             width: 48%;
             height: 45px;
             border-radius: 5px;
-            background: #8B4513; /* Color café */
+            background: #8B4513;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -148,13 +154,23 @@
         }
 
         .login100-form-btn:hover {
-            background: #5D3A00; /* Color café más oscuro */
+            background: #5D3A00;
             color: #fff;
         }
+
         .container-login100-form-btn {
             width: 100%;
             display: flex;
             justify-content: space-between;
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
         }
     </style>
 </head>
@@ -162,10 +178,9 @@
 <body>
 <div class="limiter">
     <div class="container-login100">
-
-        <a href="#" onclick="window.history.back(); return false;"><img src="img/icons/flecha.png" alt="Volver" style="width: 30px; height: 30px;"></a>
         <div class="wrap-login100">
-            <div class="container">
+            <div class="container contenedor-perfil">
+                <div class="close-icon" onclick="window.location.href='Prototipo.html';">✖️</div>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <label for="file-upload" class="circle-img">
@@ -194,56 +209,87 @@
                         <p class="estado mt-3">Estado: <span id="estado-usuario"></span></p>
                         <button class="boton-modificar" onclick="habilitarEdicion()">Modificar Todos</button>
                         <button class="boton-guardar" onclick="guardarCambios()" style="display:none;">Guardar Cambios</button>
+                        <button class="boton-cancelar" onclick="cancelarCambios()" style="display:none;">Cancelar Cambios</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Bootstrap JS y otras dependencias -->
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="vendor/bootstrap/js/popper.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
-
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    const usuarioId = 1;  // ID del usuario que quieres cargar
+    let datosOriginales = {};
+
+    document.addEventListener("DOMContentLoaded", function () {
         cargarDatosUsuario();
     });
 
     const cargarDatosUsuario = () => {
-        fetch('obtener_usuario.php')
+        fetch(`http://localhost:8080/api/usuario/${usuarioId}`)
             .then(response => response.json())
-            .then(usuario => {
-                const { nombre, apellido, nombre_usuario, telefono, sexo, email, foto_perfil } = usuario;
-                document.getElementById('nombre').textContent = nombre;
-                document.getElementById('apellido').textContent = apellido;
-                document.getElementById('nombre_usuario').textContent = nombre_usuario;
-                document.getElementById('telefono').textContent = telefono;
-                document.getElementById('sexo').textContent = sexo;
-                document.getElementById('email-usuario').textContent = email;
-                document.getElementById('estado-usuario').textContent = "Activo"; // Ejemplo de estado
-                if (foto_perfil) {
-                    document.getElementById('foto-perfil').src = foto_perfil;
-                }
+            .then(data => {
+                datosOriginales = data;  // Guardar los datos originales
+                document.getElementById("nombre").textContent = data.nombre;
+                document.getElementById("apellido").textContent = data.apellido;
+                document.getElementById("nombre_usuario").textContent = data.nombreUsuario;
+                document.getElementById("telefono").textContent = data.telefono;
+                document.getElementById("sexo").textContent = data.sexo;
+                document.getElementById("email-usuario").textContent = data.email;
+                document.getElementById("foto-perfil").src = data.fotoPerfil || "img/icons/imagen.png";
             })
-            .catch(error => {
-                console.error('Error al obtener los datos del usuario:', error);
-            });
+            .catch(error => console.error('Error al cargar los datos del usuario:', error));
     };
 
     const habilitarEdicion = () => {
         const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'sexo', 'email-usuario'];
         campos.forEach(campo => {
-            const elemento = document.getElementById(campo);
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.id = `input-${campo}`;
-            input.value = elemento.textContent;
-            elemento.parentNode.replaceChild(input, elemento);
+            const span = document.getElementById(campo);
+            let input;
+            if (campo === 'sexo') {
+                input = document.createElement('select');
+                input.id = `input-${campo}`;
+                input.classList.add('input-select');
+                ['Masculino', 'Femenino', 'Otro'].forEach(optionText => {
+                    const option = document.createElement('option');
+                    option.value = optionText;
+                    option.textContent = optionText;
+                    if (optionText === span.textContent) {
+                        option.selected = true;
+                    }
+                    input.appendChild(option);
+                });
+            } else {
+                input = document.createElement('input');
+                input.id = `input-${campo}`;
+                input.type = 'text';
+                input.value = span.textContent;
+                input.classList.add('input100');
+            }
+            span.parentNode.replaceChild(input, span);
         });
         document.querySelector('.boton-modificar').style.display = 'none';
         document.querySelector('.boton-guardar').style.display = 'inline-block';
+        document.querySelector('.boton-cancelar').style.display = 'inline-block';
+    };
+
+    const cancelarCambios = () => {
+        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'sexo', 'email-usuario'];
+        campos.forEach(campo => {
+            const input = document.getElementById(`input-${campo}`);
+            const span = document.createElement('span');
+            span.id = campo;
+            span.classList.add('font-weight-bold');
+            span.textContent = datosOriginales[campo];
+            input.parentNode.replaceChild(span, input);
+        });
+        document.getElementById("foto-perfil").src = datosOriginales.fotoPerfil || "img/icons/imagen.png";
+        document.querySelector('.boton-modificar').style.display = 'inline-block';
+        document.querySelector('.boton-guardar').style.display = 'none';
+        document.querySelector('.boton-cancelar').style.display = 'none';
     };
 
     const guardarCambios = () => {
@@ -252,51 +298,47 @@
 
         campos.forEach(campo => {
             const input = document.getElementById(`input-${campo}`);
-            if (input.value !== '') {
-                datosNuevos[campo] = input.value;
+            if (input.value.trim() !== '') {
+                datosNuevos[campo] = input.value.trim();
+            } else {
+                alert(`El campo ${campo} no puede estar vacío`);
+                return;
             }
         });
 
-        if (Object.keys(datosNuevos).length > 0) {
-            const params = new URLSearchParams();
-            params.append('id_usuario', 1);
-            Object.entries(datosNuevos).forEach(([campo, valor]) => {
-                params.append(campo, valor);
-            });
+        datosNuevos.id = usuarioId;
+        datosNuevos.fotoPerfil = document.getElementById("foto-perfil").src;
 
-            fetch('actualizar_usuario.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: params.toString()
-            })
-                .then(response => response.text())
-                .then(response => {
-                    console.log(response);
-                    Object.entries(datosNuevos).forEach(([campo, valor]) => {
-                        const input = document.getElementById(`input-${campo}`);
-                        const span = document.createElement('span');
-                        span.id = campo;
-                        span.textContent = valor;
-                        input.parentNode.replaceChild(span, input);
-                    });
+        fetch('http://localhost:8080/api/usuario/actualizar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datosNuevos)
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.id) {
+                    cargarDatosUsuario();
                     document.querySelector('.boton-modificar').style.display = 'inline-block';
                     document.querySelector('.boton-guardar').style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('Error al actualizar los datos:', error);
-                });
-        }
+                    document.querySelector('.boton-cancelar').style.display = 'none';
+                } else {
+                    alert('Error al actualizar los datos');
+                }
+            })
+            .catch(error => {
+                console.error('Error al actualizar los datos:', error);
+                alert('Error al actualizar los datos. Por favor, inténtalo de nuevo más tarde.');
+            });
     };
 
     const cargarFoto = (input) => {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 document.getElementById('foto-perfil').src = e.target.result;
-                // Lógica para enviar la imagen al servidor y actualizarla en la base de datos
-            };
+            }
             reader.readAsDataURL(input.files[0]);
         }
     };
@@ -304,3 +346,4 @@
 </body>
 
 </html>
+
