@@ -11,7 +11,7 @@ import mx.edu.utez.giup.model.User;
 
 import java.io.IOException;
 
-@WebServlet(name = "UserServlet", value = "/Login")
+@WebServlet(name = "UserServlet", value = "/usuario")
 public class UserServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +24,7 @@ public class UserServlet extends HttpServlet {
 
         if (user == null || user.getUsername() == null) {
             session.setAttribute("mensaje", "El usuario no existe en la base de datos");
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("index.html");
         } else {
             session.setAttribute("user", user);
             session.removeAttribute("mensaje");

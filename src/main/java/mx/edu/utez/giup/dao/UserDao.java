@@ -45,8 +45,8 @@ public class UserDao {
     // Método para registrar un nuevo usuario
     public boolean registerUser(User user) {
         boolean isRegistered = false;
-        String query = "INSERT INTO Usuarios (Nombre, Apellido, Nombre_Usuario, Telefono, Sexo, Correo, Contraseña, Estado, Codigo_RE, Tipo, Imagen) " +
-                "VALUES (?, ?, ?, ?, ?, ?, SHA2(?, 256), ?, ?, ?, ?)";
+            String query = "INSERT INTO Usuarios (Nombre, Apellido, Nombre_Usuario, Telefono, Correo, Contraseña, Estado, Codigo_RE, Tipo, Imagen) " +
+                "VALUES (?, ?, ?, ?, ?, SHA2(?, 256), ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -55,13 +55,12 @@ public class UserDao {
             statement.setString(2, user.getApellido());
             statement.setString(3, user.getUsername());
             statement.setString(4, user.getTelefono());
-            statement.setString(5, user.getSexo());
-            statement.setString(6, user.getCorreo());
-            statement.setString(7, user.getPassword());
-            statement.setBoolean(8, user.isEstado());
-            statement.setString(9, user.getCodigo());
-            statement.setString(10, user.getTipo());
-            statement.setString(11, user.getImagen());
+            statement.setString(5, user.getCorreo());
+            statement.setString(6, user.getPassword());
+            statement.setBoolean(7, user.isEstado());
+            statement.setString(8, user.getCodigo());
+            statement.setString(9, user.getTipo());
+            statement.setString(10, user.getImagen());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {

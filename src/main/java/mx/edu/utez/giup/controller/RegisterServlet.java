@@ -18,7 +18,6 @@ public class RegisterServlet extends HttpServlet {
         String apellido = req.getParameter("apellido");
         String usuario = req.getParameter("usuario");
         String telefono = req.getParameter("telefono");
-        String sexo = req.getParameter("sexo");
         String correo = req.getParameter("correo");
         String contraseña = req.getParameter("contraseña");
 
@@ -27,7 +26,6 @@ public class RegisterServlet extends HttpServlet {
         user.setApellido(apellido);
         user.setUsername(usuario);
         user.setTelefono(telefono);
-        user.setSexo(sexo);
         user.setCorreo(correo);
         user.setPassword(contraseña);
         user.setEstado(true);  // or set as per your logic
@@ -37,10 +35,10 @@ public class RegisterServlet extends HttpServlet {
         boolean isRegistered = userDao.registerUser(user);
 
         if (isRegistered) {
-            resp.sendRedirect("registroExitoso.jsp");
+            resp.sendRedirect("index.html");
         } else {
             req.setAttribute("errorMessage", "Error en el registro. Por favor, intente nuevamente.");
-            req.getRequestDispatcher("registroPersona.jsp").forward(req, resp);
+            req.getRequestDispatcher("registro.html").forward(req, resp);
         }
     }
 

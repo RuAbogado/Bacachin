@@ -144,7 +144,7 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form id="registroForm">
+            <form id="registroForm" method="post" action="Register">
                 <img src="" alt="Imagen" class="circle-img">
                 <div class="wrap-input100">
                     <label class="label-input100" for="nombre">Nombre completo:</label>
@@ -163,17 +163,7 @@
 
                 <div class="wrap-input100">
                     <label class="label-input100" for="telefono">Teléfono:</label>
-                    <input class="input100" type="tel" id="telefono" name="telefono" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-                </div>
-
-                <div class="wrap-input100">
-                    <label class="label-input100" for="sexo">Sexo:</label>
-                    <select class="input100" id="sexo" name="sexo" required>
-                        <option value="">Seleccione su sexo</option>
-                        <option value="otro">Otro</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="femenino">Femenino</option>
-                    </select>
+                    <input class="input100" type="tel" id="telefono" name="telefono" placeholder="1234567890" required>
                 </div>
 
                 <div class="wrap-input100">
@@ -192,7 +182,7 @@
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" type="button" onclick="validarYEnviar()">Registrar usuario</button>
+                    <button class="login100-form-btn" type="submit">Registrar usuario</button>
                     <button class="login100-form-btn" type="button" onclick="borrarRegistro()">Borrar registro</button>
                 </div>
             </form>
