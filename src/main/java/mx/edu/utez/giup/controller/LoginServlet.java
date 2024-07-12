@@ -8,11 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mx.edu.utez.giup.dao.UserDao;
 import mx.edu.utez.giup.model.User;
-
 import java.io.IOException;
 
-@WebServlet(name = "UserServlet", value = "/Login")
-public class UserServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", value = "/Login")
+public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
@@ -24,11 +23,11 @@ public class UserServlet extends HttpServlet {
 
         if (user == null || user.getUsername() == null) {
             session.setAttribute("mensaje", "El usuario no existe en la base de datos");
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("login.html"); // Redirige de nuevo al formulario si la autenticación falla
         } else {
             session.setAttribute("user", user);
             session.removeAttribute("mensaje");
-            resp.sendRedirect("bienvenido.jsp");
+            resp.sendRedirect("bienvenido.jsp"); // Redirige a la página de bienvenida si la autenticación es exitosa
         }
     }
 
