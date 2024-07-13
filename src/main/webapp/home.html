@@ -217,10 +217,15 @@
       <h2>Bienvenido a la página de inicio</h2>
       <p>Contenido de la página de inicio.</p>
     </div>
+
     <div id="clientes" style="display:none;">
       <h2>Clientes</h2>
       <p>Contenido de la página de clientes.</p>
+      <form action="${pageContext.request.contextPath}/generarReporte" method="post">
+        <button type="submit">Generar Reporte</button>
+      </form>
     </div>
+
     <div id="compras" style="display:none;">
       <h2>Ventas</h2>
       <p>Contenido de la página de ventas.</p>
@@ -272,6 +277,26 @@
     </div>
   </div>
 </div>
+
+<script>
+  function mostrarClientes() {
+    console.log('mostrarClientes se ha llamado');
+    document.getElementById('clientes').style.display = 'block';
+  }
+
+  // Asocia la función mostrarClientes con el botón correspondiente
+  document.querySelector('a[data-target="clientes"]').addEventListener('click', function(event) {
+    event.preventDefault();
+    mostrarClientes();
+  });
+</script>
+
+
+
+
+
+
+
 
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>

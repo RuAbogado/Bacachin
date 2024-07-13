@@ -9,7 +9,7 @@ import mx.edu.utez.giup.utis.ReportePDF;
 
 import java.io.IOException;
 
-@WebServlet("/GenerarReporte")
+@WebServlet("/generarReporte")
 public class ReporteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -17,7 +17,7 @@ public class ReportePDF {
         // Seleccionar una imagen de los assets (logo)
         try (FileInputStream archivo = new FileInputStream(req.getSession().getServletContext().getRealPath("/assets/img/logo.png"))) {
             // Obtener ubicación y bytes del reporte
-            String report = "/WEB-INF/reporte.jasper";
+            String report = "/WEB-INF/reporteF.jasper";
             File file = new File(req.getServletContext().getRealPath(report));
             try (InputStream input = new FileInputStream(file)) {
                 // Colocar los parámetros del reporte
