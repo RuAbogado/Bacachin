@@ -279,23 +279,33 @@
 </div>
 
 <script>
-  function mostrarClientes() {
-    console.log('mostrarClientes se ha llamado');
-    document.getElementById('clientes').style.display = 'block';
-  }
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM completamente cargado');
 
-  // Asocia la función mostrarClientes con el botón correspondiente
-  document.querySelector('a[data-target="clientes"]').addEventListener('click', function(event) {
-    event.preventDefault();
-    mostrarClientes();
+    function mostrarClientes() {
+      console.log('mostrarClientes se ha llamado');
+      const clientesElement = document.getElementById('clientes');
+      if (clientesElement) {
+        console.log('Elemento clientes encontrado');
+        clientesElement.style.display = 'block';
+      } else {
+        console.log('Elemento clientes no encontrado');
+      }
+    }
+
+    const targetLink = document.querySelector('a[data-target="clientes"]');
+    if (targetLink) {
+      console.log('Enlace encontrado');
+      targetLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        mostrarClientes();
+      });
+    } else {
+      console.log('Enlace no encontrado');
+    }
   });
+
 </script>
-
-
-
-
-
-
 
 
 <script src="js/bootstrap.js"></script>
