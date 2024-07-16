@@ -221,8 +221,8 @@
     <div id="clientes" style="display:none;">
       <h2>Clientes</h2>
       <p>Contenido de la página de clientes.</p>
-      <form action="${pageContext.request.contextPath}/generarReporte" method="post">
-        <button type="submit">Generar Reporte</button>
+      <form id="reporteForm" method="post">
+        <button type="button" onclick="submitForm()">Generar Reporte</button>
       </form>
     </div>
 
@@ -279,7 +279,7 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM completamente cargado');
 
     function mostrarClientes() {
@@ -296,7 +296,7 @@
     const targetLink = document.querySelector('a[data-target="clientes"]');
     if (targetLink) {
       console.log('Enlace encontrado');
-      targetLink.addEventListener('click', function(event) {
+      targetLink.addEventListener('click', function (event) {
         event.preventDefault();
         mostrarClientes();
       });
@@ -304,6 +304,18 @@
       console.log('Enlace no encontrado');
     }
   });
+
+
+
+    function getContextPath() {
+    return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+  }
+
+    function submitForm() {
+    var form = document.getElementById("reporteForm");
+    form.action = getContextPath() + "/generarReporte";
+    form.submit();
+  }
 
 </script>
 
