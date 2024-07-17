@@ -9,6 +9,7 @@ import mx.edu.utez.giup.dao.UserDao;
 import mx.edu.utez.giup.model.User;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = "/Register")
 public class RegisterServlet extends HttpServlet {
@@ -29,15 +30,30 @@ public class RegisterServlet extends HttpServlet {
         user.setCorreo(correo);
         user.setPassword(contraseña);
         user.setEstado(true);  // or set as per your logic
-        user.setCodigo("some_code");  // generate or set the code as per your logic
+        user.setCodigo("");  // generate or set the code as per your logic
+        user.setTipo("Cliente");
 
         UserDao userDao = new UserDao();
-        boolean isRegistered = userDao.registerUser(user);
+        try {
+            boolean isRegistered = userDao.registerUser(user);
 
-        if (isRegistered) {
-            resp.sendRedirect("index.html");
-        } else {
-            req.setAttribute("errorMessage", "Error en el registro. Por favor, intente nuevamente.");
+            if (isRegistered) {
+                resp.sendRedirect("index.html");
+            } else {
+                req.setAttribute("errorMessage", "Error en el registro. Por favor, intente nuevamente.");
+                req.getRequestDispatcher("registro.html").forward(req, resp);
+            }
+        } catch (SQLException e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage.contains("Correo duplicado")) {
+                req.setAttribute("errorMessage", "Correo ya está en uso");
+            } else if (errorMessage.contains("Teléfono duplicado")) {
+                req.setAttribute("errorMessage", "Teléfono ya está registrado");
+            } else if (errorMessage.contains("Nombre de usuario duplicado")) {
+                req.setAttribute("errorMessage", "Nombre de usuario ya está en uso");
+            } else {
+                req.setAttribute("errorMessage", "Error desconocido: " + errorMessage);
+            }
             req.getRequestDispatcher("registro.html").forward(req, resp);
         }
     }

@@ -147,7 +147,7 @@
             <form id="registroForm" method="post" action="Register">
                 <img src="" alt="Imagen" class="circle-img">
                 <div class="wrap-input100">
-                    <label class="label-input100" for="nombre">Nombre completo:</label>
+                    <label class="label-input100" for="nombre">Nombre:</label>
                     <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba su nombre" required>
                 </div>
 
@@ -196,38 +196,37 @@
         var apellido = document.getElementById("apellido").value.trim();
         var usuario = document.getElementById("usuario").value.trim();
         var telefono = document.getElementById("telefono").value.trim();
-        var sexo = document.getElementById("sexo").value;
         var correo = document.getElementById("correo").value.trim();
         var contraseña = document.getElementById("contraseña").value;
         var confirmarContraseña = document.getElementById("confirmarContraseña").value;
 
         // Validar si algún campo está vacío
-        if (nombre === "" || apellido === "" || usuario === "" || telefono === "" || sexo === "" || correo === "" || contraseña === "" || confirmarContraseña === "") {
+        if (nombre === "" || apellido === "" || usuario === "" || telefono === "" || correo === "" || contraseña === "" || confirmarContraseña === "") {
             alert("Por favor, rellene todos los campos.");
-            return; // Detener el envío del formulario si algún campo está vacío
+            return false; // Detener el envío del formulario si algún campo está vacío
         }
 
         // Validar si hay espacios en blanco en cualquier campo
-        if (nombre.includes(" ") || apellido.includes(" ") || telefono.includes(" ") || correo.includes(" ")) {
+        if (nombre.includes(" ") || telefono.includes(" ") || correo.includes(" ")) {
             alert("No se permiten espacios en blanco en ningún campo.");
-            return; // Detener el envío del formulario si se encuentra un espacio en blanco
+            return false; // Detener el envío del formulario si se encuentra un espacio en blanco
         }
 
         // Validar si las contraseñas coinciden
         if (contraseña !== confirmarContraseña) {
             alert("Las contraseñas no coinciden");
-            return; // Detener el envío del formulario si las contraseñas no coinciden
+            return false; // Detener el envío del formulario si las contraseñas no coinciden
         }
 
+        // Si pasa todas las validaciones, enviar el formulario
         localStorage.setItem("nombre", nombre);
         localStorage.setItem("apellido", apellido);
         localStorage.setItem("usuario", usuario);
         localStorage.setItem("telefono", telefono);
-        localStorage.setItem("sexo", sexo);
         localStorage.setItem("correo", correo);
         localStorage.setItem("contraseña", contraseña);
 
-        window.location.href = "registroPersona.html";
+        return true;
     }
 
     function borrarRegistro() {
@@ -238,6 +237,9 @@
             location.reload();
         }
     }
+
+
 </script>
+
 </body>
 </html>

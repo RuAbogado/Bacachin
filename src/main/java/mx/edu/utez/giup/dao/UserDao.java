@@ -43,9 +43,9 @@ public class UserDao {
     }
 
     // Método para registrar un nuevo usuario
-    public boolean registerUser(User user) {
+    public boolean registerUser(User user) throws SQLException {
         boolean isRegistered = false;
-            String query = "INSERT INTO Usuarios (Nombre, Apellido, Nombre_Usuario, Telefono, Correo, Contraseña, Estado, Codigo_RE, Tipo, Imagen) " +
+        String query = "INSERT INTO Usuarios (Nombre, Apellido, Nombre_Usuario, Telefono, Correo, Contraseña, Estado, Codigo_RE, Tipo, Imagen) " +
                 "VALUES (?, ?, ?, ?, ?, SHA2(?, 256), ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
@@ -67,10 +67,9 @@ public class UserDao {
                 isRegistered = true;
             }
         } catch (SQLException e) {
-            System.err.println("Error al registrar el usuario: " + e.getMessage());
+            // Lanza la excepción para que el servlet pueda manejarla y mostrar el mensaje adecuado
+            throw new SQLException("Error al registrar el usuario: " + e.getMessage(), e);
         }
         return isRegistered;
     }
-
-    // Otros métodos DAO como updateUser, deleteUser, etc.
 }
