@@ -15,7 +15,7 @@ public class ReportePDF {
 
     public void generarReporte(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Seleccionar una imagen de los assets (logo)
-        try (FileInputStream archivo = new FileInputStream(req.getSession().getServletContext().getRealPath("img/logo.png"))) {
+        try (FileInputStream archivo = new FileInputStream(req.getSession().getServletContext().getRealPath("img/portada.png"))) {
             // Obtener ubicación y bytes del reporte
             String report = "/WEB-INF/reporteF.jasper";
             File file = new File(req.getServletContext().getRealPath(report));
