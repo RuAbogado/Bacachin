@@ -14,20 +14,28 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String correo = req.getParameter("correo");
+        String contraseña = req.getParameter("contraseña");
 
         UserDao dao = new UserDao();
-        User user = dao.getOne(username, password);
+        User user = dao.getOne(correo, contraseña);
         HttpSession session = req.getSession();
 
-        if (user == null || user.getUsername() == null) {
-            session.setAttribute("mensaje", "El usuario no existe en la base de datos");
-            resp.sendRedirect("login.html"); // Redirige de nuevo al formulario si la autenticación falla
+        if (user == null) {
+            session.setAttribute("mensaje", "Correo o contraseña incorrectos");
+            resp.sendRedirect(req.getContextPath() + "/index.html"); // Redirige al formulario de login si la autenticación falla
         } else {
             session.setAttribute("user", user);
             session.removeAttribute("mensaje");
-            resp.sendRedirect("bienvenido.jsp"); // Redirige a la página de bienvenida si la autenticación es exitosa
+
+            // Redirige según el tipo de usuario
+            if ("admin".equals(user.getTipo())) {
+                resp.sendRedirect(req.getContextPath() + "/homeadmin.html"); // Redirige a la página de inicio de administrador
+            } else if ("Cliente".equals(user.getTipo())) {
+                resp.sendRedirect(req.getContextPath() + "/homecliente.html"); // Redirige a la página de inicio de cliente
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/index.html"); // Por si acaso no se tiene un tipo definido, redirige al login
+            }
         }
     }
 

@@ -28,7 +28,7 @@ public class UserServlet extends HttpServlet {
         } else {
             session.setAttribute("user", user);
             session.removeAttribute("mensaje");
-            resp.sendRedirect("bienvenido.jsp");
+            resp.sendRedirect("login.jsp");
         }
     }
 

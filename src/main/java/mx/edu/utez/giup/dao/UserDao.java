@@ -10,16 +10,16 @@ import java.sql.SQLException;
 
 public class UserDao {
 
-    // Método para obtener un usuario por nombre de usuario y contraseña
-    public User getOne(String username, String password) {
+    // Método para obtener un usuario por correo y contraseña
+    public User getOne(String correo, String contraseña) {
         User user = null;
-        String query = "SELECT * FROM Usuarios WHERE Nombre_Usuario = ? AND Contraseña = SHA2(?, 256)";
+        String query = "SELECT * FROM Usuarios WHERE Correo = ? AND Contraseña = SHA2(?, 256)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, username);
-            statement.setString(2, password);
+            statement.setString(1, correo);
+            statement.setString(2, contraseña);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -67,9 +67,32 @@ public class UserDao {
                 isRegistered = true;
             }
         } catch (SQLException e) {
-            // Lanza la excepción para que el servlet pueda manejarla y mostrar el mensaje adecuado
             throw new SQLException("Error al registrar el usuario: " + e.getMessage(), e);
         }
         return isRegistered;
     }
+
+    // Método para obtener el tipo de usuario por correo y contraseña
+    public String getTipoUsuario(String correo, String contraseña) {
+        String tipo = null;
+        String query = "SELECT Tipo FROM Usuarios WHERE Correo = ? AND Contraseña = SHA2(?, 256)";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, correo);
+            statement.setString(2, contraseña);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                tipo = resultSet.getString("Tipo");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener el tipo de usuario: " + e.getMessage());
+        }
+        return tipo;
+    }
+
+    // Otros métodos de DAO
+
 }

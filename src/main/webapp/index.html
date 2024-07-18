@@ -140,7 +140,7 @@
 <div class="limiter">
     <div class="contenedor-login100">
         <div class="envoltura-login100">
-            <form id="formularioInicioSesion" class="formulario-login100 validate-form">
+            <form id="formularioInicioSesion" class="formulario-login100 validate-form" action="Login" method="post">
                 <img src="img/portada.png" alt="Imagen" class="imagen-circular">
                 <div class="envoltura-input100 validate-input" data-validate="Correo es requerido">
                     <label class="etiqueta-input100" for="correo">Correo</label>
@@ -151,35 +151,15 @@
                     <input class="input100" type="password" id="contraseña" name="contraseña" placeholder="Escriba su contraseña" required minlength="5">
                 </div>
                 <div class="contenedor-boton-formulario-login100">
-                    <button class="boton-formulario-login100" type="button" onclick="guardarYEnviar()">Iniciar sesión</button>
+                    <button class="boton-formulario-login100" type="submit">Iniciar sesión</button>
                 </div>
                 <div id="enlace-registro" onclick="irARegistro()">Crear nueva cuenta</div>
-
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    function guardarYEnviar() {
-        // Obtiene los valores del formulario
-        var correo = document.getElementById("correo").value.trim();
-        var contraseña = document.getElementById("contraseña").value.trim();
-
-        // Verifica si los campos están vacíos
-        if (correo === "" || contraseña === "") {
-            alert("Por favor, complete todos los campos.");
-            return;
-        }
-
-        // Guarda los datos en el almacenamiento local del navegador
-        localStorage.setItem("correo", correo);
-        localStorage.setItem("contraseña", contraseña);
-
-        // Redirige a la siguiente página
-        window.location.href = "home.html";
-    }
-
     function irARegistro() {
         window.location.href = "registro.html";
     }
