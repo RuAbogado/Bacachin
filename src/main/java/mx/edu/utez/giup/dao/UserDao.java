@@ -93,6 +93,33 @@ public class UserDao {
         return tipo;
     }
 
-    // Otros métodos de DAO
+    // Método para actualizar un usuario
+    public boolean actualizarUsuario(User user) {
+        boolean actualizado = false;
+        String query = "UPDATE Usuarios SET Nombre = ?, Apellido = ?, Nombre_Usuario = ?, Telefono = ?, Correo = ?, Contraseña = SHA2(?, 256), Estado = ?, Codigo_RE = ?, Tipo = ?, Imagen = ? WHERE ID_Usuario = ?";
 
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, user.getNombre());
+            statement.setString(2, user.getApellido());
+            statement.setString(3, user.getUsername());
+            statement.setString(4, user.getTelefono());
+            statement.setString(5, user.getCorreo());
+            statement.setString(6, user.getPassword());
+            statement.setBoolean(7, user.isEstado());
+            statement.setString(8, user.getCodigo());
+            statement.setString(9, user.getTipo());
+            statement.setString(10, user.getImagen());
+            statement.setInt(11, user.getId());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                actualizado = true;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar el usuario: " + e.getMessage());
+        }
+        return actualizado;
+    }
 }

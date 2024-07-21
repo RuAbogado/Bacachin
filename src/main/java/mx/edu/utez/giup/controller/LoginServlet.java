@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 
         if (user == null) {
             session.setAttribute("mensaje", "Correo o contraseña incorrectos");
-            resp.sendRedirect(req.getContextPath() + "/index.html"); // Redirige al formulario de login si la autenticación falla
+            resp.sendRedirect(req.getContextPath() + "/index.html?error=1"); // Pasa el parámetro de error en la URL
         } else {
             session.setAttribute("user", user);
             session.removeAttribute("mensaje");
@@ -31,8 +31,8 @@ public class LoginServlet extends HttpServlet {
             // Redirige según el tipo de usuario
             if ("admin".equals(user.getTipo())) {
                 resp.sendRedirect(req.getContextPath() + "/homeadmin.html"); // Redirige a la página de inicio de administrador
-            } else if ("Cliente".equals(user.getTipo())) {
-                resp.sendRedirect(req.getContextPath() + "/homecliente.html"); // Redirige a la página de inicio de cliente
+            } else if ("cliente".equals(user.getTipo())) {
+                resp.sendRedirect(req.getContextPath() + "/perfil.jsp"); // Redirige a la página de perfil de cliente
             } else {
                 resp.sendRedirect(req.getContextPath() + "/index.html"); // Por si acaso no se tiene un tipo definido, redirige al login
             }
