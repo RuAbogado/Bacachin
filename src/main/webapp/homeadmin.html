@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="js/color-modes.js"></script>
-  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, y Bootstrap contributors">
+  <meta name="author" content="Mark Otto, Jacob Thornton, y contribuyentes de Bootstrap">
   <meta name="generator" content="Hugo 0.122.0">
   <title>Inicio</title>
   <link rel="icon" type="image/png" href="img/icons/favicon.ico" />
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-  <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/sidebars.css" rel="stylesheet">
   <link href="css/BotonAgregarProductos.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
   <link href="css/homeadmin.css" rel="stylesheet">
-
 </head>
 <body>
 <header class="header" style="background: #0c0c0c;">
@@ -38,7 +33,7 @@
 
 <input type="checkbox" id="btn-menu">
 <div class="container-menu">
-  <div class="cont-menu" style="border-right: 2px solid white; border-bottom-right-radius: 5%; border-top-right-radius: 5%;">
+  <div class="cont-menu">
     <nav>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
@@ -61,10 +56,13 @@
         </li>
         <li>
           <a href="#" class="nav-link text-white" data-target="productos">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#grid"/>
+            </svg>
             Productos
           </a>
         </li>
+
         <li>
           <a href="#" class="nav-link text-white" data-target="empleados">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -103,23 +101,15 @@
       <p>Contenido de la página de ventas.</p>
     </div>
 
-    <div id="productos" style="display:none;"></div>
-
-    <script>
-      $(document).ready(function() {
-        $('a[data-target="productos"]').on('click', function(event) {
-          event.preventDefault();
-          $("#productos").load("productos.html", function() {
-            $(this).show();
-          });
-        });
-      });
-    </script>
+    <div id="productos" style="display:none;">
+      <!-- Contenido cargado dinámicamente aquí -->
+    </div>
 
     <div id="empleados" style="display:none;">
       <h2>Empleados</h2>
       <p>Contenido de la página de empleados.</p>
     </div>
+
     <div id="inventario" style="display:none;">
       <h2>Inventario</h2>
       <p>Contenido de la página de Inventario.</p>
@@ -133,7 +123,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Agregar Productos</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -141,16 +131,15 @@
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary">Guardar Cambios</button>
       </div>
     </div>
   </div>
 </div>
 
-
-<script src="js/bootstrap.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/sidebars.js"></script>
+<script src="js/homeadmin.js"></script>
 </body>
 </html>
