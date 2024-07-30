@@ -126,7 +126,7 @@ public class UserDao {
 
     public User getOne(int id) {
         User user = null;
-        String query = "SELECT * FROM Usuarios WHERE Id_Usuario = ?";
+        String query = "SELECT * FROM Usuarios WHERE ID_Usuario = ?";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

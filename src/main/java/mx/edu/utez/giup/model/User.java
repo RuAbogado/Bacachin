@@ -4,9 +4,8 @@ public class User {
     private int id;
     private String nombre;
     private String apellido;
-    private String username;
+    private String Nombre_Usuario;
     private String telefono;
-    private String sexo;
     private String correo;
     private String password;
     private boolean estado;
@@ -21,9 +20,8 @@ public class User {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.username = username;
+        this.Nombre_Usuario = Nombre_Usuario;
         this.telefono = telefono;
-        this.sexo = sexo;
         this.correo = correo;
         this.password = password;
         this.estado = estado;
@@ -65,12 +63,12 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return Nombre_Usuario;
     }
 
     public void setUsername(String username) {
         if(username != null && !username.trim().isEmpty()) {
-            this.username = username;
+            this.Nombre_Usuario = username;
         } else {
             throw new IllegalArgumentException("Username no puede estar vacío");
         }
@@ -88,17 +86,7 @@ public class User {
         }
     }
 
-    public String getSexo() {
-        return sexo;
-    }
 
-    public void setSexo(String sexo) {
-        if(sexo != null && (sexo.equalsIgnoreCase("Masculino") || sexo.equalsIgnoreCase("Femenino"))) {
-            this.sexo = sexo;
-        } else {
-            throw new IllegalArgumentException("Sexo debe ser 'Masculino' o 'Femenino'");
-        }
-    }
 
     public String getCorreo() {
         return correo;
@@ -174,9 +162,8 @@ public class User {
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", username='" + username + '\'' +
+                ", username='" + Nombre_Usuario + '\'' +
                 ", telefono='" + telefono + '\'' +
-                ", sexo='" + sexo + '\'' +
                 ", correo='" + correo + '\'' +
                 ", estado=" + estado +
                 ", codigo='" + codigo + '\'' +
