@@ -38,10 +38,10 @@ public class RegisterServlet extends HttpServlet {
             boolean isRegistered = userDao.registerUser(user);
 
             if (isRegistered) {
-                resp.sendRedirect("index.html");
+                resp.sendRedirect("index.jsp");
             } else {
                 req.setAttribute("errorMessage", "Error en el registro. Por favor, intente nuevamente.");
-                req.getRequestDispatcher("registro.html").forward(req, resp);
+                req.getRequestDispatcher("registro.jsp").forward(req, resp);
             }
         } catch (SQLException e) {
             String errorMessage = e.getMessage();
@@ -54,7 +54,7 @@ public class RegisterServlet extends HttpServlet {
             } else {
                 req.setAttribute("errorMessage", "Error desconocido: " + errorMessage);
             }
-            req.getRequestDispatcher("registro.html").forward(req, resp);
+            req.getRequestDispatcher("registro.jsp").forward(req, resp);
         }
     }
 

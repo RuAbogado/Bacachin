@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // jQuery ready function para manejar la carga de contenido y navegación
 $(document).ready(function() {
-    // Cargar contenido de productos.html
+    // Cargar contenido de productos.jsp
     $('a[data-target="productos"]').on('click', function(event) {
         event.preventDefault();
         $("#productos").load("productos.html", function() {

@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -234,7 +235,7 @@
     });
 
         const cargarDatosUsuario = () => {
-        fetch(`http://localhost:8080/api/usuario/${usuarioId}`)
+        fetch(`usuarioId${usuarioId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');

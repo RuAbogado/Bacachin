@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -159,7 +160,7 @@
       <span class="fs-4" style="color: white">GIUP</span>
     </div>
     <nav class="menu">
-      <a href="perfil_usuario.html"><img alt="logo_perfil" src="img/usuario.png"></a>
+      <a href="perfil_usuario.jsp"><img alt="logo_perfil" src="img/usuario.png"></a>
     </nav>
   </div>
 </header>

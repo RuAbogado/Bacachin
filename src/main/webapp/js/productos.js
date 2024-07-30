@@ -1,4 +1,4 @@
-// productos.html
+// productos.jsp
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeProductModal();

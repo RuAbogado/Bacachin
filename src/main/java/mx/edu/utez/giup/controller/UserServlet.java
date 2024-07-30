@@ -24,7 +24,7 @@ public class UserServlet extends HttpServlet {
 
         if (user == null || user.getUsername() == null) {
             session.setAttribute("mensaje", "El usuario no existe en la base de datos");
-            resp.sendRedirect("index.html");
+            resp.sendRedirect("index.jsp");
         } else {
             session.setAttribute("user", user);
             session.removeAttribute("mensaje");
