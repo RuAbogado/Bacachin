@@ -124,14 +124,14 @@ public class UserDao {
     }
 
 
-    public User getOne(int id) {
+    public User getOne(int ID_Usuario) {
         User user = null;
         String query = "SELECT * FROM Usuarios WHERE ID_Usuario = ?";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, id);
+            statement.setInt(1, ID_Usuario);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

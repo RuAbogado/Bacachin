@@ -17,7 +17,7 @@ public class UserServlet2 extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int id = Integer.parseInt(req.getParameter("usuarioId"));
+        int id = Integer.parseInt(req.getParameter("ID_Usuario"));
 
         UserDao dao = new UserDao();
         User user = dao.getOne(id);

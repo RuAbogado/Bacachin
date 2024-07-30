@@ -1,7 +1,7 @@
 package mx.edu.utez.giup.model;
 
 public class User {
-    private int id;
+    private int ID_Usuario;
     private String nombre;
     private String apellido;
     private String Nombre_Usuario;
@@ -17,7 +17,7 @@ public class User {
     }
 
     public User(int id, String nombre, String apellido, String username, String telefono, String sexo, String correo, String password, boolean estado, String codigo, String tipo, String imagen) {
-        this.id = id;
+        this.ID_Usuario = ID_Usuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.Nombre_Usuario = Nombre_Usuario;
@@ -31,11 +31,11 @@ public class User {
     }
 
     public int getId() {
-        return id;
+        return ID_Usuario;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.ID_Usuario = id;
     }
 
     public String getNombre() {
@@ -159,7 +159,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + ID_Usuario +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", username='" + Nombre_Usuario + '\'' +
