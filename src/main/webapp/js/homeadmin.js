@@ -1,39 +1,63 @@
-
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM completamente cargado');
 
-    function mostrarClientes() {
-    console.log('mostrarClientes se ha llamado');
-    const clientesElement = document.getElementById('clientes');
-    if (clientesElement) {
-    console.log('Elemento clientes encontrado');
-    clientesElement.style.display = 'block';
-} else {
-    console.log('Elemento clientes no encontrado');
-}
-}
+    // Función para mostrar una sección por ID
+    function mostrarSeccion(id) {
+        const seccionElement = document.getElementById(id);
+        if (seccionElement) {
+            console.log(`Elemento ${id} encontrado`);
+            seccionElement.style.display = 'block';
+        } else {
+            console.log(`Elemento ${id} no encontrado`);
+        }
+    }
 
-    const targetLink = document.querySelector('a[data-target="clientes"]');
-    if (targetLink) {
-    console.log('Enlace encontrado');
-    targetLink.addEventListener('click', function (event) {
-    event.preventDefault();
-    mostrarClientes();
-});
-} else {
-    console.log('Enlace no encontrado');
-}
-});
+    // Asocia el evento de clic al enlace de clientes
+    const clienteLink = document.querySelector('a[data-target="clientes"]');
+    if (clienteLink) {
+        console.log('Enlace de clientes encontrado');
+        clienteLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            mostrarSeccion('clientes');
+        });
+    } else {
+        console.log('Enlace de clientes no encontrado');
+    }
 
-
-
+    // Función para obtener la ruta del contexto
     function getContextPath() {
-    return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-}
+        return window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
+    }
 
-    function submitForm() {
-    var form = document.getElementById("reporteForm");
-    form.action = getContextPath() + "/generarReporte";
-    form.submit();
-}
+    // Función para enviar el formulario de reporte
+    window.submitForm = function () {
+        const form = document.getElementById("reporteForm");
+        if (form) {
+            form.action = `${getContextPath()}/generarReporte`;
+            form.submit();
+        } else {
+            console.log('Formulario no encontrado');
+        }
+    };
+});
+
+// jQuery ready function para manejar la carga de contenido y navegación
+$(document).ready(function() {
+    // Cargar contenido de productos.html
+    $('a[data-target="productos"]').on('click', function(event) {
+        event.preventDefault();
+        $("#productos").load("productos.html", function() {
+            $('#content > div').hide(); // Oculta todas las secciones
+            $("#productos").show(); // Muestra la sección de productos
+        });
+    });
+
+    // Funcionalidad para mostrar otras secciones
+    $('a[data-target]').on('click', function(event) {
+        event.preventDefault();
+        const targetId = $(this).data('target');
+        $('#content > div').hide(); // Oculta todas las secciones
+        $(`#${targetId}`).show(); // Muestra la sección objetivo
+    });
+});
 

@@ -9,14 +9,13 @@
     <!-- FUENTE DE ICONOS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/productos.css">
-    <link href="css/BotonAgregarProductos.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
+
     <div class="banner">
-        <img src="img/banner.png" alt="">
+        <img src="img/banner.jpg" alt="">
     </div>
 
     <h1 class="title">Nuevos Productos</h1>
@@ -25,73 +24,39 @@
         <!-- Los productos añadidos dinámicamente se mostrarán aquí -->
     </div>
 
-    <div class="btn-2">
-        <h1>¡Agrega productos!</h1>
-        <a href="#" data-toggle="modal" data-target="#exampleModal"><span>Agregar Producto</span></a>
-    </div>
+    <button class="btn-primary" id="openAddProductModal">Agregar Producto</button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Productos</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addProductForm">
-                        <div class="form-group">
-                            <label for="productId">ID del Producto</label>
-                            <input type="text" class="form-control" id="productId" name="productId">
-                        </div>
-                        <div class="form-group">
-                            <label for="categoryId">ID de la Categoría</label>
-                            <input type="text" class="form-control" id="categoryId" name="categoryId">
-                        </div>
-                        <div class="form-group">
-                            <label for="productName">Nombre del Producto</label>
-                            <input type="text" class="form-control" id="productName" name="productName">
-                        </div>
-                        <div class="form-group">
-                            <label for="productDesc">Descripción</label>
-                            <input type="text" class="form-control" id="productDesc" name="productDesc">
-                        </div>
-                        <div class="form-group">
-                            <label for="productPrice">Precio</label>
-                            <input type="number" class="form-control" id="productPrice" name="productPrice">
-                        </div>
-                        <div class="form-group">
-                            <label for="productStock">Stock</label>
-                            <input type="number" class="form-control" id="productStock" name="productStock">
-                        </div>
-                        <div class="form-group">
-                            <label for="productDate">Fecha de Creación</label>
-                            <input type="date" class="form-control" id="productDate" name="productDate">
-                        </div>
-                        <div class="form-group">
-                            <label for="productType">Tipo</label>
-                            <input type="text" class="form-control" id="productType" name="productType">
-                        </div>
-                        <div class="form-group">
-                            <label for="productImage">Imagen URL</label>
-                            <input type="text" class="form-control" id="productImage" name="productImage">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
+    <!-- FORMULARIO PARA AGREGAR PRODUCTO -->
+    <div class="modal" id="jsAddProductModal" style="display: none;">
+        <div class="modal__container">
+            <button type="button" class="modal__close fa-solid fa-xmark jsAddProductClose"></button>
+            <h2>Agregar Producto</h2>
+            <form id="addProductForm">
+                <label for="productId">ID Producto:</label>
+                <input type="text" id="productId" name="productId" required>
+                <label for="categoryId">ID Categoría:</label>
+                <input type="text" id="categoryId" name="categoryId" required>
+                <label for="productName">Nombre:</label>
+                <input type="text" id="productName" name="productName" required>
+                <label for="productDesc">Descripción:</label>
+                <input type="text" id="productDesc" name="productDesc">
+                <label for="productPrice">Precio:</label>
+                <input type="number" id="productPrice" name="productPrice" step="0.01" required>
+                <label for="productStock">Stock:</label>
+                <input type="number" id="productStock" name="productStock" required>
+                <label for="productDate">Fecha de Creación:</label>
+                <input type="date" id="productDate" name="productDate" required>
+                <label for="productType">Tipo:</label>
+                <input type="text" id="productType" name="productType">
+                <label for="productImage">Imagen URL:</label>
+                <input type="text" id="productImage" name="productImage">
+                <button type="submit">Agregar Producto</button>
+            </form>
         </div>
     </div>
+
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="js/productos.js"></script>
 </body>
 </html>
