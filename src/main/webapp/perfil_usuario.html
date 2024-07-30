@@ -234,7 +234,7 @@
     });
 
         const cargarDatosUsuario = () => {
-        fetch(`http://localhost:8080/api/usuario/${usuarioId}`)
+        fetch(`usuario2?usuarioID=${usuarioId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');

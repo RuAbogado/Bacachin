@@ -122,4 +122,36 @@ public class UserDao {
         }
         return actualizado;
     }
+
+
+    public User getOne(int id) {
+        User user = null;
+        String query = "SELECT * FROM Usuarios WHERE Id_Usuario = ?";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("ID_Usuario"));
+                user.setNombre(resultSet.getString("Nombre"));
+                user.setApellido(resultSet.getString("Apellido"));
+                user.setCorreo(resultSet.getString("Correo"));
+                user.setTelefono(resultSet.getString("Telefono"));
+                user.setUsername(resultSet.getString("Nombre_Usuario"));
+                user.setPassword(resultSet.getString("Contraseña"));
+                user.setCodigo(resultSet.getString("Codigo_RE"));
+                user.setEstado(resultSet.getBoolean("Estado"));
+                user.setTipo(resultSet.getString("Tipo"));
+                user.setImagen(resultSet.getString("Imagen"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener el usuario: " + e.getMessage());
+        }
+        return user;
+    }
+
 }
