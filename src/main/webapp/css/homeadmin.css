@@ -126,20 +126,3 @@ body {
     display: inline-block;
     margin-bottom: 7px;
 }
-
-.vertical-divider {
-    border-left: 2px solid #000;
-    height: calc(100% + 70px);
-    position: absolute;
-    left: 70%;
-    top: 80px;
-}
-
-.vertical-divider h2 {
-    margin-left: 10px;
-}
-
-.container {
-    position: relative;
-    height: 100vh;
-}

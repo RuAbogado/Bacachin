@@ -25,32 +25,6 @@
       <span class="fs-4" style="color: white">GIUP</span>
     </div>
     <nav class="menu">
-      <a href="#" class="nav-link" style="color:white" aria-current="page" data-target="inicio">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-        Inicio
-      </a>
-      <a href="#" class="nav-link text-white" data-target="clientes">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-        Clientes
-      </a>
-      <a href="#" class="nav-link text-white" data-target="compras">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-        Ventas
-      </a>
-      <a href="#" class="nav-link text-white" data-target="productos">
-        <svg class="bi pe-none me-2" width="16" height="16">
-          <use xlink:href="#grid"/>
-        </svg>
-        Productos
-      </a>
-      <a href="#" class="nav-link text-white" data-target="empleados">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-        Empleados
-      </a>
-      <a href="#" class="nav-link text-white" data-target="inventario">
-        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-         Inventario
-      </a>
       <a href="perfil_usuario.jsp"><img alt="logo_perfil" src="img/usuario.png"></a>
     </nav>
   </div>
@@ -126,7 +100,7 @@
     <div id="productos" style="display:none;">
       <!-- Contenido cargado dinámicamente aquí -->
 
-      <iframe src="productos.jsp" style="position: absolute; padding-top: 70px" width="100%" height="500px"></iframe>
+      <iframe src="productos.jsp" width="100%" height="100%"></iframe>
     </div>
 <!-- Parte Alison -->
     <div id="empleados" style="display:none;">
