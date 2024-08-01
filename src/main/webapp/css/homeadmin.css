@@ -20,16 +20,6 @@
 
 
 
-
-#inicio {
-    background-image: url('../img/portada_inicio.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding: 60px;
-    color: #ffe7c3;
-}
-
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;

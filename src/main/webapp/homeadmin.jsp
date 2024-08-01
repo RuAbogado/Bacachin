@@ -84,6 +84,10 @@
     <div id="inicio">
       <h2>Bienvenido a la página de inicio</h2>
       <p>Contenido de la página de inicio.</p>
+
+
+
+
     </div>
 
     <div id="clientes" style="display:none;">
