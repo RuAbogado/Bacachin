@@ -31,6 +31,14 @@ public class ListarClientesServlet extends HttpServlet {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
 
+            if (!rs.next()) {
+                out.println("<p>No hay usuarios registrados de tipo cliente.</p>");
+                return;
+            }
+
+            // Reset the cursor to the beginning of the result set
+            rs.beforeFirst();
+
             out.println("<table id='clientTable'>");
             out.println("<thead>");
             out.println("<tr>");
