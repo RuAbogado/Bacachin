@@ -1,0 +1,27 @@
+.table {
+    margin-top: 1px;
+    background-color: white;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th, .table td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #9C5D00;
+    color: black;
+}
+
+.modal-header .btn-close {
+    background: chocolate;
+    border: chocolate;
+    font-size: 1.5rem;
+}
+
+.btn {
+    margin-right: 5px;
+}

@@ -85,10 +85,11 @@
       <h2>Bienvenido a la página de inicio</h2>
       <p>Contenido de la página de inicio.</p>
     </div>
-
+<!-- Parte Efrain -->
     <div id="clientes" style="display:none;">
       <h2>Clientes</h2>
       <p>Contenido de la página de clientes.</p>
+      <iframe src="clientes.html" width="100%" height="500px"></iframe>
       <form id="reporteForm" method="post">
         <button type="button" onclick="submitForm()">Generar Reporte</button>
       </form>
@@ -102,10 +103,11 @@
     <div id="productos" style="display:none;">
       <!-- Contenido cargado dinámicamente aquí -->
     </div>
-
+<!-- Parte Alison -->
     <div id="empleados" style="display:none;">
       <h2>Empleados</h2>
       <p>Contenido de la página de empleados.</p>
+      <iframe src="empleados.html" width="100%" height="500px"></iframe>
     </div>
 
     <div id="inventario" style="display:none;">
