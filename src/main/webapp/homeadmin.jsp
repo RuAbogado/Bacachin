@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,7 +10,6 @@
   <meta name="generator" content="Hugo 0.122.0">
   <title>Inicio</title>
   <link rel="icon" type="image/png" href="img/icons/favicon.ico" />
-  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
@@ -61,7 +61,6 @@
             Productos
           </a>
         </li>
-
         <li>
           <a href="#" class="nav-link text-white" data-target="empleados">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -137,6 +136,7 @@
   </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/homeadmin.js"></script>
 </body>
