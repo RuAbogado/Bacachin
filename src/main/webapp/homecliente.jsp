@@ -197,7 +197,7 @@
   <div class="flex-grow-1 p-3" id="content">
     <div id="inicio">
 
-      <iframe src="inicio.html" width="100%" height="900px"></iframe>
+      <iframe src="inicio.html" width="100%" height="500px"></iframe>
 
     </div>
 

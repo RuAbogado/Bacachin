@@ -79,7 +79,7 @@
   </div>
 </div>
 
-<article style="padding-top: 100px;">
+<article>
   <div class="flex-grow-1 p-3" id="content">
     <div id="inicio">
       <iframe src="inicio.html" width="100%" height="900px"></iframe>
@@ -87,12 +87,9 @@
     </div>
 <!-- Parte Efrain -->
     <div id="clientes" style="display:none;">
-      <h2>Clientes</h2>
-      <p>Contenido de la página de clientes.</p>
+
       <iframe src="clientes.html" width="100%" height="500px"></iframe>
-      <form id="reporteForm" method="post">
-        <button type="button" onclick="submitForm()">Generar Reporte</button>
-      </form>
+
     </div>
 
     <div id="compras" style="display:none;">
