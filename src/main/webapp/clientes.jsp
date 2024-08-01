@@ -20,7 +20,7 @@
             background-color: #f2f2f2;
         }
         tr:nth-child(even) {
-            background-color: #ffe7c3;
+            background-color: #ffffff;
         }
         button {
             padding: 10px 20px;
@@ -41,6 +41,10 @@
             color: #30303F;
             margin-top: 60px;
             margin-bottom: 70px;
+        }
+
+        #clientesContainer table {
+            background-color: #ffffff;
         }
     </style>
 </head>
