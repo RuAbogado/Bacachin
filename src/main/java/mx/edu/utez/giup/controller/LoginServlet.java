@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
             if ("admin".equals(user.getTipo())) {
                 resp.sendRedirect(req.getContextPath() + "/homeadmin.jsp"); // Redirige a la página de inicio de administrador
             } else if ("cliente".equals(user.getTipo())) {
-                resp.sendRedirect(req.getContextPath() + "/perfil.jsp"); // Redirige a la página de perfil de cliente
+                resp.sendRedirect(req.getContextPath() + "/homecliente.jsp"); // Redirige a la página de perfil de cliente
             } else {
                 resp.sendRedirect(req.getContextPath() + "/index.jsp"); // Por si acaso no se tiene un tipo definido, redirige al login
             }
