@@ -1,17 +1,17 @@
 
 .container-menu {
-    z-index: 1000; /* Ajusta según sea necesario */
+
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     width: 250px; /* Ajusta según sea necesario */
     background-color: #333;
-    color: white;
+    color: #ffe7c3;
 }
 
 .header {
-    z-index: 1000; /* Debe estar encima del contenedor de menú */
+
     position: fixed;
     width: 100%;
     top: 0;
@@ -27,7 +27,7 @@
     background-repeat: no-repeat;
     background-position: center;
     padding: 60px;
-    color: white;
+    color: #ffe7c3;
 }
 
 .bd-placeholder-img {
@@ -115,12 +115,12 @@
 
 .nav-link.active {
     background-color: #D2A679;
-    color: white;
+    color: #ffe7c3;
 }
 
 .nav-link:hover {
     background-color: #9C5D00;
-    color: white;
+    color: #ffe7c3;
 }
 
 .label-input100 {

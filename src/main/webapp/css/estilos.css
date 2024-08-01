@@ -17,12 +17,7 @@
 		border-bottom-left-radius: 5%;
 		border-bottom-right-radius: 5%;
 	}
-	.container{
-		width: 90%;
-		min-width: 800px;
-		max-width: 1200px;
-		margin: auto;
-	}
+
 	.container .btn-menu, .logo{
 		float: left;
 		line-height:100px;
@@ -68,9 +63,7 @@
 	/*Fin de Estilos para el encabezado*/
 
 	/*Menù lateral*/
-	#btn-menu{
-		display: none;
-	}
+
 	.container-menu{
 		position: absolute;
 		background: rgba(0,0,0,0.5);
