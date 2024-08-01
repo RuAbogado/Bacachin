@@ -12,8 +12,6 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/sidebars.css" rel="stylesheet">
-  <link href="css/BotonAgregarProductos.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
   <link href="css/homeadmin.css" rel="stylesheet">
 </head>
@@ -140,7 +138,6 @@
 </div>
 
 <script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/sidebars.js"></script>
 <script src="js/homeadmin.js"></script>
 </body>
 </html>
