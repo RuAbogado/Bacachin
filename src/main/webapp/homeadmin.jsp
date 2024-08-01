@@ -80,7 +80,7 @@
 </div>
 
 <article>
-  <div class="flex-grow-1 p-3" id="content">
+  <div class="flex-grow-1" id="content">
     <div id="inicio">
       <iframe src="inicio.html" width="100%" height="900px"></iframe>
 
@@ -88,7 +88,7 @@
 <!-- Parte Efrain -->
     <div id="clientes" style="display:none;">
 
-      <iframe src="clientes.html" width="100%" height="500px"></iframe>
+      <iframe src="clientes.jsp" width="100%" height="500px"></iframe>
 
     </div>
 
