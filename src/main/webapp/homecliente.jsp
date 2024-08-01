@@ -15,8 +15,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/sidebars.css" rel="stylesheet">
-  <link href="css/BotonAgregarProductos.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
 
   <style>
@@ -198,8 +196,9 @@
 <article style="padding-top: 100px;">
   <div class="flex-grow-1 p-3" id="content">
     <div id="inicio">
-      <h2>Bienvenido a la página de inicio</h2>
-      <p>Contenido de la página de inicio.</p>
+
+      <iframe src="inicio.html" width="100%" height="900px"></iframe>
+
     </div>
 
 
@@ -293,6 +292,6 @@
 
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/sidebars.js"></script>
+
 </body>
 </html>

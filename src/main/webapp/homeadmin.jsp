@@ -82,11 +82,7 @@
 <article style="padding-top: 100px;">
   <div class="flex-grow-1 p-3" id="content">
     <div id="inicio">
-      <h2>Bienvenido a la página de inicio</h2>
-      <p>Contenido de la página de inicio.</p>
-
-
-
+      <iframe src="inicio.html" width="100%" height="900px"></iframe>
 
     </div>
 <!-- Parte Efrain -->

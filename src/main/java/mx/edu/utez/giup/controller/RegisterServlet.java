@@ -30,8 +30,9 @@ public class RegisterServlet extends HttpServlet {
         user.setCorreo(correo);
         user.setPassword(contraseña);
         user.setEstado(true);  // or set as per your logic
-        user.setCodigo("");  // generate or set the code as per your logic
-        user.setTipo("Cliente");
+        user.setCodigo("x");  // generate or set the code as per your logic
+        user.setTipo("cliente");
+        user.setImagen("img/user.png");
 
         UserDao userDao = new UserDao();
         try {
