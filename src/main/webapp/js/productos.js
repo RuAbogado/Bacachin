@@ -1,6 +1,5 @@
 // productos.html
 
-document.addEventListener('DOMContentLoaded', () => {
     const btnAgregarProducto = document.getElementById('btn-agregar-producto');
     const btnAgregarBebida = document.getElementById('btn-agregar-bebida');
     const formularioAgregarProducto = document.getElementById('agregar-producto');
@@ -66,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                     reader.readAsDataURL(imagen);
                 }
+                //Comunicacion con un servlet que maneje el ingreso de datos en la BD}
+                //fetch / XMLHTTPRequest / Ajax
+                //Ver nuevo Cedis en ejemplo de Camiones COcacola
+                //Ver ejemplo de tarea (ejemplo asincrono)
             });
         }
     }
@@ -84,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     cargarEventListeners();
-});
 
 //-------------------------------------------------------------------------------------AGREGAR NUEVA CATEGORIA-----------------------------------
 // Obtener elementos del DOM

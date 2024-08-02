@@ -100,7 +100,7 @@
     <div id="productos" style="display:none;">
       <!-- Contenido cargado dinámicamente aquí -->
 
-      <iframe src="productos.jsp" width="100%" height="100%"></iframe>
+      <iframe src="productos.html" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
 <!-- Parte Alison -->
     <div id="empleados" style="display:none;">
