@@ -39,30 +39,14 @@ window.onclick = function(event) {
 // Función para cargar las categorías existentes desde el servidor
 function cargarCategorias() {
     fetch('ObtenerCategorias')
-        .then(response => response.json())
+        .then(response => response.text()) // Procesar como texto en lugar de JSON
         .then(data => {
-            const select = document.getElementById('categoria-producto');
-            data.forEach(categoria => {
-                const option = document.createElement('option');
-                option.value = categoria.ID_Categoria;
-                option.text = categoria.nombre;
-                select.add(option);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const categorias = doc.querySelectorAll('.categoria-container');
 
-                // Crear nuevo contenedor de categoría
-                const newCategoryContainer = document.createElement('div');
-                newCategoryContainer.className = 'categoria-container mb-5';
-                newCategoryContainer.id = `categoria-${categoria.ID_Categoria}`;
-                newCategoryContainer.innerHTML = `
-                <div class="categoria-header">
-                    <h1 class="encabezado">${categoria.nombre}</h1>
-                    <div class="container-btn">
-                        <button class="boton-agregar" onclick="mostrarFormulario(${categoria.ID_Categoria})">Agregar ${categoria.nombre}</button>
-                        <button class="boton-eliminar" onclick="eliminarCategoria(${categoria.ID_Categoria})">Eliminar Categoría</button>
-                    </div>
-                </div>
-                <div class="row" id="${categoria.ID_Categoria}"></div>
-            `;
-                document.getElementById('productos-container').appendChild(newCategoryContainer);
+            categorias.forEach(categoria => {
+                document.getElementById('productos-container').appendChild(categoria);
             });
 
             cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
@@ -93,7 +77,7 @@ formAgregarProducto.addEventListener('submit', function(event) {
     formData.append('descripcion', descripcion);
     formData.append('precio', precio);
     formData.append('stock', stock);
-    formData.append('idCategoria', categoria);
+    formData.append('ID_Categoria', categoria); // Cambiar a ID_Categoria
     if (imagen) {
         formData.append('imagen', imagen);
     }
@@ -102,9 +86,13 @@ formAgregarProducto.addEventListener('submit', function(event) {
         method: 'POST',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => response.text()) // Procesar como texto en lugar de JSON
         .then(data => {
-            if (data.success) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const success = doc.querySelector('h1').textContent.includes('exitosamente');
+
+            if (success) {
                 const nuevoProducto = document.createElement('div');
                 nuevoProducto.className = 'col-md-3 producto';
                 nuevoProducto.innerHTML = `
@@ -150,27 +138,32 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
         },
         body: `nombre=${encodeURIComponent(newCategory)}&descripcion=${encodeURIComponent(description)}`
     })
-        .then(response => response.json())
+        .then(response => response.text()) // Procesar como texto en lugar de JSON
         .then(data => {
-            if (data.success) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const success = doc.querySelector('h1').textContent.includes('exitosamente');
+            const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
+
+            if (success) {
                 const select = document.getElementById('categoria-producto');
                 const option = document.createElement('option');
-                option.value = data.ID_Categoria;
+                option.value = ID_Categoria;
                 option.text = newCategory;
                 select.add(option);
 
                 const newCategoryContainer = document.createElement('div');
                 newCategoryContainer.className = 'categoria-container mb-5';
-                newCategoryContainer.id = `categoria-${data.ID_Categoria}`;
+                newCategoryContainer.id = `categoria-${ID_Categoria}`;
                 newCategoryContainer.innerHTML = `
                 <div class="categoria-header">
                     <h1 class="encabezado">${newCategory}</h1>
                     <div class="container-btn">
-                        <button class="boton-agregar" onclick="mostrarFormulario(${data.ID_Categoria})">Agregar ${newCategory}</button>
-                        <button class="boton-eliminar" onclick="eliminarCategoria(${data.ID_Categoria})">Eliminar Categoría</button>
+                        <button class="boton-agregar" onclick="mostrarFormulario(${ID_Categoria})">Agregar ${newCategory}</button>
+                        <button class="boton-eliminar" onclick="eliminarCategoria(${ID_Categoria})">Eliminar Categoría</button>
                     </div>
                 </div>
-                <div class="row" id="${data.ID_Categoria}"></div>
+                <div class="row" id="${ID_Categoria}"></div>
             `;
                 document.getElementById('productos-container').appendChild(newCategoryContainer);
 
@@ -213,9 +206,13 @@ function eliminarCategoria(ID_Categoria) {
         },
         body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
     })
-        .then(response => response.json())
+        .then(response => response.text()) // Procesar como texto en lugar de JSON
         .then(data => {
-            if (!data.success) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const success = doc.querySelector('h1').textContent.includes('eliminado');
+
+            if (!success) {
                 alert('Error al eliminar la categoría.');
                 // Opcional: Puedes volver a mostrar la categoría en caso de error
             }
@@ -236,7 +233,7 @@ function mostrarFormulario(categoria) {
 function cargarEventListenersEliminar() {
     const botonesEliminar = document.querySelectorAll('.eliminar-producto');
     botonesEliminar.forEach(boton => {
-        boton.addEventListener('click', function(e) {
+        boton.addEventListener('click', function (e) {
             e.preventDefault();
             const producto = this.closest('.producto');
             const productoId = producto.getAttribute('data-id');
@@ -248,10 +245,15 @@ function cargarEventListenersEliminar() {
                 },
                 body: `ID_Producto=${encodeURIComponent(productoId)}`
             })
-                .then(response => response.json())
+                .then(response => response.text()) // Procesar como texto en lugar de JSON
                 .then(data => {
-                    if (data.success) {
-                        producto.parentNode.removeChild(producto);
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data, 'text / html');
+                    const success = doc.querySelector('h1')
+                    textContent.includes('eliminado')
+                    ;
+                    if (success) {
+                        producto.remove();
                     } else {
                         alert('Error al eliminar el producto.');
                     }
@@ -262,11 +264,4 @@ function cargarEventListenersEliminar() {
                 });
         });
     });
-
 }
-
-// Llamada inicial para cargar los event listeners de eliminar
-cargarEventListenersEliminar();
-
-
-
