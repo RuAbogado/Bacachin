@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +9,8 @@
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/formulario.css">
-</head>
+    </head>
+---------------------------------------------------------------------------------------------
 <body>
 <div id="hero" class="py-5">
     <div class="container">
@@ -20,25 +20,29 @@
         </div>
     </div>
 </div>
-
+-----------------------------------------------------------------------------------------------
 <div id="productos-container" class="container">
-    <div id="categoria-productos" class="mb-5">
-        <h1 id="encabezado" class="encabezado">Productos</h1>
-        <div class="container-btn">
-            <button id="btn-agregar-producto" class="btn btn-primary mb-3">Agregar Producto</button>
+    <div id="categoria-productos" class="categoria-container mb-5">
+        <div class="categoria-header">
+            <h1 id="encabezado" class="encabezado">Productos</h1>
+            <div class="container-btn">
+                <button id="btn-agregar-producto" class="boton-agregar">Agregar Producto</button>
+            </div>
         </div>
         <div id="productos" class="row"></div>
     </div>
-
-    <div id="categoria-bebidas" class="mb-5">
-        <h1 id="encabezado_01" class="encabezado">Bebidas</h1>
-        <div class="container-btn">
-            <button id="btn-agregar-bebida" class="btn btn-primary mb-3">Agregar Bebida</button>
+<!--CATEGORIAS AGREGADAS-->
+    <div id="categoria-bebidas" class="categoria-container mb-5">
+        <div class="categoria-header">
+            <h1 id="encabezado_01" class="encabezado">Bebidas</h1>
+            <div class="container-btn">
+                <button id="btn-agregar-bebida" class="boton-agregar">Agregar Bebida</button>
+            </div>
         </div>
         <div id="bebidas" class="row"></div>
     </div>
 </div>
-
+<!--FORMULARIO PARA AGREGAR UN NUEVO PRODUCTO   -->
 <div id="agregar-producto" class="container d-none">
     <h1 id="encabezado_02" class="encabezado">Agregar Nuevo Producto</h1>
     <div class="limiter">
@@ -59,11 +63,11 @@
                     </div>
                     <div class="form-group">
                         <label for="precio-producto">Precio:</label>
-                        <input type="number" id="precio-producto" name="precio-producto" class="form-control" placeholder="Precio del producto" min="0" step="0.01" required>
+                        <input type="number" id="precio-producto" name="precio-producto" class="form-control" placeholder="$00.00"  required>
                     </div>
                     <div class="form-group">
-                        <label for="descuento-producto">Descuento:</label>
-                        <input type="number" id="descuento-producto" name="descuento-producto" class="form-control" placeholder="Descuento del producto" min="0" step="0.01">
+                        <label for="stock-producto">Stock:</label>
+                        <input type="number" id="stock-producto" name="stock-producto" class="form-control" placeholder="00">
                     </div>
                     <div class="form-group">
                         <label for="categoria-producto">Categoría:</label>
@@ -73,7 +77,7 @@
                         </select>
                     </div>
                     <div class="container-btn">
-                        <button class="btn btn-primary" type="submit">Agregar Producto</button>
+                        <button class="boton-agregar" type="submit">Agregar Producto</button>
                     </div>
                 </form>
             </div>
@@ -81,6 +85,26 @@
     </div>
 </div>
 
+<div class="container-btn">
+    <button type="button" id="add-category-btn" class="container-btn">Agregar Categoría</button>
+
+    <button type="button" id="eliminar-categoria" class="container-btn">Eliminar Categoría</button>
+</div>
+
+<!-- Modal para agregar nueva categoría -->
+<div id="categoryModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Agregar nueva categoría</h2>
+        <form id="category-form">
+            <div class="form-group">
+                <label for="new-category">Nombre de la nueva categoría:</label>
+                <input type="text" id="new-category" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+    </div>
+</div>
 
 <script src="js/productos.js"></script>
 </body>

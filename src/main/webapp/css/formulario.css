@@ -51,6 +51,7 @@
     object-fit: cover;
 }
 
+.boton-agregar,
 .boton-modificar,
 .boton-guardar,
 .boton-cancelar {
@@ -64,6 +65,7 @@
     margin-top: 20px;
 }
 
+.boton-agregar:hover,
 .boton-modificar:hover,
 .boton-guardar:hover,
 .boton-cancelar:hover {
