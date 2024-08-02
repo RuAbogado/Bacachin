@@ -1,9 +1,9 @@
 // productos.html
 
-    const btnAgregarProducto = document.getElementById('btn-agregar-producto');
-    const btnAgregarBebida = document.getElementById('btn-agregar-bebida');
-    const formularioAgregarProducto = document.getElementById('agregar-producto');
-    const formAgregarProducto = document.getElementById('form-agregar-producto');
+const btnAgregarProducto = document.getElementById('btn-agregar-producto');
+const btnAgregarBebida = document.getElementById('btn-agregar-bebida');
+const formularioAgregarProducto = document.getElementById('agregar-producto');
+const formAgregarProducto = document.getElementById('form-agregar-producto');
 
 function cargarEventListeners() {
     if (btnAgregarProducto) {

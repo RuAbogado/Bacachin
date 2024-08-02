@@ -85,7 +85,7 @@
       <iframe src="inicio.html" width="100%" height="900px"></iframe>
 
     </div>
-<!-- Parte Efrain -->
+    <!-- Parte Efrain -->
     <div id="clientes" style="display:none;">
 
       <iframe src="clientes.jsp" width="100%" height="500px"></iframe>
@@ -102,7 +102,7 @@
 
       <iframe src="productos.html" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
-<!-- Parte Alison -->
+    <!-- Parte Alison -->
     <div id="empleados" style="display:none;">
       <h2>Empleados</h2>
       <p>Contenido de la página de empleados.</p>

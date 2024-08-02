@@ -31,7 +31,7 @@ ul {
     padding: 10px 20px;
 }
 
-.info-card p, 
+.info-card p,
 .card h4 {
     margin-bottom: 5px;
 }
@@ -49,12 +49,12 @@ ul {
 .footer {
     margin-top: 40px;
     border-top:1px solid white;;
-    padding-top: 40px;   
+    padding-top: 40px;
 }
 .footer .menu a{
-display: block;
-margin-bottom: 10px;
-text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
 }
 
 
