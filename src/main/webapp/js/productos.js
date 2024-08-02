@@ -1,155 +1,272 @@
-// productos.html
+// Obtener elementos del DOM
+const btnAgregarProducto = document.getElementById('add-product-btn');
+const btnAgregarCategoria = document.getElementById('add-category-btn');
+const modalProducto = document.getElementById('productModal');
+const modalCategoria = document.getElementById('categoryModal');
+const spanCerrarProducto = modalProducto.getElementsByClassName('close-product')[0];
+const spanCerrarCategoria = modalCategoria.getElementsByClassName('close-category')[0];
 
-const btnAgregarProducto = document.getElementById('btn-agregar-producto');
-const btnAgregarBebida = document.getElementById('btn-agregar-bebida');
-const formularioAgregarProducto = document.getElementById('agregar-producto');
-const formAgregarProducto = document.getElementById('form-agregar-producto');
-
-function cargarEventListeners() {
-    if (btnAgregarProducto) {
-        btnAgregarProducto.addEventListener('click', () => {
-            formularioAgregarProducto.classList.toggle('d-none');
-            document.getElementById('categoria-producto').value = 'productos';
-        });
-    }
-
-    if (btnAgregarBebida) {
-        btnAgregarBebida.addEventListener('click', () => {
-            formularioAgregarProducto.classList.toggle('d-none');
-            document.getElementById('categoria-producto').value = 'bebidas';
-        });
-    }
-
-    if (formAgregarProducto) {
-        formAgregarProducto.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const imagen = document.getElementById('imagen-producto').files[0];
-            const nombre = document.getElementById('nombre-producto').value;
-            const descripcion = document.getElementById('descripcion-producto').value;
-            const precio = document.getElementById('precio-producto').value;
-            const stock = document.getElementById('stock-producto').value;
-            const categoria = document.getElementById('categoria-producto').value;
-
-            if (imagen) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const imagenURL = e.target.result;
-
-                    const nuevoProducto = document.createElement('div');
-                    nuevoProducto.className = 'col-md-3 producto';
-                    nuevoProducto.innerHTML = `
-                        <div>
-                            <div class="four columns">
-                                <img src="${imagenURL}" class="imagen-curso u-full-width" alt="${nombre}">
-                                <div class="info-card">
-                                    <h5 class="card-title">${nombre}</h5>
-                                    <p class="card-text">${descripcion}</p>
-                                    <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
-                                    <a href="#" class="u-full-width boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    document.getElementById(categoria).appendChild(nuevoProducto);
-
-                    formularioAgregarProducto.classList.add('d-none');
-                    formAgregarProducto.reset();
-
-                    cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
-                };
-                reader.readAsDataURL(imagen);
-            }
-            // Aquí se puede agregar la comunicación con el servidor para guardar el producto en la base de datos
-        });
-    }
+// Función para mostrar el modal de agregar producto
+btnAgregarProducto.onclick = function() {
+    modalProducto.style.display = "block";
 }
 
-function cargarEventListenersEliminar() {
-    const botonesEliminar = document.querySelectorAll('.eliminar-producto');
-    botonesEliminar.forEach(boton => {
-        boton.addEventListener('click', (event) => {
-            event.preventDefault();
-            const producto = boton.closest('.producto');
-            if (producto) {
-                producto.remove();
-            }
-        });
-    });
+// Función para mostrar el modal de agregar categoría
+btnAgregarCategoria.onclick = function() {
+    modalCategoria.style.display = "block";
 }
 
-cargarEventListeners();
-
-// Modal para nueva categoría
-const modal = document.getElementById("categoryModal");
-const btn = document.getElementById("add-category-btn");
-const span = document.getElementsByClassName("close")[0];
-
-// Mostrar el modal
-btn.onclick = function() {
-    modal.style.display = "block";
+// Función para cerrar el modal de agregar producto
+spanCerrarProducto.onclick = function() {
+    modalProducto.style.display = "none";
 }
 
-// Ocultar el modal
-span.onclick = function() {
-    modal.style.display = "none";
+// Función para cerrar el modal de agregar categoría
+spanCerrarCategoria.onclick = function() {
+    modalCategoria.style.display = "none";
 }
 
-// Ocultar el modal si se hace clic fuera de él
+// Función para cerrar los modales cuando se hace clic fuera de ellos
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == modalProducto) {
+        modalProducto.style.display = "none";
+    }
+    if (event.target == modalCategoria) {
+        modalCategoria.style.display = "none";
     }
 }
 
-// Agregar nueva categoría al formulario y a la página
+// Función para cargar las categorías existentes desde el servidor
+function cargarCategorias() {
+    fetch('ObtenerCategorias')
+        .then(response => response.json())
+        .then(data => {
+            const select = document.getElementById('categoria-producto');
+            data.forEach(categoria => {
+                const option = document.createElement('option');
+                option.value = categoria.ID_Categoria;
+                option.text = categoria.nombre;
+                select.add(option);
+
+                // Crear nuevo contenedor de categoría
+                const newCategoryContainer = document.createElement('div');
+                newCategoryContainer.className = 'categoria-container mb-5';
+                newCategoryContainer.id = `categoria-${categoria.ID_Categoria}`;
+                newCategoryContainer.innerHTML = `
+                <div class="categoria-header">
+                    <h1 class="encabezado">${categoria.nombre}</h1>
+                    <div class="container-btn">
+                        <button class="boton-agregar" onclick="mostrarFormulario(${categoria.ID_Categoria})">Agregar ${categoria.nombre}</button>
+                        <button class="boton-eliminar" onclick="eliminarCategoria(${categoria.ID_Categoria})">Eliminar Categoría</button>
+                    </div>
+                </div>
+                <div class="row" id="${categoria.ID_Categoria}"></div>
+            `;
+                document.getElementById('productos-container').appendChild(newCategoryContainer);
+            });
+
+            cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al cargar las categorías.');
+        });
+}
+
+// Llamar a la función para cargar las categorías al cargar la página
+document.addEventListener('DOMContentLoaded', cargarCategorias);
+
+// Event listener para agregar producto
+const formAgregarProducto = document.getElementById('form-agregar-producto');
+formAgregarProducto.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const imagen = document.getElementById('imagen-producto').files[0];
+    const nombre = document.getElementById('nombre-producto').value;
+    const descripcion = document.getElementById('descripcion-producto').value;
+    const precio = document.getElementById('precio-producto').value;
+    const stock = document.getElementById('stock-producto').value;
+    const categoria = document.getElementById('categoria-producto').value;
+
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('descripcion', descripcion);
+    formData.append('precio', precio);
+    formData.append('stock', stock);
+    formData.append('idCategoria', categoria);
+    if (imagen) {
+        formData.append('imagen', imagen);
+    }
+
+    fetch('AgregarProducto', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const nuevoProducto = document.createElement('div');
+                nuevoProducto.className = 'col-md-3 producto';
+                nuevoProducto.innerHTML = `
+                <div>
+                    <div class="four columns">
+                        <img src="${URL.createObjectURL(imagen)}" class="imagen-curso u-full-width" alt="${nombre}">
+                        <div class="info-card">
+                            <h5 class="card-title">${nombre}</h5>
+                            <p class="card-text">${descripcion}</p>
+                            <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
+                            <a href="#" class="u-full-width boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+                document.getElementById(categoria).appendChild(nuevoProducto);
+
+                modalProducto.style.display = "none";
+                formAgregarProducto.reset();
+
+                cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
+            } else {
+                alert('Error al agregar el producto.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+});
+
+// Event listener para agregar categoría
 document.getElementById('category-form').addEventListener('submit', function(e) {
     e.preventDefault();
+
     const newCategory = document.getElementById('new-category').value;
-    const select = document.getElementById('categoria-producto');
-    const option = document.createElement('option');
-    option.value = newCategory.toLowerCase();
-    option.text = newCategory;
-    select.add(option);
+    const description = document.getElementById('category-description').value;
 
-    // Crear nuevo contenedor de categoría
-    const newCategoryContainer = document.createElement('div');
-    newCategoryContainer.className = 'categoria-container mb-5';
-    newCategoryContainer.id = `categoria-${newCategory.toLowerCase()}`;
-    newCategoryContainer.innerHTML = `
-        <div class="categoria-header">
-            <h1 class="encabezado">${newCategory}</h1>
-            <div class="container-btn">
-                <button class="boton-agregar" onclick="mostrarFormulario('${newCategory.toLowerCase()}')">Agregar ${newCategory}</button>
-                <button class="boton-eliminar" onclick="eliminarCategoria('categoria-${newCategory.toLowerCase()}')">Eliminar Categoría</button>
-            </div>
-        </div>
-        <div class="row" id="${newCategory.toLowerCase()}"></div>
-    `;
-    document.getElementById('productos-container').appendChild(newCategoryContainer);
+    fetch('AgregarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `nombre=${encodeURIComponent(newCategory)}&descripcion=${encodeURIComponent(description)}`
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const select = document.getElementById('categoria-producto');
+                const option = document.createElement('option');
+                option.value = data.ID_Categoria;
+                option.text = newCategory;
+                select.add(option);
 
-    modal.style.display = "none";
-    document.getElementById('new-category').value = '';
+                const newCategoryContainer = document.createElement('div');
+                newCategoryContainer.className = 'categoria-container mb-5';
+                newCategoryContainer.id = `categoria-${data.ID_Categoria}`;
+                newCategoryContainer.innerHTML = `
+                <div class="categoria-header">
+                    <h1 class="encabezado">${newCategory}</h1>
+                    <div class="container-btn">
+                        <button class="boton-agregar" onclick="mostrarFormulario(${data.ID_Categoria})">Agregar ${newCategory}</button>
+                        <button class="boton-eliminar" onclick="eliminarCategoria(${data.ID_Categoria})">Eliminar Categoría</button>
+                    </div>
+                </div>
+                <div class="row" id="${data.ID_Categoria}"></div>
+            `;
+                document.getElementById('productos-container').appendChild(newCategoryContainer);
+
+                modalCategoria.style.display = "none";
+                document.getElementById('new-category').value = '';
+                document.getElementById('category-description').value = '';
+            } else {
+                alert('Error al agregar la categoría.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
 });
 
 // Función para eliminar categoría
-function eliminarCategoria(idCategoria) {
-    const categoria = document.getElementById(idCategoria);
-    categoria.parentNode.removeChild(categoria);
+function eliminarCategoria(ID_Categoria) {
+    if (!confirm('¿Estás seguro de que quieres eliminar esta categoría?')) {
+        return;
+    }
 
-    // Eliminar la opción del select
+    const categoria = document.getElementById(`categoria-${ID_Categoria}`);
+    if (categoria) {
+        categoria.parentNode.removeChild(categoria);
+    }
+
     const select = document.getElementById('categoria-producto');
     for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].value === idCategoria.replace('categoria-', '')) {
+        if (select.options[i].value == ID_Categoria) {
             select.remove(i);
             break;
         }
     }
+
+    fetch('EliminarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                alert('Error al eliminar la categoría.');
+                // Opcional: Puedes volver a mostrar la categoría en caso de error
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
 }
 
 // Función para mostrar el formulario y establecer la categoría
 function mostrarFormulario(categoria) {
-    formularioAgregarProducto.classList.remove('d-none');
+    modalProducto.style.display = "block";
     document.getElementById('categoria-producto').value = categoria;
 }
+
+// Event listener para eliminar producto
+function cargarEventListenersEliminar() {
+    const botonesEliminar = document.querySelectorAll('.eliminar-producto');
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const producto = this.closest('.producto');
+            const productoId = producto.getAttribute('data-id');
+
+            fetch('EliminarProducto', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `ID_Producto=${encodeURIComponent(productoId)}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        producto.parentNode.removeChild(producto);
+                    } else {
+                        alert('Error al eliminar el producto.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error en la solicitud.');
+                });
+        });
+    });
+
+}
+
+// Llamada inicial para cargar los event listeners de eliminar
+cargarEventListenersEliminar();
+
+
+

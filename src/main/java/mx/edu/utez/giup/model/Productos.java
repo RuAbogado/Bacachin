@@ -3,7 +3,7 @@ package mx.edu.utez.giup.model;
 public class Productos {
 
         private int ID_Producto;
-        private int ID_categoria;
+        private int ID_Categoria;
         private String Nombre;
         private String Descripcion;
         private int Precio;
@@ -16,9 +16,9 @@ public class Productos {
 
         }
 
-    public Productos(int ID_Producto, int ID_categoria, String nombre, String descripcion, int precio, int stock, String fecha_creacion, String tipo, String imagen) {
+    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, int precio, int stock, String fecha_creacion, String tipo, String imagen) {
         this.ID_Producto = ID_Producto;
-        this.ID_categoria = ID_categoria;
+        this.ID_Categoria = ID_Categoria;
         Nombre = nombre;
         Descripcion = descripcion;
         Precio = precio;
@@ -36,12 +36,12 @@ public class Productos {
         this.ID_Producto = ID_Producto;
     }
 
-    public int getID_categoria() {
-        return ID_categoria;
+    public int getID_Categoria() {
+        return ID_Categoria;
     }
 
-    public void setID_categoria(int ID_categoria) {
-        this.ID_categoria = ID_categoria;
+    public void setID_Categoria(int ID_Categoria) {
+        this.ID_Categoria = ID_Categoria;
     }
 
     public String getNombre() {
