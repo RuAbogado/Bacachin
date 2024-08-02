@@ -7,8 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mx.edu.utez.giup.dao.UserDao;
+import mx.edu.utez.giup.model.Carrito;
 import mx.edu.utez.giup.model.User;
 import java.io.IOException;
+import java.sql.Date;
 
 @WebServlet(name = "LoginServlet", value = "/Login")
 public class LoginServlet extends HttpServlet {
@@ -26,6 +28,8 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/index.jsp?error=1"); // Pasa el parámetro de error en la URL
         } else {
             session.setAttribute("user", user);
+            long millis = System.currentTimeMillis();
+            session.setAttribute("carrito", new Carrito(user.getId(), new Date(millis)));
             session.removeAttribute("mensaje");
 
             // Redirige según el tipo de usuario

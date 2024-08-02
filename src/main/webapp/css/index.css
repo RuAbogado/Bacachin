@@ -126,3 +126,11 @@ body {
     text-decoration: underline;
     cursor: pointer;
 }
+#enlace-recuperar {
+    margin-top: 20px;
+    text-align: center;
+    color: #C49E66;
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+}

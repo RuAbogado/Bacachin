@@ -5,7 +5,6 @@
     align-items: center;
     justify-content: center;
     padding: 15px;
-    position: relative;
 }
 
 .container-login100::before {

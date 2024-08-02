@@ -20,7 +20,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin-top: 5%;
             padding: 0;
             display: flex;
             justify-content: center;
@@ -37,7 +37,6 @@
         <div class="wrap-login100">
 
             <form id="registroForm" method="post" action="Register">
-                <img src="" alt="Imagen" class="circle-img">
                 <div class="wrap-input100">
                     <label class="label-input100" for="nombre">Nombre:</label>
                     <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba su nombre" required>

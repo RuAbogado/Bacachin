@@ -29,6 +29,7 @@
                     <button class="boton-formulario-login100" type="submit">Iniciar sesión</button>
                 </div>
                 <div id="enlace-registro" onclick="irARegistro()">Crear nueva cuenta</div>
+                <div id="enlace-recuperar" onclick="">Recuperar Contraseña</div>
             </form>
         </div>
     </div>
