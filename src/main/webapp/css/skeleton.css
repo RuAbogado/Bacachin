@@ -115,8 +115,6 @@
 /* Estilos Base
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 body {
-  font-size: 1.5em; /* actualmente ems debido a un error en chrome que malinterpreta rems en el elemento body */
-  line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222; }
