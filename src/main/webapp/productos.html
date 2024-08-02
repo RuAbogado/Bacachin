@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Productos</title>
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/formulario.css">
-    </head>
+</head>
 <body>
 <div id="hero" class="py-5">
     <div class="container">
@@ -18,27 +20,9 @@
 </div>
 
 <div id="productos-container" class="container">
-    <div id="categoria-productos" class="categoria-container mb-5">
-        <div class="categoria-header">
-            <h1 id="encabezado" class="encabezado">Productos</h1>
-            <div class="container-btn">
-                <button id="btn-agregar-producto" class="boton-agregar">Agregar Producto</button>
-            </div>
-        </div>
-        <div id="productos" class="row"></div>
-    </div>
-<!--CATEGORIAS AGREGADAS-->
-    <div id="categoria-bebidas" class="categoria-container mb-5">
-        <div class="categoria-header">
-            <h1 id="encabezado_01" class="encabezado">Bebidas</h1>
-            <div class="container-btn">
-                <button id="btn-agregar-bebida" class="boton-agregar">Agregar Bebida</button>
-            </div>
-        </div>
-        <div id="bebidas" class="row"></div>
-    </div>
+    <!-- Aquí se agregarán dinámicamente las nuevas categorías -->
 </div>
-<!--FORMULARIO PARA AGREGAR UN NUEVO PRODUCTO   -->
+
 <div id="agregar-producto" class="container d-none">
     <h1 id="encabezado_02" class="encabezado">Agregar Nuevo Producto</h1>
     <div class="limiter">
@@ -59,17 +43,16 @@
                     </div>
                     <div class="form-group">
                         <label for="precio-producto">Precio:</label>
-                        <input type="number" id="precio-producto" name="precio-producto" class="form-control" placeholder="$00.00"  required>
+                        <input type="number" id="precio-producto" name="precio-producto" class="form-control" placeholder="$00.00" required>
                     </div>
                     <div class="form-group">
                         <label for="stock-producto">Stock:</label>
                         <input type="number" id="stock-producto" name="stock-producto" class="form-control" placeholder="00">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group d-none">
                         <label for="categoria-producto">Categoría:</label>
                         <select id="categoria-producto" name="categoria-producto" class="form-control" required>
-                            <option value="productos">Productos</option>
-                            <option value="bebidas">Bebidas</option>
+                            <!-- Las categorías se agregarán dinámicamente -->
                         </select>
                     </div>
                     <div class="container-btn">
@@ -81,10 +64,8 @@
     </div>
 </div>
 
-<div class="container-btn">
-    <button type="button" id="add-category-btn" class="container-btn">Agregar Categoría</button>
-
-    <button type="button" id="eliminar-categoria" class="container-btn">Eliminar Categoría</button>
+<div class="container">
+    <button type="button" id="add-category-btn" class="btn-mas">Agregar Categoría</button>
 </div>
 
 <!-- Modal para agregar nueva categoría -->
