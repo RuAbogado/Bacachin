@@ -114,11 +114,6 @@
 
 /* Estilos Base
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-/* NOTA
-html está configurado al 62.5% para que todas las mediciones REM en Skeleton
-se basen en tamaños de 10px. Básicamente 1.5rem = 15px :) */
-html {
-  font-size: 62.5%; }
 body {
   font-size: 1.5em; /* actualmente ems debido a un error en chrome que malinterpreta rems en el elemento body */
   line-height: 1.6;

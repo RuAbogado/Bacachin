@@ -17,9 +17,9 @@
 </head>
 <body>
 <header class="header" style="background: #0c0c0c;">
-  <div class="container">
+  <div class="container347">
     <div class="btn-menu">
-      <label for="btn-menu" style="margin-left: -100%">☰</label>
+      <label for="btn-menu" style="">☰</label>
     </div>
     <div class="logo">
       <span class="fs-4" style="color: white">GIUP</span>
@@ -31,7 +31,7 @@
 </header>
 
 <input type="checkbox" id="btn-menu">
-<div class="container-menu">
+<div class="container-menu347">
   <div class="cont-menu">
     <nav>
       <ul class="nav nav-pills flex-column mb-auto">
