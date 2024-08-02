@@ -15,13 +15,14 @@
 		border-bottom-right-radius: 5%;
 	}
 
-	.container .btn-menu, .logo{
+	.container347 .btn-menu, .logo{
 		float: left;
 		line-height:100px;
 		color: #fff;
 	}
-	.container .btn-menu label{
-		margin-left: -100%;
+	.container347 .btn-menu label{
+		margin-left: 80px;
+		padding-right: 20px;
 		color: #fff;
 		font-size: 25px;
 		cursor: pointer;
@@ -31,11 +32,12 @@
 		font-weight: 400;
 		font-size: 22px;
 	}
-	.container .menu{
+	.container347 .menu{
+		margin-right: 80px;
 		float: right;
 		line-height: 100px;
 	}
-	.container .menu a{
+	.container347 .menu a{
 		display: inline-block;
 		padding: 15px;
 		line-height: normal;
@@ -48,12 +50,12 @@
 		margin-left: 5px;
 		width: 80px;
 	}
-	.container .menu img{
+	.container347 .menu img{
 		width: 100%;
 		background: white;
 		border-radius: 100%
 	}
-	.container .menu a:hover{
+	.container347 .menu a:hover{
 		border-bottom: 2px solid #c7c7c7;
 		padding-bottom: 5px;
 	}
@@ -61,7 +63,7 @@
 
 	/*Menù lateral*/
 
-	.container-menu{
+	.container-menu347{
 		position: absolute;
 		background: rgba(0,0,0,0.5);
 		width: 100%;
@@ -71,7 +73,7 @@
 		opacity: 0;
 		visibility: hidden;
 	}
-	#btn-menu:checked ~ .container-menu{
+	#btn-menu:checked ~ .container-menu347{
 		opacity: 1;
 		visibility: visible;
 	}
@@ -84,7 +86,7 @@
 		transition: all 500ms ease;
 		transform: translateX(-100%);
 	}
-	#btn-menu:checked ~ .container-menu .cont-menu{
+	#btn-menu:checked ~ .container-menu347 .cont-menu{
 		transform: translateX(0%);
 	}
 	.cont-menu nav{
