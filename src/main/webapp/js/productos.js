@@ -36,29 +36,6 @@ window.onclick = function(event) {
     }
 }
 
-// Función para cargar las categorías existentes desde el servidor
-function cargarCategorias() {
-    fetch('ObtenerCategorias')
-        .then(response => response.text()) // Procesar como texto en lugar de JSON
-        .then(data => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data, 'text/html');
-            const categorias = doc.querySelectorAll('.categoria-container');
-
-            categorias.forEach(categoria => {
-                document.getElementById('productos-container').appendChild(categoria);
-            });
-
-            cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al cargar las categorías.');
-        });
-}
-
-// Llamar a la función para cargar las categorías al cargar la página
-document.addEventListener('DOMContentLoaded', cargarCategorias);
 
 // Event listener para agregar producto
 const formAgregarProducto = document.getElementById('form-agregar-producto');
