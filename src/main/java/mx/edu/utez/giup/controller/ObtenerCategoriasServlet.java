@@ -26,10 +26,10 @@ public class ObtenerCategoriasServlet extends HttpServlet {
 
         // Generar HTML para las categorías
         PrintWriter out = response.getWriter();
-        out.println("<ul>");
+        //out.println("<ul>");
         for (Categorias categoria : categorias) {
-            out.println("<li>" + categoria.getNombre() + "</li>");
+            out.println("<option value=\"" + categoria.getID_Categoria() +"\">" + categoria.getNombre() + "</option>");
         }
-        out.println("</ul>");
+        //out.println("</ul>");
     }
 }

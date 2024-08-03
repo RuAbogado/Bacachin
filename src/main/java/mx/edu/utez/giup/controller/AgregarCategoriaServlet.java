@@ -16,7 +16,6 @@ public class AgregarCategoriaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private CategoriasDao categoriasDao = new CategoriasDao();
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -29,12 +28,14 @@ public class AgregarCategoriaServlet extends HttpServlet {
         nuevaCategoria.setNombre(nombre);
         nuevaCategoria.setDescripcion(descripcion);
 
-        boolean success = categoriasDao.addCategoria(nuevaCategoria);
+        int categoriaId = categoriasDao.addCategoria(nuevaCategoria);
 
-        if (success) {
-            out.print("{\"success\":true}");
+        if (categoriaId != -1) {
+            //out.print("{\"success\":true}");
+            out.print("<h1>success=exitosamente</h1> <input name=\"ID_Categoria\" value=\""+ categoriaId + "\">");
         } else {
-            out.print("{\"success\":false}");
+           // out.print("{\"success\":false}");
+            out.print("<h1>success=fallo</h1> <input name=\"ID_Categoria\" value=\"\">");
         }
 
         out.flush();

@@ -97,7 +97,7 @@
       <p>Contenido de la página de ventas.</p>
     </div>
 
-    <div id="productos" style="display:none;">
+    <div id="productos" style="display:none; margin-top: 100px">
       <!-- Contenido cargado dinámicamente aquí -->
 
       <iframe src="productos.html" width="100%" height="100%" sandbox="allow-scripts"></iframe>

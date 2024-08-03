@@ -36,6 +36,64 @@ window.onclick = function(event) {
     }
 }
 
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
+// Función para cargar las categorías existentes desde el servidor
+function cargarCategorias(){
+    console.log("cargando categorias")
+    fetch('ObtenerCategorias')
+        .then(response => response.text()) // Procesar como texto en lugar de JSON
+        .then(data => {
+            console.log("ObtenerCategorias:", data)
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const categorias = doc.querySelectorAll('option');
+
+            removeAllChildren(document.getElementById('productos-container'))
+            categorias.forEach(category => {
+                const newCategoryContainer = document.createElement('div');
+                newCategoryContainer.className = 'categoria-container mb-5';
+                newCategoryContainer.id = `categoria-${category.value}`;
+                newCategoryContainer.innerHTML = `
+                <div class="categoria-header">
+                    <h1 class="encabezado">${category.text}</h1>
+                    <div class="container-btn">
+                        <button class="boton-agregar" onclick="mostrarFormulario(${category.value})">Agregar ${category.text}</button>
+                        <button class="boton-eliminar" onclick="eliminarCategoria(${category.value})">Eliminar Categoría</button>
+                    </div>
+                </div>
+                <div class="row" id="${category.value}"></div>
+            `;
+                document.getElementById('productos-container').appendChild(newCategoryContainer);
+            })
+
+            categorias.forEach(categoria => {
+                document.getElementById('categoria-producto').appendChild(categoria);
+            });
+
+            cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al cargar las categorías.');
+        });
+}
+
+// Llamar a la función para cargar las categorías al cargar la página
+
+// No puede obtener la lista de categorias aparece un error de CORS
+// pero al ingresar a la pagina de productos y cargar productos.html y productos.js
+// si obtiene la informacion y no hay error de CORS
+document.addEventListener('DOMContentLoaded', function() {
+    cargarCategorias()
+});
+
+// Deberia de borrarse esta linea
+setInterval(cargarCategorias, 2000);
 
 // Event listener para agregar producto
 const formAgregarProducto = document.getElementById('form-agregar-producto');

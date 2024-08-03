@@ -13,7 +13,7 @@ import java.util.List;
 public class CategoriasDao {
 
     // Método para agregar una nueva categoría
-    public boolean addCategoria(Categorias categoria) {
+    public int addCategoria(Categorias categoria) {
         String query = "INSERT INTO Categorias (Nombre, Descripcion) VALUES (?, ?)";
         try (Connection conn = DatabaseConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -22,10 +22,13 @@ public class CategoriasDao {
             pstmt.setString(2, categoria.getDescripcion());
 
             int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+
+            int categoriaId = this.getAllCategorias().stream().filter(cat -> cat.getNombre().equals(categoria.getNombre())).findFirst().get().getID_Categoria();
+
+            return categoriaId;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
     }
 
