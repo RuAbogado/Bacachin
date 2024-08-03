@@ -44,11 +44,9 @@ function removeAllChildren(element) {
 
 // Función para cargar las categorías existentes desde el servidor
 function cargarCategorias(){
-    console.log("cargando categorias")
     fetch('ObtenerCategorias')
         .then(response => response.text()) // Procesar como texto en lugar de JSON
         .then(data => {
-            console.log("ObtenerCategorias:", data)
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
             const categorias = doc.querySelectorAll('option');
@@ -91,9 +89,6 @@ function cargarCategorias(){
 document.addEventListener('DOMContentLoaded', function() {
     cargarCategorias()
 });
-
-// Deberia de borrarse esta linea
-setInterval(cargarCategorias, 2000);
 
 // Event listener para agregar producto
 const formAgregarProducto = document.getElementById('form-agregar-producto');

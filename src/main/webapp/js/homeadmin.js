@@ -3,21 +3,17 @@ $(document).ready(function() {
 
     // Función para mostrar una sección por ID
     function mostrarSeccion(id) {
-        $('#content > div').hide(); // Oculta todas las secciones
-        $('#' + id).show(); // Muestra la sección seleccionada
+       // $('#content > div').hide(); // Oculta todas las secciones
+       // $('#' + id).show(); // Muestra la sección seleccionada
+        document.getElementsByTagName('iframe')[0].src =  id +".html"
     }
 
     // Asocia el evento de clic a los enlaces
     $('a[data-target]').on('click', function(event) {
         event.preventDefault();
         const targetId = $(this).data('target');
-        if (targetId === 'productos') {
-            $("#productos").load("productos.html", function() {
-                mostrarSeccion('productos');
-            });
-        } else {
-            mostrarSeccion(targetId);
-        }
+
+        mostrarSeccion(targetId);
     });
 
     // Función para obtener la ruta del contexto
