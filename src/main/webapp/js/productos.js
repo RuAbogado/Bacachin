@@ -95,34 +95,42 @@ const formAgregarProducto = document.getElementById('form-agregar-producto');
 formAgregarProducto.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const imagen = document.getElementById('imagen-producto').files[0];
-    const nombre = document.getElementById('nombre-producto').value;
-    const descripcion = document.getElementById('descripcion-producto').value;
-    const precio = document.getElementById('precio-producto').value;
-    const stock = document.getElementById('stock-producto').value;
-    const categoria = document.getElementById('categoria-producto').value;
+    // Obtener valores del formulario
+    const nombre = document.querySelector('[name="nombre-producto"]').value;
+    const descripcion = document.querySelector('[name="descripcion-producto"]').value;
+    const precio = document.querySelector('[name="precio-producto"]').value;
+    const stock = document.querySelector('[name="stock-producto"]').value;
+    const idCategoria = document.querySelector('[name="categoria-producto"]').value;
+    const tipo = ''; // Aquí debes definir cómo obtener el tipo, si es necesario
+    const imagen = document.querySelector('[name="imagen-producto"]').files[0];
+    const categoria = idCategoria; // O el ID del contenedor de la categoría
+    const modalProducto = document.getElementById('productModal'); // Asumiendo que el modal tiene este ID
 
-    const formData = new FormData();
+    // Crear FormData con todos los datos necesarios
+    let formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
     formData.append('precio', precio);
     formData.append('stock', stock);
-    formData.append('ID_Categoria', categoria); // Cambiar a ID_Categoria
-    if (imagen) {
-        formData.append('imagen', imagen);
-    }
+    formData.append('ID_Categoria', idCategoria);
+    formData.append('Tipo', Tipo);
+    formData.append('imagen_producto', imagen);
 
+    // Realizar la solicitud fetch
     fetch('AgregarProducto', {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text()) // Procesar como texto en lugar de JSON
+        .then(response => response.text()) // Procesar como texto
         .then(data => {
+            // Analizar la respuesta HTML
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
-            const success = doc.querySelector('h1').textContent.includes('exitosamente');
+            const success = doc.querySelector('h1') && doc.querySelector('h1').textContent.includes('exitosamente');
 
+            // Verificar si el producto se agregó exitosamente
             if (success) {
+                // Crear y agregar el nuevo producto al DOM
                 const nuevoProducto = document.createElement('div');
                 nuevoProducto.className = 'col-md-3 producto';
                 nuevoProducto.innerHTML = `
@@ -140,10 +148,12 @@ formAgregarProducto.addEventListener('submit', function(event) {
             `;
                 document.getElementById(categoria).appendChild(nuevoProducto);
 
+                // Ocultar el modal y resetear el formulario
                 modalProducto.style.display = "none";
                 formAgregarProducto.reset();
 
-                cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
+                // Cargar los event listeners de eliminar
+                cargarEventListenersEliminar();
             } else {
                 alert('Error al agregar el producto.');
             }

@@ -22,15 +22,15 @@ public class ProductosDao {
 
     // Método para agregar un producto
     public boolean agregarProducto(Productos producto) {
-        String query = "INSERT INTO productos (ID_Producto, ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen) VALUES (?, ?, ?, ?, ?, ?, ?, 'x', 'img/')";
+        String query = "INSERT INTO productos (ID_Producto, ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, producto.getID_Producto());
             stmt.setInt(2, producto.getID_Categoria());
             stmt.setString(3, producto.getNombre());
             stmt.setString(4, producto.getDescripcion());
-            stmt.setInt(5, producto.getPrecio());
+            stmt.setDouble(5, producto.getPrecio());
             stmt.setInt(6, producto.getStock());
-            stmt.setString(7, producto.getFecha_creacion());
+            stmt.setDate(7, producto.getFecha_creacion());
             stmt.setString(8, producto.getTipo());
             stmt.setString(9, producto.getImagen());
             int rowsAffected = stmt.executeUpdate();
@@ -40,6 +40,7 @@ public class ProductosDao {
             return false;
         }
     }
+
 
     // Método para cargar todos los productos
     public List<Productos> cargarProductos() {
@@ -52,7 +53,7 @@ public class ProductosDao {
                         rs.getInt("ID_categoria"),
                         rs.getString("Nombre"),
                         rs.getString("Descripcion"),
-                        rs.getInt("Precio"),
+                        rs.getFloat("Precio"),
                         rs.getInt("Stock"),
                         rs.getString("Fecha_creacion"),
                         rs.getString("Tipo"),
