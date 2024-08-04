@@ -23,28 +23,28 @@
         <h2>Agregar Nuevo Producto</h2>
         <form method="post" action="AgregarProducto" enctype="multipart/form-data" id="form-agregar-producto">
             <div>
-                <label for="imagen-producto">Imagen:</label>
-                <input type="file" id="imagen-producto" name="imagen_producto" accept="image/*" required>
+                <label for="imagen">Imagen:</label>
+                <input type="file" id="imagen" name="imagen-producto" accept="image/*" required>
             </div>
             <div>
-                <label for="nombre-producto">Nombre:</label>
-                <input type="text" id="nombre-producto" name="nombre" placeholder="Nombre del producto" required>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre-producto" placeholder="Nombre del producto" required>
             </div>
             <div>
-                <label for="descripcion-producto">Descripción:</label>
-                <input type="text" id="descripcion-producto" name="descripcion" placeholder="Descripción del producto" required>
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="descripcion-producto" placeholder="Descripción del producto" required>
             </div>
             <div>
-                <label for="precio-producto">Precio:</label>
-                <input type="number" id="precio-producto" name="precio" placeholder="$00.00" step="0.01" required>
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio-producto" placeholder="$00.00" step="0.01" required>
             </div>
             <div>
-                <label for="stock-producto">Stock:</label>
-                <input type="number" id="stock-producto" name="stock" placeholder="00">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock-producto" placeholder="00">
             </div>
             <div>
-                <label for="categoria-producto">Categoría:</label>
-                <select id="categoria-producto" name="ID_Categoria" required>
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="ID_Categoria" required>
                     <!-- Las categorías se llenarán dinámicamente -->
 
                         </select>

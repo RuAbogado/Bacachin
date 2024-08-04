@@ -22,7 +22,7 @@ public class ProductosDao {
 
     // Método para agregar un producto
     public boolean agregarProducto(Productos producto) {
-        String query = "INSERT INTO productos (ID_Producto, ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO productos (ID_Producto, ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen) VALUES (?, ?, ?, ?, ?, ?, ?, 'x', ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, producto.getID_Producto());
             stmt.setInt(2, producto.getID_Categoria());

@@ -72,7 +72,9 @@
     </div>
 </div>
 <div class="inline">
-    <h1>Productos</h1>
+    <h1>Productos
+    <iframe><iframe src="productos.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe></iframe>
+    </h1>
 </div>
 </body>
 </html>

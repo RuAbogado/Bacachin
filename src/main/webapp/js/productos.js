@@ -92,76 +92,87 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Event listener para agregar producto
 const formAgregarProducto = document.getElementById('form-agregar-producto');
-formAgregarProducto.addEventListener('submit', function(event) {
+formAgregarProducto.addEventListener('submit', async function(event) {
     event.preventDefault();
 
     // Obtener valores del formulario
-    const nombre = document.querySelector('[name="nombre-producto"]').value;
-    const descripcion = document.querySelector('[name="descripcion-producto"]').value;
-    const precio = document.querySelector('[name="precio-producto"]').value;
-    const stock = document.querySelector('[name="stock-producto"]').value;
-    const idCategoria = document.querySelector('[name="categoria-producto"]').value;
+    const nombre = document.querySelector('[name="nombre"]').value;
+    const descripcion = document.querySelector('[name="descripcion"]').value;
+    const precio = document.querySelector('[name="precio"]').value;
+    const stock = document.querySelector('[name="stock"]').value;
+    const idCategoria = document.querySelector('[name="categoria"]').value;
     const tipo = ''; // Aquí debes definir cómo obtener el tipo, si es necesario
-    const imagen = document.querySelector('[name="imagen-producto"]').files[0];
+    const imagen = document.querySelector('[name="imagen"]').files[0];
     const categoria = idCategoria; // O el ID del contenedor de la categoría
     const modalProducto = document.getElementById('productModal'); // Asumiendo que el modal tiene este ID
+
+    // Verificar que todos los campos necesarios estén presentes
+    if (!nombre || !descripcion || isNaN(parseFloat(precio)) || isNaN(parseInt(stock)) || !idCategoria || !imagen) {
+        alert('Por favor complete todos los campos requeridos.');
+        return;
+    }
 
     // Crear FormData con todos los datos necesarios
     let formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
-    formData.append('precio', precio);
-    formData.append('stock', stock);
+    formData.append('precio', parseFloat(precio)); // Asegúrate de que el precio sea un float
+    formData.append('stock', parseInt(stock)); // Asegúrate de que el stock sea un entero
     formData.append('ID_Categoria', idCategoria);
-    formData.append('Tipo', Tipo);
-    formData.append('imagen_producto', imagen);
+    formData.append('Tipo', tipo);
+    formData.append('imagen', imagen);
 
-    // Realizar la solicitud fetch
-    fetch('AgregarProducto', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.text()) // Procesar como texto
-        .then(data => {
-            // Analizar la respuesta HTML
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data, 'text/html');
-            const success = doc.querySelector('h1') && doc.querySelector('h1').textContent.includes('exitosamente');
+    try {
+        // Realizar la solicitud fetch
+        const response = await fetch('AgregarProducto', {
+            method: 'POST',
+            body: formData
+        });
 
-            // Verificar si el producto se agregó exitosamente
-            if (success) {
-                // Crear y agregar el nuevo producto al DOM
-                const nuevoProducto = document.createElement('div');
-                nuevoProducto.className = 'col-md-3 producto';
-                nuevoProducto.innerHTML = `
-                <div>
-                    <div class="four columns">
-                        <img src="${URL.createObjectURL(imagen)}" class="imagen-curso u-full-width" alt="${nombre}">
-                        <div class="info-card">
-                            <h5 class="card-title">${nombre}</h5>
-                            <p class="card-text">${descripcion}</p>
-                            <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
-                            <a href="#" class="u-full-width boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
-                        </div>
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.text(); // Procesar como texto
+
+        // Analizar la respuesta HTML
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const success = doc.querySelector('h1') && doc.querySelector('h1').textContent.includes('exitosamente');
+
+        // Verificar si el producto se agregó exitosamente
+        if (success) {
+            // Crear y agregar el nuevo producto al DOM
+            const nuevoProducto = document.createElement('div');
+            nuevoProducto.className = 'col-md-3 producto';
+            nuevoProducto.innerHTML = `
+            <div>
+                <div class="four columns">
+                    <img src="${URL.createObjectURL(imagen)}" class="imagen-curso u-full-width" alt="${nombre}">
+                    <div class="info-card">
+                        <h5 class="card-title">${nombre}</h5>
+                        <p class="card-text">${descripcion}</p>
+                        <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
+                        <a href="#" class="u-full-width boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
                     </div>
                 </div>
-            `;
-                document.getElementById(categoria).appendChild(nuevoProducto);
+            </div>
+        `;
+            document.getElementById(categoria).appendChild(nuevoProducto);
 
-                // Ocultar el modal y resetear el formulario
-                modalProducto.style.display = "none";
-                formAgregarProducto.reset();
+            // Ocultar el modal y resetear el formulario
+            modalProducto.style.display = "none";
+            formAgregarProducto.reset();
 
-                // Cargar los event listeners de eliminar
-                cargarEventListenersEliminar();
-            } else {
-                alert('Error al agregar el producto.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error en la solicitud.');
-        });
+            // Cargar los event listeners de eliminar
+            cargarEventListenersEliminar();
+        } else {
+            alert('Error al agregar el producto.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error en la solicitud.');
+    }
 });
 
 // Event listener para agregar categoría
