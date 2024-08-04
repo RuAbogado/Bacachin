@@ -81,7 +81,7 @@
 
 <article>
   <div class="flex-grow-1" id="content" >
-    <div id="inicio" style="margin-top: 100px">
+    <div id="inicio" style="margin-top: 70px">
       <iframe src="inicio.jsp" width="100%" height="900px"></iframe>
 
     </div>
