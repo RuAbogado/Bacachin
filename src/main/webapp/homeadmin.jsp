@@ -99,7 +99,6 @@
 
     <div id="productos" style="display:none; margin-top: 100px">
       <!-- Contenido cargado dinámicamente aquí -->
-
       <iframe src="productos.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
     <!-- Parte Alison -->
