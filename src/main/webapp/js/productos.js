@@ -84,7 +84,7 @@ function cargarCategorias(){
 // Llamar a la función para cargar las categorías al cargar la página
 
 // No puede obtener la lista de categorias aparece un error de CORS
-// pero al ingresar a la pagina de productos y cargar productos.html y productos.js
+// pero al ingresar a la pagina de productos y cargar productos.jsp y productos.js
 // si obtiene la informacion y no hay error de CORS
 document.addEventListener('DOMContentLoaded', function() {
     cargarCategorias()

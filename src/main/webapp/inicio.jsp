@@ -1,4 +1,4 @@
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -72,7 +72,7 @@
 <div class="content">
   <h1>Bienvenido a Nuestra Cafetería</h1>
   <p>El mejor café de la ciudad, solo para ti.</p>
-  <button class="btn btn-primary" onclick="location.href='productos.html'">Ver Menú</button>
+  <button class="btn btn-primary" onclick="location.href='productos.jsp'">Ver Menú</button>
 </div>
 
 <footer>

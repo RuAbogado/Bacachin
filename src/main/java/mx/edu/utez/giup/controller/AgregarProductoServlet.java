@@ -44,12 +44,12 @@ public class AgregarProductoServlet extends HttpServlet {
         if (success) {
             out.println("<html><body>");
             out.println("<h1>Producto agregado exitosamente</h1>");
-            out.println("<a href='productos.html'>Volver a la lista de productos</a>");
+            out.println("<a href='productos.jsp'>Volver a la lista de productos</a>");
             out.println("</body></html>");
         } else {
             out.println("<html><body>");
             out.println("<h1>Error al agregar el producto</h1>");
-            out.println("<a href='productos.html'>Volver a intentar</a>");
+            out.println("<a href='productos.jsp'>Volver a intentar</a>");
             out.println("</body></html>");
         }
 

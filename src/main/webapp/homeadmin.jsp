@@ -82,7 +82,7 @@
 <article>
   <div class="flex-grow-1" id="content" >
     <div id="inicio" style="margin-top: 100px">
-      <iframe src="inicio.html" width="100%" height="900px"></iframe>
+      <iframe src="inicio.jsp" width="100%" height="900px"></iframe>
 
     </div>
     <!-- Parte Efrain -->
@@ -100,13 +100,13 @@
     <div id="productos" style="display:none; margin-top: 100px">
       <!-- Contenido cargado dinámicamente aquí -->
 
-      <iframe src="productos.html" width="100%" height="100%" sandbox="allow-scripts"></iframe>
+      <iframe src="productos.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
     <!-- Parte Alison -->
     <div id="empleados" style="display:none;">
       <h2>Empleados</h2>
       <p>Contenido de la página de empleados.</p>
-      <iframe src="empleados.html" width="100%" height="500px"></iframe>
+      <iframe src="empleados.jsp" width="100%" height="500px"></iframe>
     </div>
 
     <div id="inventario" style="display:none;">

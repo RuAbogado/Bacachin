@@ -5,7 +5,7 @@ $(document).ready(function() {
     function mostrarSeccion(id) {
        // $('#content > div').hide(); // Oculta todas las secciones
        // $('#' + id).show(); // Muestra la sección seleccionada
-        document.getElementsByTagName('iframe')[0].src =  id +".html"
+        document.getElementsByTagName('iframe')[0].src =  id +".jsp"
     }
 
     // Asocia el evento de clic a los enlaces

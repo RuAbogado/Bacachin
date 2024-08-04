@@ -1,6 +1,6 @@
 package mx.edu.utez.giup.model;
 
-public class Categorias {
+public class  Categorias {
     private int ID_Categoria;
     private String nombre;
     private String descripcion;
