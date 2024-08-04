@@ -15,9 +15,16 @@ import java.util.List;
 @WebServlet("/ObtenerCategorias")
 public class ObtenerCategoriasServlet extends HttpServlet {
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Agregar encabezados CORS
+        response.setHeader("Access-Control-Allow-Origin", "*"); // Permite solicitudes desde cualquier origen
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"); // Métodos permitidos
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type"); // Encabezados permitidos
+
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
 
