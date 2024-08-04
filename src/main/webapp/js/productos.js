@@ -6,27 +6,25 @@ const modalCategoria = document.getElementById('categoryModal');
 const spanCerrarProducto = modalProducto.getElementsByClassName('close-product')[0];
 const spanCerrarCategoria = modalCategoria.getElementsByClassName('close-category')[0];
 
-// Función para mostrar el modal de agregar producto
+// Mostrar modales
 btnAgregarProducto.onclick = function() {
     modalProducto.style.display = "block";
 }
 
-// Función para mostrar el modal de agregar categoría
 btnAgregarCategoria.onclick = function() {
     modalCategoria.style.display = "block";
 }
 
-// Función para cerrar el modal de agregar producto
+// Cerrar modales
 spanCerrarProducto.onclick = function() {
     modalProducto.style.display = "none";
 }
 
-// Función para cerrar el modal de agregar categoría
 spanCerrarCategoria.onclick = function() {
     modalCategoria.style.display = "none";
 }
 
-// Función para cerrar los modales cuando se hace clic fuera de ellos
+// Cerrar modal cuando se hace clic fuera de él
 window.onclick = function(event) {
     if (event.target == modalProducto) {
         modalProducto.style.display = "none";
@@ -36,16 +34,17 @@ window.onclick = function(event) {
     }
 }
 
+// Eliminar todos los hijos de un elemento
 function removeAllChildren(element) {
     while (element.firstChild) {
         element.removeChild(element.firstChild);
     }
 }
 
-// Función para cargar las categorías existentes desde el servidor
+// Cargar categorías desde el servidor
 function cargarCategorias(){
     fetch('ObtenerCategorias')
-        .then(response => response.text()) // Procesar como texto en lugar de JSON
+        .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
@@ -73,7 +72,7 @@ function cargarCategorias(){
                 document.getElementById('categoria-producto').appendChild(categoria);
             });
 
-            cargarEventListenersEliminar(); // Cargar los event listeners de eliminar
+            cargarEventListenersEliminar();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -81,49 +80,40 @@ function cargarCategorias(){
         });
 }
 
-// Llamar a la función para cargar las categorías al cargar la página
-
-// No puede obtener la lista de categorias aparece un error de CORS
-// pero al ingresar a la pagina de productos y cargar productos.jsp y productos.js
-// si obtiene la informacion y no hay error de CORS
 document.addEventListener('DOMContentLoaded', function() {
     cargarCategorias()
 });
 
-// Event listener para agregar producto
+// Agregar un nuevo producto
 const formAgregarProducto = document.getElementById('form-agregar-producto');
 formAgregarProducto.addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    // Obtener valores del formulario
     const nombre = document.querySelector('[name="nombre"]').value;
     const descripcion = document.querySelector('[name="descripcion"]').value;
     const precio = document.querySelector('[name="precio"]').value;
     const stock = document.querySelector('[name="stock"]').value;
     const idCategoria = document.querySelector('[name="categoria"]').value;
-    const tipo = ''; // Aquí debes definir cómo obtener el tipo, si es necesario
+    const tipo = '';
     const imagen = document.querySelector('[name="imagen"]').files[0];
-    const categoria = idCategoria; // O el ID del contenedor de la categoría
-    const modalProducto = document.getElementById('productModal'); // Asumiendo que el modal tiene este ID
+    const categoria = idCategoria;
+    const modalProducto = document.getElementById('productModal');
 
-    // Verificar que todos los campos necesarios estén presentes
     if (!nombre || !descripcion || isNaN(parseFloat(precio)) || isNaN(parseInt(stock)) || !idCategoria || !imagen) {
         alert('Por favor complete todos los campos requeridos.');
         return;
     }
 
-    // Crear FormData con todos los datos necesarios
     let formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
-    formData.append('precio', parseFloat(precio)); // Asegúrate de que el precio sea un float
-    formData.append('stock', parseInt(stock)); // Asegúrate de que el stock sea un entero
+    formData.append('precio', parseFloat(precio));
+    formData.append('stock', parseInt(stock));
     formData.append('ID_Categoria', idCategoria);
     formData.append('Tipo', tipo);
     formData.append('imagen', imagen);
 
     try {
-        // Realizar la solicitud fetch
         const response = await fetch('AgregarProducto', {
             method: 'POST',
             body: formData
@@ -133,16 +123,12 @@ formAgregarProducto.addEventListener('submit', async function(event) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.text(); // Procesar como texto
-
-        // Analizar la respuesta HTML
+        const data = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(data, 'text/html');
         const success = doc.querySelector('h1') && doc.querySelector('h1').textContent.includes('exitosamente');
 
-        // Verificar si el producto se agregó exitosamente
         if (success) {
-            // Crear y agregar el nuevo producto al DOM
             const nuevoProducto = document.createElement('div');
             nuevoProducto.className = 'col-md-3 producto';
             nuevoProducto.innerHTML = `
@@ -160,11 +146,8 @@ formAgregarProducto.addEventListener('submit', async function(event) {
         `;
             document.getElementById(categoria).appendChild(nuevoProducto);
 
-            // Ocultar el modal y resetear el formulario
             modalProducto.style.display = "none";
             formAgregarProducto.reset();
-
-            // Cargar los event listeners de eliminar
             cargarEventListenersEliminar();
         } else {
             alert('Error al agregar el producto.');
@@ -175,7 +158,7 @@ formAgregarProducto.addEventListener('submit', async function(event) {
     }
 });
 
-// Event listener para agregar categoría
+// Agregar una nueva categoría
 document.getElementById('category-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -189,7 +172,7 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
         },
         body: `nombre=${encodeURIComponent(newCategory)}&descripcion=${encodeURIComponent(description)}`
     })
-        .then(response => response.text()) // Procesar como texto en lugar de JSON
+        .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
@@ -231,7 +214,7 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
         });
 });
 
-// Función para eliminar categoría
+// Eliminar una categoría
 function eliminarCategoria(ID_Categoria) {
     if (!confirm('¿Estás seguro de que quieres eliminar esta categoría?')) {
         return;
@@ -257,7 +240,7 @@ function eliminarCategoria(ID_Categoria) {
         },
         body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
     })
-        .then(response => response.text()) // Procesar como texto en lugar de JSON
+        .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
@@ -265,7 +248,6 @@ function eliminarCategoria(ID_Categoria) {
 
             if (!success) {
                 alert('Error al eliminar la categoría.');
-                // Opcional: Puedes volver a mostrar la categoría en caso de error
             }
         })
         .catch(error => {
@@ -274,13 +256,13 @@ function eliminarCategoria(ID_Categoria) {
         });
 }
 
-// Función para mostrar el formulario y establecer la categoría
+// Mostrar formulario para agregar producto en una categoría específica
 function mostrarFormulario(categoria) {
     modalProducto.style.display = "block";
     document.getElementById('categoria-producto').value = categoria;
 }
 
-// Event listener para eliminar producto
+// Eliminar un producto
 function cargarEventListenersEliminar() {
     const botonesEliminar = document.querySelectorAll('.eliminar-producto');
     botonesEliminar.forEach(boton => {
@@ -296,13 +278,11 @@ function cargarEventListenersEliminar() {
                 },
                 body: `ID_Producto=${encodeURIComponent(productoId)}`
             })
-                .then(response => response.text()) // Procesar como texto en lugar de JSON
+                .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text / html');
-                    const success = doc.querySelector('h1')
-                    textContent.includes('eliminado')
-                    ;
+                    const doc = parser.parseFromString(data, 'text/html');
+                    const success = doc.querySelector('h1').textContent.includes('eliminado');
                     if (success) {
                         producto.remove();
                     } else {

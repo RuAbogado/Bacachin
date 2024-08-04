@@ -53,6 +53,8 @@
 <!-- Formulario para generar reporte -->
 <form id="reporteForm" method="post">
     <button type="button" onclick="submitForm()">Generar Reporte</button>
+    <button id="delete_user" onclick="deleteUser(123)">Eliminar Usuario</button>
+
 </form>
 <!-- Contenedor para la tabla de clientes -->
 <div id="clientesContainer">
@@ -62,6 +64,26 @@
     // Función para manejar el formulario de reporte
     function submitForm() {
         document.getElementById('reporteForm').submit();
+    }
+    //Funcion para eliminar un usuario
+    function deleteUser(userId) {
+        if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+            fetch(`/delete_user/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Usuario eliminado con éxito');
+                        // Aquí puedes agregar código para actualizar la UI
+                    } else {
+                        alert('Hubo un problema al eliminar el usuario');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
     }
 </script>
 </body>
