@@ -4,7 +4,13 @@
 	margin: 0;
 	font-family: 'Montserrat Alternates', sans-serif;
 }
-.header{
+*, ::after, ::before {
+	box-sizing: border-box;
+}
+body{
+	background: #FFE7C3FF;
+}
+.headerr{
 	width: 100%;
 	height: 100px;
 	position: fixed;
@@ -18,7 +24,12 @@
 .container347 .btn-menu, .logo{
 	float: left;
 	line-height:100px;
+	font-size: calc(1.275rem + .3vw) !important;
+}
+.container347 .btn-menu, .logo a{
+	text-decoration: none;
 	color: #fff;
+	font-size: calc(1.275rem + .3vw) !important;
 }
 .container347 .btn-menu label{
 	margin-left: 80px;
@@ -39,7 +50,7 @@
 }
 .container347 .menu a{
 	display: inline-block;
-	padding: 15px;
+	padding: 10px;
 	line-height: normal;
 	text-decoration: none;
 	color: #fff;
@@ -47,7 +58,7 @@
 	border-radius: 100%;
 	border-bottom: 2px solid transparent;
 	font-size: 15px;
-	margin-left: 5px;
+	margin: 10px;
 	width: 80px;
 }
 .container347 .menu img{
@@ -112,3 +123,6 @@
 	font-size: 18px;
 }
 /*Fin de Menù lateral*/
+.inline{
+	margin-top: 100px;
+}
