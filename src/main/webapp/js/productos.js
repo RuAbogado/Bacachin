@@ -64,9 +64,9 @@ function cargarCategorias(){
                     </div>
                 </div>
                 <div class="row" id="${category.value}"></div>
-            `;
+                `;
                 document.getElementById('productos-container').appendChild(newCategoryContainer);
-            })
+            });
 
             categorias.forEach(categoria => {
                 document.getElementById('categoria-producto').appendChild(categoria);
@@ -94,7 +94,7 @@ formAgregarProducto.addEventListener('submit', async function(event) {
     const precio = document.querySelector('[name="precio"]').value;
     const stock = document.querySelector('[name="stock"]').value;
     const idCategoria = document.querySelector('[name="categoria"]').value;
-    const tipo = '';
+    const tipo = ' ';
     const imagen = document.querySelector('[name="imagen"]').files[0];
     const categoria = idCategoria;
     const modalProducto = document.getElementById('productModal');
