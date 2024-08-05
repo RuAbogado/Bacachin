@@ -25,7 +25,7 @@
         <form method="post" action="AgregarProducto" enctype="multipart/form-data" id="form-agregar-producto">
             <div>
                 <label for="imagen-producto">Imagen:</label>
-                <input type="file" id="imagen-producto" name="imagen_producto" accept="image/*" required>
+                <input type="file" id="imagen-producto" name="imagen" accept="image/*" required>
             </div>
             <div>
                 <label for="nombre-producto">Nombre:</label>

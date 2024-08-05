@@ -93,7 +93,7 @@ formAgregarProducto.addEventListener('submit', async function(event) {
     const descripcion = document.querySelector('[name="descripcion"]').value;
     const precio = document.querySelector('[name="precio"]').value;
     const stock = document.querySelector('[name="stock"]').value;
-    const idCategoria = document.querySelector('[name="categoria"]').value;
+    const idCategoria = document.querySelector('[name="ID_Categoria"]').value;
     const tipo = ' ';
     const imagen = document.querySelector('[name="imagen"]').files[0];
     const categoria = idCategoria;
