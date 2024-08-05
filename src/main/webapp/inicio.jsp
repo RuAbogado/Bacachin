@@ -24,7 +24,7 @@
 
     body {
       font-family: 'Arial', sans-serif;
-      background: url('img/banner.png') no-repeat center center fixed;
+      background: url('img/cafeportada.png') no-repeat center center fixed;
       background-size: cover;
       color: #333;
       display: flex;
@@ -136,8 +136,8 @@
 <body>
 
 <div class="content">
-  <h1>Bienvenido a Nuestra Cafetería</h1>
-  <p>El mejor café de la ciudad, solo para ti.</p>
+  <h1>Bienvenido a Nuestro Sistema </h1>
+  <p>Gestione sus Ventas de Manera Eficiente y Sencilla</p>
   <button class="btn btn-primary" onclick="location.href='productos.jsp'">Ver Menú</button>
 </div>
 

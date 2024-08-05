@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio - Sistema de Punto de Venta</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .hero {
+      background-image: url('img/cafeportada.png');
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+    }
+    .features {
+      padding: 2rem 0;
+    }
+    .feature {
+      padding: 1rem;
+    }
+    .footer {
+      background: #343a40;
+      color: white;
+      padding: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero">
+  <div class="content">
+    <h1>Bienvenido a Nuestro Sistema de Punto de Venta</h1>
+    <p>Gestione sus ventas de manera eficiente y sencilla.</p>
+    <button class="btn btn-primary" onclick="location.href='dashboard.jsp'">Ir al Panel de Control</button>
+  </div>
+</div>
+
+<!-- Funciones Principales -->
+<section class="features container text-center">
+  <h2>Funciones Principales</h2>
+  <div class="row">
+    <div class="col-md-4 feature">
+      <img src="img/sales.png" alt="Ventas" class="img-fluid">
+      <h3>Gestión de Ventas</h3>
+      <p>Registre y controle todas las ventas de su negocio de forma rápida y eficiente.</p>
+      <button class="btn btn-success" onclick="location.href='ventas.jsp'">Ir a Ventas</button>
+    </div>
+    <div class="col-md-4 feature">
+      <img src="img/inventory.png" alt="Inventario" class="img-fluid">
+      <h3>Gestión de Inventario</h3>
+      <p>Monitoree y administre su inventario en tiempo real.</p>
+      <button class="btn btn-success" onclick="location.href='inventario.jsp'">Ir a Inventario</button>
+    </div>
+    <div class="col-md-4 feature">
+      <img src="img/reports.png" alt="Reportes" class="img-fluid">
+      <h3>Generación de Reportes</h3>
+      <p>Genere reportes detallados para analizar el rendimiento de su negocio.</p>
+      <button class="btn btn-success" onclick="location.href='reportes.jsp'">Ir a Reportes</button>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonios -->
+<section class="testimonials container text-center">
+  <h2>Testimonios de Clientes</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <blockquote>
+        <p>"Este sistema de punto de venta ha transformado la manera en que gestiono mi tienda. Muy recomendable."</p>
+        <footer>- Juan Pérez</footer>
+      </blockquote>
+    </div>
+    <div class="col-md-6">
+      <blockquote>
+        <p>"Fácil de usar y con todas las funciones que necesito para administrar mi negocio de manera eficiente."</p>
+        <footer>- María López</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- Información de Contacto -->
+<section class="contact-info container text-center">
+  <h2>Contacto</h2>
+  <p>Dirección: Calle Falsa 123, Ciudad, País</p>
+  <p>Teléfono: (123) 456-7890</p>
+  <p>Email: soporte@puntodeventa.com</p>
+</section>
+
+<!-- Footer -->
+<footer class="footer text-center">
+  <p>&copy; 2024 Sistema de Punto de Venta. Todos los derechos reservados.</p>
+  <div>
+    <a href="#" class="text-light">Facebook</a> |
+    <a href="#" class="text-light">Instagram</a> |
+    <a href="#" class="text-light">Twitter</a>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

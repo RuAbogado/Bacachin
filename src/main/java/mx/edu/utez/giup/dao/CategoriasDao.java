@@ -33,12 +33,12 @@ public class CategoriasDao {
     }
 
     // Método para eliminar una categoría por ID
-    public static boolean deleteCategoria(int idCategoria) {
+    public static boolean deleteCategoria(int ID_Categoria) {
         String query = "DELETE FROM Categorias WHERE ID_Categoria = ?";
         try (Connection conn = DatabaseConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setInt(1, idCategoria);
+            pstmt.setInt(1, ID_Categoria);
 
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
