@@ -46,7 +46,7 @@ public class AgregarProductoServlet extends HttpServlet {
                 return;
             }
 
-            int stock;
+            int stock=0;
             try {
                 String stockStr = request.getParameter("stock");
                 if (stockStr != null && !stockStr.trim().isEmpty()) {
@@ -99,7 +99,7 @@ public class AgregarProductoServlet extends HttpServlet {
             }
 
             // Manejar la carga de archivos
-            Part filePart = request.getPart("imagen_producto");
+            Part filePart = request.getPart("imagen");
             if (filePart != null && filePart.getSize() > 0) {
                 String fileName = getSubmittedFileName(filePart);
                 String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
