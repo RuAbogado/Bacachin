@@ -8,7 +8,6 @@
   <style>
     @keyframes rise {
       0% {
-        bottom: -10%;
         transform: translateX(0);
         opacity: 0.1;
       }
