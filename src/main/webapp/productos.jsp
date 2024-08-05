@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,7 +8,23 @@
 </head>
 <body>
 <div id="productos-container">
-    <!-- Aquí se agregarán dinámicamente las nuevas categorías -->
+    <div class="category-item">mates</div>
+    <div class="button-group">
+        <button>Agregar mates</button>
+        <button>Eliminar Categoría</button>
+    </div>
+    <div class="category-item">coca</div>
+    <div class="button-group">
+        <button>Agregar coca</button>
+        <button>Eliminar Categoría</button>
+    </div>
+    <div class="category-item">Cafe´s</div>
+    <div class="button-group">
+        <button>Agregar Cafe´s</button>
+        <button>Eliminar Categoría</button>
+        <button>Agregar Producto</button>
+        <button>Agregar Categoría</button>
+    </div>
 </div>
 
 <div>
@@ -17,7 +32,6 @@
     <button type="button" id="add-category-btn">Agregar Categoría</button>
 </div>
 
-<!-- Modal para agregar nuevo producto -->
 <div id="productModal" class="modal">
     <div class="modal-content">
         <span class="close-product">&times;</span>
@@ -46,7 +60,6 @@
             <div>
                 <label for="categoria-producto">Categoría:</label>
                 <select id="categoria-producto" name="ID_Categoria" required>
-                    <!-- Las categorías se llenarán dinámicamente -->
                 </select>
             </div>
             <div>
@@ -56,7 +69,6 @@
     </div>
 </div>
 
-<!-- Modal para agregar nueva categoría -->
 <div id="categoryModal" class="modal">
     <div class="modal-content">
         <span class="close-category">&times;</span>
