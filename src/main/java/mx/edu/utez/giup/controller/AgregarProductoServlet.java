@@ -46,7 +46,7 @@ public class AgregarProductoServlet extends HttpServlet {
                 return;
             }
 
-            int stock=0;
+            int stock;
             try {
                 String stockStr = request.getParameter("stock");
                 if (stockStr != null && !stockStr.trim().isEmpty()) {

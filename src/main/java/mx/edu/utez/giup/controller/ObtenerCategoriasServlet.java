@@ -23,7 +23,7 @@ public class ObtenerCategoriasServlet extends HttpServlet {
         // Agregar encabezados CORS
         response.setHeader("Access-Control-Allow-Origin", "*"); // Permite solicitudes desde cualquier origen
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"); // Métodos permitidos
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type"); // Encabezados permitidos
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type"); // Encabezados permitidosgit
 
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
