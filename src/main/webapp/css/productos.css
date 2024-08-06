@@ -140,3 +140,26 @@ close-category:focus {
     background-color: var(--color1);
     color: var(--fondo);
 }
+
+.container-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.producto {
+    margin-bottom: 20px; /* Ajusta este valor según tus necesidades */
+}
+
+.producto img {
+    padding-left: 20px;
+}
+
+.u-full-width {
+    width: 100%;
+    box-sizing: border-box; }
+
+.u-pull-right {
+    float: right; }
+
+.u-pull-left {
+    float: left; }
