@@ -28,12 +28,17 @@ body {
 }
 
 #productos-container {
-    width: 80%;
-    margin: 20px auto;
-    text-align: center;
+    margin: 20px 0; /* Ajuste para alinear a la izquierda */
+    padding: 40px;
+    text-align: center; /* Asegúrate de que el texto esté alineado a la izquierda */
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .category-item {
+
     font-size: 24px;
     font-weight: 600;
     color: var(--color1);
@@ -53,7 +58,7 @@ body {
     font-size: 14px;
     border-radius: 5px;
     border: 1px solid var(--color1);
-    background-color: var(--fondo);
+    background-color: #d2a679;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }

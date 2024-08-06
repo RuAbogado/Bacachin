@@ -234,7 +234,7 @@ function eliminarCategoria(ID_Categoria) {
     }
 
 
-    //Si tebgo un formulario con imagenes
+    //Si tengo un formulario con imagenes
     //agarra el formulario en una var
     //luego hacer un
     //var datos= new FormData(x)
@@ -300,4 +300,62 @@ function cargarEventListenersEliminar() {
                 });
         });
     });
+
+
+    const productosContainer = document.getElementById('productos-container');
+
+        // Función para cargar productos desde el servlet
+        function cargarProductos() {
+            fetch('CargarProductos')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('internet no responde');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    mostrarProductosPorCategoria(data);
+                })
+                .catch(error => {
+                    console.error('Ocurrio un error con el fetch', error);
+                });
+        }
+
+        // Función para mostrar los productos organizados por categoría
+    function mostrarProductosPorCategoria(productos) {
+        productosContainer.innerHTML = '';
+
+        // Agrupamos productos por categoría
+        const categorias = productos.reduce((acc, producto) => {
+            if (!acc[producto.categoria]) {
+                acc[producto.categoria] = [];
+            }
+            acc[producto.categoria].push(producto);
+            return acc;
+        }, {});
+
+        // Mostrar productos por categoría
+        for (const categoria in categorias) {
+            const productosPorCategoria = categorias[categoria];
+            const categoriaDiv = document.createElement('div');
+            categoriaDiv.className = 'categoria';
+            categoriaDiv.innerHTML = `<h2>${categoria}</h2>`;
+
+            productosPorCategoria.forEach(producto => {
+                const productoDiv = document.createElement('div');
+                productoDiv.className = 'producto';
+                productoDiv.innerHTML = `
+            <h3>${producto.nombre}</h3>
+            <p>${producto.descripcion}</p>
+            <p class="precio">Precio: $${producto.precio.toFixed(2)}</p>
+            <p>Stock: ${producto.stock}</p>
+            <img src="${producto.imagen}" alt="${producto.nombre}" class="img-fluid">
+        `;
+                categoriaDiv.appendChild(productoDiv);
+            });
+
+            productosContainer.appendChild(categoriaDiv);
+        }
+    }
+
 }

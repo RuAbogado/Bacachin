@@ -7,29 +7,14 @@
     <link rel="stylesheet" href="css/productos.css">
 </head>
 <body>
-<div id="productos-container">
-    <div class="category-item">mates</div>
-    <div class="button-group">
-        <button>Agregar mates</button>
-        <button>Eliminar Categoría</button>
-    </div>
-    <div class="category-item">coca</div>
-    <div class="button-group">
-        <button>Agregar coca</button>
-        <button>Eliminar Categoría</button>
-    </div>
-    <div class="category-item">Cafe´s</div>
-    <div class="button-group">
-        <button>Agregar Cafe´s</button>
-        <button>Eliminar Categoría</button>
-        <button>Agregar Producto</button>
-        <button>Agregar Categoría</button>
-    </div>
+<div id="productos-container" class="button-group">
+
+
 </div>
 
-<div>
+<div class="button-group">
     <button type="button" id="add-product-btn">Agregar Producto</button>
-    <button type="button" id="add-category-btn">Agregar Categoría</button>
+    <button type="button" id="add-category-btn">Agregar Categoria</button>
 </div>
 
 <div id="productModal" class="modal">
@@ -46,8 +31,8 @@
                 <input type="text" id="nombre-producto" name="nombre" placeholder="Nombre del producto" required>
             </div>
             <div>
-                <label for="descripcion-producto">Descripción:</label>
-                <input type="text" id="descripcion-producto" name="descripcion" placeholder="Descripción del producto" required>
+                <label for="descripcion-producto">Descripcion:</label>
+                <input type="text" id="descripcion-producto" name="descripcion" placeholder="Descripcion del producto" required>
             </div>
             <div>
                 <label for="precio-producto">Precio:</label>
@@ -58,7 +43,7 @@
                 <input type="number" id="stock-producto" name="stock" placeholder="00">
             </div>
             <div>
-                <label for="categoria-producto">Categoría:</label>
+                <label for="categoria-producto">Categoria:</label>
                 <select id="categoria-producto" name="ID_Categoria" required>
                 </select>
             </div>
@@ -72,14 +57,14 @@
 <div id="categoryModal" class="modal">
     <div class="modal-content">
         <span class="close-category">&times;</span>
-        <h2>Agregar nueva categoría</h2>
+        <h2>Agregar nueva categoria</h2>
         <form id="category-form">
             <div>
-                <label for="new-category">Nombre de la nueva categoría:</label>
+                <label for="new-category">Nombre de la nueva categoria:</label>
                 <input type="text" id="new-category" required>
             </div>
             <div>
-                <label for="category-description">Descripción de la categoría:</label>
+                <label for="category-description">Descripcion de la categoria:</label>
                 <textarea id="category-description" rows="4" required></textarea>
             </div>
             <button type="submit">Agregar</button>
