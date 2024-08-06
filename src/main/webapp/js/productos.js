@@ -233,6 +233,11 @@ function eliminarCategoria(ID_Categoria) {
         }
     }
 
+
+    //Si tebgo un formulario con imagenes
+    //agarra el formulario en una var
+    //luego hacer un
+    //var datos= new FormData(x)
     fetch('EliminarCategoria', {
         method: 'POST',
         headers: {
@@ -242,12 +247,12 @@ function eliminarCategoria(ID_Categoria) {
     })
         .then(response => response.text())
         .then(data => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data, 'text/html');
-            const success = doc.querySelector('h1').textContent.includes('eliminado');
+            data = JSON.parse(data);
 
-            if (!success) {
+            if (!data.success) {
                 alert('Error al eliminar la categoría.');
+            }else{
+                alert('La categoria se elimino correctamente.')
             }
         })
         .catch(error => {

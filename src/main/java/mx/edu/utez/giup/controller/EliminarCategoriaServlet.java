@@ -23,6 +23,7 @@ public class EliminarCategoriaServlet extends HttpServlet {
 
         // Obtener el ID de la categoría desde los parámetros de la solicitud
         String ID_CategoriaParam = request.getParameter("ID_Categoria");
+        System.out.println(ID_CategoriaParam);
 
         if (ID_CategoriaParam == null || ID_CategoriaParam.isEmpty()) {
             out.print("{\"success\":false, \"message\":\"Category ID is missing.\"}");
