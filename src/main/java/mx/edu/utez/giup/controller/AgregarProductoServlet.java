@@ -1,5 +1,8 @@
 package mx.edu.utez.giup.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import jakarta.servlet.AsyncContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +19,8 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
+import java.util.Map;
 import java.util.UUID;
 
 @WebServlet("/AgregarProducto")

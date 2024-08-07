@@ -88,6 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
 const formAgregarProducto = document.getElementById('form-agregar-producto');
 formAgregarProducto.addEventListener('submit', async function(event) {
     event.preventDefault();
+    console.log("Enviando producto para agregar")
+
 
     const nombre = document.querySelector('[name="nombre"]').value;
     const descripcion = document.querySelector('[name="descripcion"]').value;
@@ -157,6 +159,8 @@ formAgregarProducto.addEventListener('submit', async function(event) {
         alert('Error en la solicitud.');
     }
 });
+
+
 
 // Agregar una nueva categoría
 document.getElementById('category-form').addEventListener('submit', function(e) {
