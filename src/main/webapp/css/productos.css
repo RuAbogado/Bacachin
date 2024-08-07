@@ -54,18 +54,20 @@ body {
 }
 
 .button-group button {
+    color: whitesmoke;
     padding: 10px 20px;
     font-size: 14px;
     border-radius: 5px;
-    border: 1px solid var(--color1);
+    border: 1px solid #d2a679;
     background-color: #d2a679;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .button-group button:hover {
-    background-color: var(--color1);
-    color: var(--fondo);
+    background-color: #60410d;
+    border: 1px solid #60410d;
+
 }
 
 .modal {
