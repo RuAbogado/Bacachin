@@ -27,7 +27,7 @@ public class ListarEmpleadosServlet extends HttpServlet {
             ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = ps.executeQuery();
             if (!rs.next()) {
-                out.println("<p>No hay usuarios registrados de tipo cliente.</p>");
+                out.println("<p>No hay usuarios registrados de tipo empledo.</p>");
                 return;
             }
             rs.beforeFirst();
