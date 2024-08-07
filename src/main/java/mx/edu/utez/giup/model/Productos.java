@@ -16,20 +16,20 @@ public class Productos {
     private String Tipo;
     private String Imagen;
 
-    // Constructor con parámetros
-    public Productos(int ID_Producto, int ID_Categoria, String Nombre, String Descripcion, float Precio, int Stock, String Fecha_creacion, String Tipo, String Imagen) {
+
+    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_creacion, String tipo, String imagen) {
         this.ID_Producto = ID_Producto;
         this.ID_Categoria = ID_Categoria;
-        this.Nombre = Nombre;
-        this.Descripcion = Descripcion;
-        this.Precio = Precio;
-        this.Stock = Stock;
-        setFecha_creacion(Fecha_creacion); // Llama al setter para parsear la fecha
-        this.Tipo = Tipo;
-        this.Imagen = Imagen;
+        Nombre = nombre;
+        Descripcion = descripcion;
+        Precio = precio;
+        Stock = stock;
+        Fecha_creacion = fecha_creacion;
+        Tipo = tipo;
+        Imagen = imagen;
     }
 
-    // Getters y Setters
+
     public int getID_Producto() {
         return ID_Producto;
     }
@@ -50,61 +50,55 @@ public class Productos {
         return Nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        Nombre = nombre;
     }
 
     public String getDescripcion() {
         return Descripcion;
     }
 
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
+    public void setDescripcion(String descripcion) {
+        Descripcion = descripcion;
     }
 
     public float getPrecio() {
         return Precio;
     }
 
-    public void setPrecio(float Precio) {
-        this.Precio = Precio;
+    public void setPrecio(float precio) {
+        Precio = precio;
     }
 
     public int getStock() {
         return Stock;
     }
 
-    public void setStock(int Stock) {
-        this.Stock = Stock;
+    public void setStock(int stock) {
+        Stock = stock;
     }
 
     public Date getFecha_creacion() {
         return Fecha_creacion;
     }
 
-    public void setFecha_creacion(String fecha_creacion) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            java.util.Date utilDate = sdf.parse(fecha_creacion);
-            this.Fecha_creacion = new Date(utilDate.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public void setFecha_creacion(Date fecha_creacion) {
+        Fecha_creacion = fecha_creacion;
     }
 
     public String getTipo() {
         return Tipo;
     }
 
-    public void setTipo(String Tipo) {
-        this.Tipo = Tipo;
+    public void setTipo(String tipo) {
+        Tipo = tipo;
     }
 
     public String getImagen() {
         return Imagen;
     }
 
-    public void setImagen(String Imagen) {
-        this.Imagen = Imagen;
+    public void setImagen(String imagen) {
+        Imagen = imagen;
     }
 }

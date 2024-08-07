@@ -22,17 +22,15 @@ public class ProductosDao {
 
     // Método para agregar un producto
     public boolean agregarProducto(Productos producto) {
-        String query = "INSERT INTO productos (ID_Producto, ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen) VALUES (?, ?, ?, ?, ?, ?, ?, 'x', ?)";
+        String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen) VALUES ( ?, ?, ?, ?, ?, ?, 'x', ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, producto.getID_Producto());
-            stmt.setInt(2, producto.getID_Categoria());
-            stmt.setString(3, producto.getNombre());
-            stmt.setString(4, producto.getDescripcion());
-            stmt.setDouble(5, producto.getPrecio());
-            stmt.setInt(6, producto.getStock());
-            stmt.setDate(7, producto.getFecha_creacion());
-            stmt.setString(8, producto.getTipo());
-            stmt.setString(9, producto.getImagen());
+            stmt.setInt(1, producto.getID_Categoria());
+            stmt.setString(2, producto.getNombre());
+            stmt.setString(3, producto.getDescripcion());
+            stmt.setFloat(4, producto.getPrecio());
+            stmt.setInt(5, producto.getStock());
+            stmt.setDate(6, producto.getFecha_creacion());
+            stmt.setString(7, producto.getImagen());
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -55,7 +53,7 @@ public class ProductosDao {
                         rs.getString("Descripcion"),
                         rs.getFloat("Precio"),
                         rs.getInt("Stock"),
-                        rs.getString("Fecha_creacion"),
+                        rs.getDate("Fecha_creacion"),
                         rs.getString("Tipo"),
                         rs.getString("Imagen")
                 );

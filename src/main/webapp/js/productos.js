@@ -91,6 +91,7 @@ formAgregarProducto.addEventListener('submit', async function(event) {
     console.log("Enviando producto para agregar")
 
 
+
     const nombre = document.querySelector('[name="nombre"]').value;
     const descripcion = document.querySelector('[name="descripcion"]').value;
     const precio = document.querySelector('[name="precio"]').value;
