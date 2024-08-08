@@ -181,7 +181,7 @@
     <div class="container-login100">
         <div class="wrap-login100">
             <div class="container contenedor-perfil">
-                <div class="close-icon" onclick="window.location.href='Prototipo.html';">✖️</div>
+                <div class="close-icon" onclick="window.location.href='homeadmin.jsp';">✖️</div>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <label for="file-upload" class="circle-img">

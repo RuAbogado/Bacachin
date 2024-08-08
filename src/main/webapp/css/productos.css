@@ -52,7 +52,7 @@ body {
     gap: 10px;
     margin-bottom: 20px;
 }
-
+.boton-cancelar,
 .button-group button {
     color: whitesmoke;
     padding: 10px 20px;
@@ -148,20 +148,57 @@ close-category:focus {
     margin-top: 20px;
 }
 
+
+
+
+
 .producto {
-    margin-bottom: 20px; /* Ajusta este valor según tus necesidades */
+    margin-bottom: 20px;
 }
 
-.producto img {
+.producto-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.producto-card:hover {
+    transform: scale(1.05);
+}
+
+.imagen-curso {
+    max-width: 100%;
+    border-radius: 5px;
     padding-left: 20px;
+
+}
+
+.info-card {
+    padding: 10px 0;
+    text-align: left;
+}
+
+.card-title {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.text-muted {
+    color: #999;
 }
 
 .u-full-width {
     width: 100%;
-    box-sizing: border-box; }
+}
+
 
 .u-pull-right {
-    float: right; }
-
-.u-pull-left {
-    float: left; }
+    float: right;
+}
