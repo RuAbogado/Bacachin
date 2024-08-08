@@ -47,6 +47,11 @@
             Carrito
           </a>
         </li>
+        <li>
+          <a href="index.jsp" class="nav-link text-white">
+            Cerrar sesion
+          </a>
+        </li>
       </ul>
     </nav>
     <label for="btn-menu">✖️</label>
