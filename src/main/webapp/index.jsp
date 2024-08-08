@@ -16,7 +16,7 @@
     <div class="contenedor-login100">
         <div class="envoltura-login100">
             <form id="formularioInicioSesion" class="formulario-login100 validate-form" action="Login" method="post">
-                <img src="img/portada.png" alt="Imagen" class="imagen-circular">
+                <img src="img/GIUP.png" alt="Imagen" class="imagen-circular">
                 <div class="envoltura-input100 validate-input" data-validate="Correo es requerido">
                     <label class="etiqueta-input100" for="correo">Correo</label>
                     <input class="input100" type="email" id="correo" name="correo" placeholder="Escriba su correo" required>
