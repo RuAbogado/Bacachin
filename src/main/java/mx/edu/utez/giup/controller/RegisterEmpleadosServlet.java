@@ -39,7 +39,7 @@ public class RegisterEmpleadosServlet extends HttpServlet {
             boolean isRegistered = userDao.registerUser(user);
 
             if (isRegistered) {
-                resp.sendRedirect("homecliente.jsp");
+                resp.sendRedirect("homeadmin.jsp");
             } else {
                 req.setAttribute("errorMessage", "Error en el registro. Por favor, intente nuevamente.");
                 req.getRequestDispatcher("registroEmpleado.jsp").forward(req, resp);

@@ -52,8 +52,7 @@
 <h2 class="cliente-tituloprincipal">Clientes</h2>
 <!-- Formulario para generar reporte -->
 <form id="reporteForm" method="post">
-    <button type="button" onclick="submitForm()">Generar Reporte</button>
-    <button id="delete_user" onclick="deleteUser(123)">Eliminar Usuario</button>
+    <button id="delete_user" onclick="deleteUser(123)">Desabilitar Usuario</button>
 
 </form>
 <!-- Contenedor para la tabla de clientes -->

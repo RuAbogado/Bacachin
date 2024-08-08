@@ -138,7 +138,7 @@
 <div class="content">
   <h1>Bienvenido </h1>
   <p>Esperamos que sus compras sean de su agrado</p>
-  <button class="btn btn-primary" onclick="location.href='Carrito.jsp'">Ver Menú</button>
+  <button class="btn btn-primary" onclick="location.href='Carrito.jsp'">Ver Carrito</button>
 </div>
 
 <div class="bubble"></div>
@@ -151,8 +151,6 @@
   <p>&copy; 2024 Sistema de Cafetería. Todos los derechos reservados.</p>
 </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
