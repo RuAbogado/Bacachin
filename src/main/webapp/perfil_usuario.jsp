@@ -23,6 +23,7 @@
         }
 
         .container-login100 {
+            margin-top: 240px;
             width: 100%;
             min-height: 100vh;
             display: flex;
@@ -33,12 +34,13 @@
         }
 
         .container-login100::before {
+            margin-top: -240px;
             content: "";
             display: block;
             position: absolute;
             z-index: -1;
             width: 100%;
-            height: 100%;
+            height: 1500px;
             top: 0;
             left: 0;
             background-color: rgba(255, 255, 255, 0.5);
