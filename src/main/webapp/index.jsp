@@ -8,7 +8,65 @@
     <link rel="icon" type="image/png" href="img/icons/icono.png"/>
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css">
+    <style>
+        @keyframes rise {
+            0% {
+                transform: translateX(0);
+                opacity: 0.1;
+            }
+            50% {
+                transform: translateX(10%);
+                opacity: 0.5;
+            }
+            100% {
+                bottom: 110%;
+                transform: translateX(-10%);
+                opacity: 0;
+            }
+        }
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: rise 10s infinite ease-in-out;
+            opacity: 0;
+        }
 
+        .bubble:nth-child(2) {
+            width: 30px;
+            height: 30px;
+            left: 25%;
+            animation-duration: 7s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 40px;
+            height: 40px;
+            left: 50%;
+            animation-duration: 5s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 50px;
+            height: 50px;
+            left: 75%;
+            animation-duration: 6s;
+            animation-delay: 3s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 60px;
+            height: 60px;
+            left: 90%;
+            animation-duration: 8s;
+            animation-delay: 4s;
+        }
+    </style>
 
 </head>
 <body>
@@ -34,7 +92,11 @@
         </div>
     </div>
 </div>
-
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
 
 <script src="js/index.js"></script>
 </body>
