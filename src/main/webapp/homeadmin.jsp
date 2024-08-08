@@ -67,12 +67,12 @@
             Empleados
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="#" class="nav-link text-white" data-target="inventario">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
             Inventario
           </a>
-        </li>
+        </li>-->
       </ul>
     </nav>
     <label for="btn-menu">✖️</label>

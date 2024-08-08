@@ -25,7 +25,7 @@
             <span class="fs-4" style="color: white">GIUP</span>
         </div>
         <nav class="menu">
-            <a href="perfil_usuario.jsp"><img alt="logo_perfil" src="img/usuario.png"></a>
+            <a href="perfil_usuario_empleado.jsp"><img alt="logo_perfil" src="img/usuario.png"></a>
         </nav>
     </div>
 </header>
@@ -54,17 +54,17 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white" data-target="compras">
+                    <a href="#" class="nav-link text-white" data-target="ventas">
                         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
                         Ventas
                     </a>
                 </li>
-                <li>
+                <!--<li>
                     <a href="#" class="nav-link text-white" data-target="inventario">
                         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                         Inventario
                     </a>
-                </li>
+                </li>-->
             </ul>
         </nav>
         <label for="btn-menu">✖️</label>
@@ -89,14 +89,14 @@
 
         </div>
 
-        <div id="compras" style="display:none;">
+        <div id="ventas" style="display:none;">
             <iframe src="ventas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
         </div>
 
-        <!--<div id="inventario" style="display:none;">
+        <div id="inventario" style="display:none;">
             <h2>Inventario</h2>
             <p>Contenido de la página de Inventario.</p>
-        </div> -->
+        </div>
     </div>
 </article>
 
