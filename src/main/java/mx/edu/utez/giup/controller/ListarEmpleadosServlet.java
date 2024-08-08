@@ -35,26 +35,20 @@ public class ListarEmpleadosServlet extends HttpServlet {
             out.println("<thead>");
             out.println("<tr>");
             out.println("<th>ID_Usuario</th>");
-            out.println("<th>ID_Empleado</th>");
             out.println("<th>Nombre</th>");
             out.println("<th>Apellido</th>");
             out.println("<th>Email</th>");
             out.println("<th>Teléfono</th>");
-            out.println("<th>Fecha_Contratacion</th>");
-            out.println("<th>Salario</th>");
             out.println("</tr>");
             out.println("</thead>");
             out.println("<tbody>");
             while (rs.next()) {
                 out.println("<tr>");
                 out.println("<td>" + rs.getInt("ID_Usuario") + "</td>");
-                out.println("<td>" + rs.getString("ID_Empleado") + "</td>");
                 out.println("<td>" + rs.getString("Nombre") + "</td>");
                 out.println("<td>" + rs.getString("Apellido") + "</td>");
                 out.println("<td>" + rs.getString("Correo") + "</td>");
                 out.println("<td>" + rs.getString("Telefono") + "</td>");
-                out.println("<td>" + rs.getString("Fecha_Contratacion") + "</td>");
-                out.println("<td>" + rs.getString("Salario") + "</td>");
                 out.println("</tr>");
             }
             out.println("</tbody>");

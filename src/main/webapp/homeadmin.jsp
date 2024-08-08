@@ -48,8 +48,8 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white" data-target="compras">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          <a href="#" class="nav-link text-white" data-target="ventas">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
             Ventas
           </a>
         </li>
@@ -92,9 +92,8 @@
 
     </div>
 
-    <div id="compras" style="display:none;">
-      <h2>Ventas</h2>
-      <p>Contenido de la página de ventas.</p>
+    <div id="ventas" style="display:none;">
+      <iframe src="ventas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
 
     <div id="productos" style="display:none;">
