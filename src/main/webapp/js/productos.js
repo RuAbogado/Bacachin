@@ -82,35 +82,26 @@ function cargarCategoriasYProductos() {
         });
 }
 
-// Función para cargar productos por categoría desde el servidor
-function cargarProductosPorCategoria(categoriaID) {
+    // funcion para cargar los productos por categorias
+
+    function cargarProductosPorCategoria(categoriaID) {
     fetch(`CargarProductos?categoriaID=${categoriaID}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
             }
-            return response.json();
+            return response.text();  // Se espera un texto HTML, no JSON
         })
-        .then(productos => {
+        .then(html => {
             const categoriaDiv = document.getElementById(`categoria-${categoriaID}`);
             const productosContainer = categoriaDiv.querySelector('.row');
 
-            productos.forEach(producto => {
-                const productoDiv = document.createElement('div');
-                productoDiv.className = 'producto';
-                productoDiv.innerHTML = `
-                    <h3>${producto.nombre}</h3>
-                    <p>${producto.descripcion}</p>
-                    <p class="precio">Precio: $${producto.precio.toFixed(2)}</p>
-                    <p>Stock: ${producto.stock}</p>
-                    <img src="${producto.imagen}" alt="${producto.nombre}" class="img-fluid">
-                `;
-                productosContainer.appendChild(productoDiv);
-            });
+            productosContainer.innerHTML = html; // Inserta el HTML recibido
         })
         .catch(error => {
             console.error('Ocurrió un error con el fetch:', error);
         });
+
 }
 
 // Iniciar la carga cuando el DOM esté completamente cargado
