@@ -40,20 +40,24 @@ public class ProductosDao {
     }
 
 
-    // Método para cargar todos los productos
-    public List<Productos> cargarProductos() {
+    // Método para cargar productos por categoría
+    public List<Productos> cargarProductosPorCategoria(int categoriaID) {
         List<Productos> productosList = new ArrayList<>();
-        String query = "SELECT * FROM productos";
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+        String query = "{CALL GetProductosPorCategoria(?)}";
+
+        try (CallableStatement stmt = connection.prepareCall(query)) {
+            stmt.setInt(1, categoriaID);
+            ResultSet rs = stmt.executeQuery();
+
             while (rs.next()) {
                 Productos producto = new Productos(
                         rs.getInt("ID_Producto"),
-                        rs.getInt("ID_categoria"),
+                        rs.getInt("ID_Categoria"),
                         rs.getString("Nombre"),
                         rs.getString("Descripcion"),
                         rs.getFloat("Precio"),
                         rs.getInt("Stock"),
-                        rs.getDate("Fecha_creacion"),
+                        rs.getDate("Fecha_Creacion"),
                         rs.getString("Tipo"),
                         rs.getString("Imagen")
                 );
@@ -64,6 +68,7 @@ public class ProductosDao {
         }
         return productosList;
     }
+
 
     // Método para eliminar un producto
     public boolean eliminarProducto(int idProducto) {

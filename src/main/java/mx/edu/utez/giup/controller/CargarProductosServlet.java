@@ -20,8 +20,10 @@ public class CargarProductosServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
+        int categoriaID = Integer.parseInt(request.getParameter("categoriaID"));
+
         ProductosDao productosDao = new ProductosDao();
-        List<Productos> productos = productosDao.cargarProductos();
+        List<Productos> productos = productosDao.cargarProductosPorCategoria(categoriaID);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(productos);

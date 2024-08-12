@@ -41,8 +41,9 @@ function removeAllChildren(element) {
     }
 }
 
-// Cargar categorías desde el servidor
-function cargarCategorias(){
+// Cargar categorías y productos desde el servidor
+function cargarCategoriasYProductos() {
+    // Primero, cargar las categorías
     fetch('ObtenerCategorias')
         .then(response => response.text())
         .then(data => {
@@ -50,7 +51,7 @@ function cargarCategorias(){
             const doc = parser.parseFromString(data, 'text/html');
             const categorias = doc.querySelectorAll('option');
 
-            removeAllChildren(document.getElementById('productos-container'))
+            removeAllChildren(document.getElementById('productos-container'));
             categorias.forEach(category => {
                 const newCategoryContainer = document.createElement('div');
                 newCategoryContainer.className = 'categoria-container mb-5';
@@ -66,13 +67,14 @@ function cargarCategorias(){
                 <div class="row" id="${category.value}"></div>
                 `;
                 document.getElementById('productos-container').appendChild(newCategoryContainer);
+
+                // Cargar productos para esta categoría
+                cargarProductosPorCategoria(category.value);
             });
 
             categorias.forEach(categoria => {
                 document.getElementById('categoria-producto').appendChild(categoria);
             });
-
-            cargarEventListenersEliminar();
         })
         .catch(error => {
             console.error('Error:', error);
@@ -80,9 +82,47 @@ function cargarCategorias(){
         });
 }
 
+// Función para cargar productos por categoría desde el servidor
+function cargarProductosPorCategoria(categoriaID) {
+    fetch(`CargarProductos?categoriaID=${categoriaID}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+        })
+        .then(productos => {
+            const categoriaDiv = document.getElementById(`categoria-${categoriaID}`);
+            const productosContainer = categoriaDiv.querySelector('.row');
+
+            productos.forEach(producto => {
+                const productoDiv = document.createElement('div');
+                productoDiv.className = 'producto';
+                productoDiv.innerHTML = `
+                    <h3>${producto.nombre}</h3>
+                    <p>${producto.descripcion}</p>
+                    <p class="precio">Precio: $${producto.precio.toFixed(2)}</p>
+                    <p>Stock: ${producto.stock}</p>
+                    <img src="${producto.imagen}" alt="${producto.nombre}" class="img-fluid">
+                `;
+                productosContainer.appendChild(productoDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Ocurrió un error con el fetch:', error);
+        });
+}
+
+// Iniciar la carga cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
-    cargarCategorias()
+    cargarCategoriasYProductos();
 });
+
+
+
+//-------------------------------------------------
+
+
 
 // Agregar un nuevo producto
 const formAgregarProducto = document.getElementById('form-agregar-producto');
@@ -290,6 +330,7 @@ function cargarEventListenersEliminar() {
             })
                 .then(response => response.text())
                 .then(data => {
+                    console.log(data);
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(data, 'text/html');
                     const success = doc.querySelector('h1').textContent.includes('eliminado');
@@ -305,62 +346,5 @@ function cargarEventListenersEliminar() {
                 });
         });
     });
-
-
-    const productosContainer = document.getElementById('productos-container');
-
-        // Función para cargar productos desde el servlet
-        function cargarProductos() {
-            fetch('CargarProductos')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('internet no responde');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    mostrarProductosPorCategoria(data);
-                })
-                .catch(error => {
-                    console.error('Ocurrio un error con el fetch', error);
-                });
-        }
-
-        // Función para mostrar los productos organizados por categoría
-    function mostrarProductosPorCategoria(productos) {
-        productosContainer.innerHTML = '';
-
-        // Agrupamos productos por categoría
-        const categorias = productos.reduce((acc, producto) => {
-            if (!acc[producto.categoria]) {
-                acc[producto.categoria] = [];
-            }
-            acc[producto.categoria].push(producto);
-            return acc;
-        }, {});
-
-        // Mostrar productos por categoría
-        for (const categoria in categorias) {
-            const productosPorCategoria = categorias[categoria];
-            const categoriaDiv = document.createElement('div');
-            categoriaDiv.className = 'categoria';
-            categoriaDiv.innerHTML = `<h2>${categoria}</h2>`;
-
-            productosPorCategoria.forEach(producto => {
-                const productoDiv = document.createElement('div');
-                productoDiv.className = 'producto';
-                productoDiv.innerHTML = `
-            <h3>${producto.nombre}</h3>
-            <p>${producto.descripcion}</p>
-            <p class="precio">Precio: $${producto.precio.toFixed(2)}</p>
-            <p>Stock: ${producto.stock}</p>
-            <img src="${producto.imagen}" alt="${producto.nombre}" class="img-fluid">
-        `;
-                categoriaDiv.appendChild(productoDiv);
-            });
-
-            productosContainer.appendChild(categoriaDiv);
-        }
-    }
 
 }

@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @WebServlet("/ListarClientes")
 public class ListarClientesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -39,6 +39,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<th>Apellido</th>");
             out.println("<th>Email</th>");
             out.println("<th>Teléfono</th>");
+            out.println("<th>Acciones</th>");  // Nueva columna para el botón de deshabilitar
             out.println("</tr>");
             out.println("</thead>");
             out.println("<tbody>");
@@ -49,6 +50,8 @@ public class ListarClientesServlet extends HttpServlet {
                 out.println("<td>" + rs.getString("Apellido") + "</td>");
                 out.println("<td>" + rs.getString("Correo") + "</td>");
                 out.println("<td>" + rs.getString("Telefono") + "</td>");
+                // Columna del botón de deshabilitar
+                out.println("<td><button class='deshabilitar-btn' onclick='deshabilitarUsuario(" + rs.getInt("ID_Usuario") + ")'>Deshabilitar</button></td>");
                 out.println("</tr>");
             }
             out.println("</tbody>");
