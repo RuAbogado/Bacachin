@@ -91,8 +91,7 @@ function cargarCategoriasYProductos() {
                 throw new Error('Error en la respuesta del servidor');
             }
             return response.text();  // Se espera un texto HTML, no JSON
-        })
-        .then(html => {
+        }).then(html => {
             const categoriaDiv = document.getElementById(`categoria-${categoriaID}`);
             const productosContainer = categoriaDiv.querySelector('.row');
 

@@ -38,7 +38,7 @@ public class ReporteServlet extends HttpServlet {
         Connection con = null;
         try {
             // Seleccionar una imagen de los assets (logo)
-            String logoPath = req.getSession().getServletContext().getRealPath("/img/logo.PNG");
+            String logoPath = req.getSession().getServletContext().getRealPath("/img/GIUP.png");
             if (logoPath == null || logoPath.isEmpty()) {
                 throw new IOException("La ruta del logo es nula o está vacía");
             }

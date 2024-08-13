@@ -16,6 +16,9 @@ public class CargarProductosServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST"); // Métodos permitidos
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Encabezados permitidosgit
         response.setContentType("text/html;charset=UTF-8");
 
         int categoriaID = Integer.parseInt(request.getParameter("categoriaID"));

@@ -6,25 +6,25 @@
     id: 1,
     nombre: 'Patata',
     precio: 1,
-    imagen: 'patata.jpg'
+    imagen: 'portada_cafe.png'
 },
 {
     id: 2,
     nombre: 'Cebolla',
     precio: 1.2,
-    imagen: 'cebolla.jpg'
+    imagen: 'portada_cafe.png'
 },
 {
     id: 3,
     nombre: 'Calabacin',
     precio: 2.1,
-    imagen: 'calabacin.jpg'
+    imagen: 'portada_cafe.png'
 },
 {
     id: 4,
     nombre: 'Fresas',
     precio: 0.6,
-    imagen: 'fresas.jpg'
+    imagen: 'portada_cafe.png'
 }
 
     ];
@@ -157,7 +157,7 @@
 }
 
     /**
-     * Varia el carrito y vuelve a dibujarlo
+     * Vacia el carrito y vuelve a dibujarlo
      */
     function vaciarCarrito() {
     // Limpiamos los productos guardados

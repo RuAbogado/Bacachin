@@ -228,16 +228,15 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script>
+    const usuarioId = 1; // ID del usuario que quieres cargar
+    let datosOriginales = {};
 
-        const usuarioId = 1; // ID del usuario que quieres cargar
-        let datosOriginales = {};
-
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
         cargarDatosUsuario();
     });
 
-        const cargarDatosUsuario = () => {
-        fetch(`usuarioId${usuarioId}`)
+    const cargarDatosUsuario = () => {
+        fetch(`CargarUsuario?ID_Usuario=${usuarioId}`)  // Cambié la URL para que use la variable usuarioId
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');
@@ -246,13 +245,12 @@
             })
             .then(data => {
                 datosOriginales = data;  // Guardar los datos originales
-                document.getElementById("nombre").textContent = data.nombre;
-                document.getElementById("apellido").textContent = data.apellido;
-                document.getElementById("nombre_usuario").textContent = data.nombreUsuario;
-                document.getElementById("telefono").textContent = data.telefono;
-                document.getElementById("sexo").textContent = data.sexo;
-                document.getElementById("email-usuario").textContent = data.email;
-                document.getElementById("foto-perfil").src = data.fotoPerfil || "img/icons/imagen.png";
+                document.getElementById("nombre").value = data.nombre;  // Usar .value para los inputs si son campos de entrada
+                document.getElementById("apellido").value = data.apellido;
+                document.getElementById("nombre_usuario").value = data.nombreUsuario;
+                document.getElementById("telefono").value = data.telefono;
+                document.getElementById("email-usuario").value = data.email;
+                document.getElementById("foto-perfil").src = data.imagen || "img/user.png";
             })
             .catch(error => {
                 console.error('Error al cargar los datos del usuario:', error);

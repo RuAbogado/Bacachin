@@ -26,6 +26,7 @@
             <!-- Precio total -->
             <p class="text-right">Total: $<span id="total"></span></p>
             <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+            <button id="boton-solicitud" class="btn btn-danger">Realizar Solicitud</button>
         </aside>
     </div>
 </div>
