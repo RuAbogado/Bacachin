@@ -47,6 +47,13 @@
             Carrito
           </a>
         </li>
+
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white" data-target="SolicitudesUsuario">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            Solicitudes
+          </a>
+        </li>
         <li>
           <a href="index.jsp" class="nav-link text-white">
             Cerrar sesion
@@ -60,13 +67,18 @@
 
 <article>
   <div class="flex-grow-1" id="content" >
-    <div id="inicio" style="margin-top: 70px">
+    <div id="inicio" style="">
       <iframe src="inicioCliente.jsp" width="100%" height="900px"></iframe>
 
     </div>
 
     <div id="Carrito" style="margin-top: 70px; display:none;">
       <iframe src="Carrito.jsp" width="100%" height="100%"></iframe>
+
+    </div>
+
+    <div id="Solicitudes" style="margin-top: 20px; display:none;">
+      <iframe src="SolicitudesEmpleado.jsp" width="100%" height="100%"></iframe>
 
     </div>
 

@@ -25,7 +25,7 @@
             <span class="fs-4" style="color: white">GIUP</span>
         </div>
         <nav class="menu">
-            <a href="perfil_usuario_empleado.jsp"><img alt="logo_perfil" src="img/usuario.png"></a>
+            <a href="perfil_usuario_cliente.jsp"><img alt="logo_perfil" src="img/usuario.png"></a>
         </nav>
     </div>
 </header>
@@ -41,30 +41,19 @@
                         Inicio
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="nav-link text-white" data-target="clientes">
-                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                        Clientes
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link text-white" data-target="Carrito">
                         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                         Carrito
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="nav-link text-white" data-target="ventas">
-                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                        Ventas
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white" data-target="SolicitudesUsuario">
+                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                        Solicitudes
                     </a>
                 </li>
-                <!--<li>
-                    <a href="#" class="nav-link text-white" data-target="inventario">
-                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                        Inventario
-                    </a>
-                </li>-->
                 <li>
                     <a href="index.jsp" class="nav-link text-white">
                         Cerrar sesion
@@ -78,14 +67,8 @@
 
 <article>
     <div class="flex-grow-1" id="content" >
-        <div id="inicio" style="margin-top: 70px">
+        <div id="inicio" style="">
             <iframe src="inicioCliente.jsp" width="100%" height="900px"></iframe>
-
-        </div>
-
-        <div id="clientes" style="display:none;">
-
-            <iframe src="clientes.jsp" width="100%" height="500px"></iframe>
 
         </div>
 
@@ -94,37 +77,13 @@
 
         </div>
 
-        <div id="ventas" style="display:none;">
-            <iframe src="ventas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
+        <div id="Solicitudes" style="margin-top: 20px; display:none;">
+            <iframe src="SolicitudesEmpleado.jsp" width="100%" height="100%"></iframe>
+
         </div>
 
-        <div id="inventario" style="display:none;">
-            <h2>Inventario</h2>
-            <p>Contenido de la página de Inventario.</p>
-        </div>
     </div>
 </article>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar Productos</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar Cambios</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
