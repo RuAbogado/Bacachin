@@ -50,20 +50,13 @@
 </head>
 <body>
 <h2 class="cliente-tituloprincipal">Clientes</h2>
-<!-- Formulario para generar reporte -->
-<form id="reporteForm" method="post">
-    <button id="delete_user" onclick="deleteUser(123)">Desabilitar Usuario</button>
 
-</form>
 <!-- Contenedor para la tabla de clientes -->
 <div id="clientesContainer">
     <jsp:include page="/ListarClientes" />
 </div>
 <script>
-    // Función para manejar el formulario de reporte
-    function submitForm() {
-        document.getElementById('reporteForm').submit();
-    }
+
     //Funcion para eliminar un usuario
     function deleteUser(userId) {
         if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {

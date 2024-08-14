@@ -206,9 +206,6 @@
                             <span>Teléfono: </span><span id="telefono" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Sexo: </span><span id="sexo" class="font-weight-bold"></span>
-                        </div>
-                        <div>
                             <span>E-mail: </span><span id="email-usuario" class="font-weight-bold"></span>
                         </div>
                         <p class="estado mt-3">Estado: <span id="estado-usuario"></span></p>

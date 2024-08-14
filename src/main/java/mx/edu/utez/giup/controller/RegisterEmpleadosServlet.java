@@ -5,10 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import mx.edu.utez.giup.dao.EmpleadoDao;
 import mx.edu.utez.giup.dao.UserDao;
+import mx.edu.utez.giup.model.Empleado;
 import mx.edu.utez.giup.model.User;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 @WebServlet(name = "RegisterEmpleadosServlet", urlPatterns = "/RegisterEmpleados")
@@ -35,6 +38,16 @@ public class RegisterEmpleadosServlet extends HttpServlet {
         user.setImagen("user.png");
 
         UserDao userDao = new UserDao();
+
+        int salario = Integer.parseInt(req.getParameter("salario"));
+        Date fecha = Date.valueOf(req.getParameter("fecha"));
+
+        Empleado empleado = new Empleado();
+        empleado.setFecha_Contratacion(fecha);
+        empleado.setSalario(salario);
+
+        EmpleadoDao empleadoDao = new EmpleadoDao();
+
         try {
             boolean isRegistered = userDao.registerUser(user);
 

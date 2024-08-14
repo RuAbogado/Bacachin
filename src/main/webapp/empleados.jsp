@@ -87,16 +87,16 @@
         <input class="input100" type="password" id="confirmarContraseña" name="confirmarContraseña" placeholder="Repita su contraseña" required minlength="5">
     </div>
 
+    <div class="wrap-input100">
+        <label class="label-input100" for="Salario">Salario:</label>
+        <input class="input100" type="number" id="Salario" name="Salario" placeholder="Salario" required minlength="5">
+    </div>
+
     <div class="container-login100-form-btn">
-        <button class="login100-form-btn" type="submit">Registrar usuario</button>
+        <button class="login100-form-btn" type="submit">Registrar Empleado</button>
         <button class="login100-form-btn" type="button" onclick="borrarRegistro()">Borrar registro</button>
     </div>
 
-</form>
-<!-- Formulario para generar reporte -->
-<form id="reporteForm" method="post">
-    <button type="button" onclick="submitForm()">Agregar Empleado</button>
-    <button id="delete_user" onclick="deleteUser(123)">Eliminar Empleado</button>
 </form>
 <!-- Contenedor para la tabla de clientes -->
 <div id="clientesContainer">

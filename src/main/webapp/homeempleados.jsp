@@ -49,7 +49,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white" data-target="SolicitudesUsuario">
+                    <a href="#" class="nav-link text-white" data-target="SolicitudesEmpleado">
                         <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                         Solicitudes
                     </a>
