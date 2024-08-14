@@ -163,20 +163,20 @@ formAgregarProducto.addEventListener('submit', async function(event) {
 
         if (success) {
             const nuevoProducto = document.createElement('div');
-            nuevoProducto.className = 'col-md-3 producto';
+            // Asumiendo que `nuevoProducto` es un elemento de producto que se está creando
+            nuevoProducto.className = 'producto'; // Cambiado a 'producto' para coincidir con el CSS
             nuevoProducto.innerHTML = `
-            <div>
-                <div class="four columns">
-                    <img src="${URL.createObjectURL(imagen)}" class="imagen-curso u-full-width" alt="${nombre}">
-                    <div class="info-card">
-                        <h5 class="card-title">${nombre}</h5>
-                        <p class="card-text">${descripcion}</p>
-                        <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
-                        <a href="#" class="u-full-width boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
-                    </div>
-                </div>
-            </div>
-        `;
+    <div class="producto-content">
+        <img src="${URL.createObjectURL(imagen)}" class="imagen-curso" alt="${nombre}">
+        <div class="info-card">
+            <h5 class="card-title">${nombre}</h5>
+            <p class="card-text">${descripcion}</p>
+            <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
+            <a href="#" class="boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
+        </div>
+    </div>
+`;
+
             document.getElementById(categoria).appendChild(nuevoProducto);
 
             modalProducto.style.display = "none";
