@@ -1,49 +1,27 @@
 // Obtener elementos del DOM
-const btnAgregarProducto = document.getElementById('add-product-btn');
 const btnAgregarCategoria = document.getElementById('add-category-btn');
-const modalProducto = document.getElementById('productModal');
 const modalCategoria = document.getElementById('categoryModal');
-const spanCerrarProducto = modalProducto.getElementsByClassName('close-product')[0];
 const spanCerrarCategoria = modalCategoria.getElementsByClassName('close-category')[0];
 
-// Mostrar modales
-btnAgregarProducto.onclick = function() {
-    modalProducto.style.display = "block";
-}
-
+// Mostrar modal para agregar categoría
 btnAgregarCategoria.onclick = function() {
     modalCategoria.style.display = "block";
 }
 
-// Cerrar modales
-spanCerrarProducto.onclick = function() {
-    modalProducto.style.display = "none";
-}
-
+// Cerrar modal de categoría
 spanCerrarCategoria.onclick = function() {
     modalCategoria.style.display = "none";
 }
 
 // Cerrar modal cuando se hace clic fuera de él
 window.onclick = function(event) {
-    if (event.target == modalProducto) {
-        modalProducto.style.display = "none";
-    }
     if (event.target == modalCategoria) {
         modalCategoria.style.display = "none";
     }
 }
 
-// Eliminar todos los hijos de un elemento
-function removeAllChildren(element) {
-    while (element.firstChild) {
-        element.removeChild(element.firstChild);
-    }
-}
-
-// Cargar categorías y productos desde el servidor
-function cargarCategoriasYProductos() {
-    // Primero, cargar las categorías
+// Cargar categorías desde el servidor
+function cargarCategorias() {
     fetch('ObtenerCategorias')
         .then(response => response.text())
         .then(data => {
@@ -51,7 +29,7 @@ function cargarCategoriasYProductos() {
             const doc = parser.parseFromString(data, 'text/html');
             const categorias = doc.querySelectorAll('option');
 
-            removeAllChildren(document.getElementById('productos-container'));
+            removeAllChildren(document.getElementById('clientesContainer'));
             categorias.forEach(category => {
                 const newCategoryContainer = document.createElement('div');
                 newCategoryContainer.className = 'categoria-container mb-5';
@@ -60,20 +38,11 @@ function cargarCategoriasYProductos() {
                 <div class="categoria-header">
                     <h1 class="encabezado">${category.text}</h1>
                     <div class="container-btn">
-                        <button class="boton-agregar" onclick="mostrarFormulario(${category.value})">Agregar ${category.text}</button>
                         <button class="boton-eliminar" onclick="eliminarCategoria(${category.value})">Eliminar Categoría</button>
                     </div>
                 </div>
-                <div class="row" id="${category.value}"></div>
                 `;
-                document.getElementById('productos-container').appendChild(newCategoryContainer);
-
-                // Cargar productos para esta categoría
-                cargarProductosPorCategoria(category.value);
-            });
-
-            categorias.forEach(categoria => {
-                document.getElementById('categoria-producto').appendChild(categoria);
+                document.getElementById('clientesContainer').appendChild(newCategoryContainer);
             });
         })
         .catch(error => {
@@ -81,117 +50,6 @@ function cargarCategoriasYProductos() {
             alert('Error al cargar las categorías.');
         });
 }
-
-    // funcion para cargar los productos por categorias
-
-    function cargarProductosPorCategoria(categoriaID) {
-    fetch(`CargarProductos?categoriaID=${categoriaID}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error en la respuesta del servidor');
-            }
-            return response.text();  // Se espera un texto HTML, no JSON
-        }).then(html => {
-            const categoriaDiv = document.getElementById(`categoria-${categoriaID}`);
-            const productosContainer = categoriaDiv.querySelector('.row');
-
-            productosContainer.innerHTML = html; // Inserta el HTML recibido
-        })
-        .catch(error => {
-            console.error('Ocurrió un error con el fetch:', error);
-        });
-
-}
-
-// Iniciar la carga cuando el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', function() {
-    cargarCategoriasYProductos();
-});
-
-
-
-//-------------------------------------------------
-
-
-
-// Agregar un nuevo producto
-const formAgregarProducto = document.getElementById('form-agregar-producto');
-formAgregarProducto.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    console.log("Enviando producto para agregar")
-
-
-
-    const nombre = document.querySelector('[name="nombre"]').value;
-    const descripcion = document.querySelector('[name="descripcion"]').value;
-    const precio = document.querySelector('[name="precio"]').value;
-    const stock = document.querySelector('[name="stock"]').value;
-    const idCategoria = document.querySelector('[name="ID_Categoria"]').value;
-    const tipo = ' ';
-    const imagen = document.querySelector('[name="imagen"]').files[0];
-    const categoria = idCategoria;
-    const modalProducto = document.getElementById('productModal');
-
-    if (!nombre || !descripcion || isNaN(parseFloat(precio)) || isNaN(parseInt(stock)) || !idCategoria || !imagen) {
-        alert('Por favor complete todos los campos requeridos.');
-        return;
-    }
-
-    let formData = new FormData();
-    formData.append('nombre', nombre);
-    formData.append('descripcion', descripcion);
-    formData.append('precio', parseFloat(precio));
-    formData.append('stock', parseInt(stock));
-    formData.append('ID_Categoria', idCategoria);
-    formData.append('Tipo', tipo);
-    formData.append('imagen', imagen);
-
-    try {
-        const response = await fetch('AgregarProducto', {
-            method: 'POST',
-            body: formData
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
-        const success = doc.querySelector('h1') && doc.querySelector('h1').textContent.includes('exitosamente');
-
-        if (success) {
-            const nuevoProducto = document.createElement('div');
-            // Asumiendo que `nuevoProducto` es un elemento de producto que se está creando
-            nuevoProducto.className = 'producto'; // Cambiado a 'producto' para coincidir con el CSS
-            nuevoProducto.innerHTML = `
-    <div class="producto-content">
-        <img src="${URL.createObjectURL(imagen)}" class="imagen-curso" alt="${nombre}">
-        <div class="info-card">
-            <h5 class="card-title">${nombre}</h5>
-            <p class="card-text">${descripcion}</p>
-            <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
-            <a href="#" class="boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
-        </div>
-    </div>
-`;
-
-            document.getElementById(categoria).appendChild(nuevoProducto);
-
-            modalProducto.style.display = "none";
-            formAgregarProducto.reset();
-            cargarEventListenersEliminar();
-        } else {
-            alert('Error al agregar el producto.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error en la solicitud.');
-    }
-});
-
-
 
 // Agregar una nueva categoría
 document.getElementById('category-form').addEventListener('submit', function(e) {
@@ -215,30 +73,8 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
             const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
 
             if (success) {
-                const select = document.getElementById('categoria-producto');
-                const option = document.createElement('option');
-                option.value = ID_Categoria;
-                option.text = newCategory;
-                select.add(option);
-
-                const newCategoryContainer = document.createElement('div');
-                newCategoryContainer.className = 'categoria-container mb-5';
-                newCategoryContainer.id = `categoria-${ID_Categoria}`;
-                newCategoryContainer.innerHTML = `
-                <div class="categoria-header">
-                    <h1 class="encabezado">${newCategory}</h1>
-                    <div class="container-btn">
-                        <button class="boton-agregar" onclick="mostrarFormulario(${ID_Categoria})">Agregar ${newCategory}</button>
-                        <button class="boton-eliminar" onclick="eliminarCategoria(${ID_Categoria})">Eliminar Categoría</button>
-                    </div>
-                </div>
-                <div class="row" id="${ID_Categoria}"></div>
-            `;
-                document.getElementById('productos-container').appendChild(newCategoryContainer);
-
+                cargarCategorias();  // Recargar categorías después de agregar
                 modalCategoria.style.display = "none";
-                document.getElementById('new-category').value = '';
-                document.getElementById('category-description').value = '';
             } else {
                 alert('Error al agregar la categoría.');
             }
@@ -255,24 +91,6 @@ function eliminarCategoria(ID_Categoria) {
         return;
     }
 
-    const categoria = document.getElementById(`categoria-${ID_Categoria}`);
-    if (categoria) {
-        categoria.parentNode.removeChild(categoria);
-    }
-
-    const select = document.getElementById('categoria-producto');
-    for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].value == ID_Categoria) {
-            select.remove(i);
-            break;
-        }
-    }
-
-
-    //Si tengo un formulario con imagenes
-    //agarra el formulario en una var
-    //luego hacer un
-    //var datos= new FormData(x)
     fetch('EliminarCategoria', {
         method: 'POST',
         headers: {
@@ -286,8 +104,9 @@ function eliminarCategoria(ID_Categoria) {
 
             if (!data.success) {
                 alert('Error al eliminar la categoría.');
-            }else{
-                alert('La categoria se elimino correctamente.')
+            } else {
+                document.getElementById(`categoria-${ID_Categoria}`).remove();
+                alert('La categoría se eliminó correctamente.');
             }
         })
         .catch(error => {
@@ -296,45 +115,14 @@ function eliminarCategoria(ID_Categoria) {
         });
 }
 
-// Mostrar formulario para agregar producto en una categoría específica
-function mostrarFormulario(categoria) {
-    modalProducto.style.display = "block";
-    document.getElementById('categoria-producto').value = categoria;
+// Eliminar todos los hijos de un elemento
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
 }
 
-// Eliminar un producto
-function cargarEventListenersEliminar() {
-    const botonesEliminar = document.querySelectorAll('.eliminar-producto');
-    botonesEliminar.forEach(boton => {
-        boton.addEventListener('click', function (e) {
-            e.preventDefault();
-            const producto = this.closest('.producto');
-            const productoId = producto.getAttribute('data-id');
-
-            fetch('EliminarProducto', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `ID_Producto=${encodeURIComponent(productoId)}`
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log(data);
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text/html');
-                    const success = doc.querySelector('h1').textContent.includes('eliminado');
-                    if (success) {
-                        producto.remove();
-                    } else {
-                        alert('Error al eliminar el producto.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error en la solicitud.');
-                });
-        });
-    });
-
-}
+// Iniciar la carga cuando el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', function() {
+    cargarCategorias();
+});
