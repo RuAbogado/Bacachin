@@ -56,25 +56,27 @@
     <jsp:include page="/ListarClientes" />
 </div>
 <script>
-
-    //Funcion para eliminar un usuario
-    function deleteUser(userId) {
-        if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-            fetch(`/delete_user/${userId}`, {
-                method: 'DELETE',
+    // Función para deshabilitar un usuario
+    function deshabilitarUsuario(userId) {
+        if (confirm('¿Estás seguro de que deseas deshabilitar este usuario?')) {
+            fetch(`/deshabilitar_usuario/${userId}`, {
+                method: 'PUT', // Usualmente para deshabilitar se usa PUT
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
                     if (response.ok) {
-                        alert('Usuario eliminado con éxito');
-                        // Aquí puedes agregar código para actualizar la UI
+                        alert('Usuario deshabilitado con éxito');
+                        location.reload(); // Recargar la página para actualizar la tabla
                     } else {
-                        alert('Hubo un problema al eliminar el usuario');
+                        alert('Hubo un problema al deshabilitar el usuario');
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al deshabilitar el usuario');
+                });
         }
     }
 </script>

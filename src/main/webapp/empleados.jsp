@@ -9,46 +9,44 @@
     <link href="css/productos.css" rel="stylesheet">
 
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+
+        .empleados-tituloprincipal {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #30303F;
+            margin-top: 60px;
+            margin-bottom: 20px;
         }
-        th {
-            background-color: #f2f2f2;
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 30px;
         }
-        tr:nth-child(even) {
-            background-color: #ffffff;
-        }
+
         button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 24px;
+            font-size: 18px;
             cursor: pointer;
             border: none;
             background-color: #60410d;
             color: white;
             border-radius: 5px;
+            margin-bottom: 20px;
         }
+
         button:hover {
-            background-color: #503208;
+            background-color: #40280a;
         }
-        .empleados-tituloprincipal {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #30303F;
-            margin-top: 60px;
-            margin-bottom: 70px;
-        }
-        #clientesContainer table {
-            background-color: #ffffff;
-        }
+
         .modal {
-            display: none; /* Ocultar el formulario por defecto */
+            display: none;
             position: fixed;
             z-index: 1;
             left: 0;
@@ -60,33 +58,77 @@
             justify-content: center;
             align-items: center;
         }
+
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
+            margin: 5% auto;
+            padding: 30px;
             border: 1px solid #888;
             width: 80%;
             max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #30303F;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container-login100-form-btn {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .container-login100-form-btn button {
+            width: 48%;
+        }
+
     </style>
 </head>
 <body>
 <h2 class="empleados-tituloprincipal">Empleados</h2>
 
 <!-- Botón para mostrar el formulario -->
-<button class="login100-form-btn" type="button" id="agregar-empleado">Nuevo empleado</button>
+<div class="button-container">
+    <button class="login100-form-btn" type="button" id="agregar-empleado">Nuevo empleado</button>
+</div>
 
 <!-- Contenedor para el formulario -->
 <div id="formularioContainer" class="modal">
@@ -94,6 +136,7 @@
         <span class="close" id="closeForm">&times;</span>
         <!-- Formulario para agregar empleados -->
         <form id="registroForm" method="post" action="RegisterEmpleados" onsubmit="return validarYEnviar()">
+            <h2>Agregar Nuevo Empleado</h2>
             <label class="label-input100" for="nombre">Nombre:</label>
             <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba su nombre" required>
 
@@ -129,42 +172,9 @@
     </div>
 </div>
 
-<!-- Contenedor para la tabla de empleados -->
+<!-- Contenedor para la tabla de clientes -->
 <div id="clientesContainer">
-    <table>
-        <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Nombre de Usuario</th>
-            <th>Teléfono</th>
-            <th>Correo</th>
-            <th>Salario</th>
-            <th>Fecha de Contratación</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            // Supongamos que tienes una lista de empleados en una variable llamada "empleados"
-            List<Empleado> empleados = (List<Empleado>) request.getAttribute("empleados");
-            for (Empleado empleado : empleados) {
-        %>
-        <tr>
-            <td><%= empleado.getNombre() %></td>
-            <td><%= empleado.getApellido() %></td>
-            <td><%= empleado.getUsuario() %></td>
-            <td><%= empleado.getTelefono() %></td>
-            <td><%= empleado.getCorreo() %></td>
-            <td><%= empleado.getSalario() %></td>
-            <td><%= empleado.getFechaContratacion() %></td>
-            <td>
-                <button onclick="deleteUser('<%= empleado.getId() %>')">Eliminar Empleado</button>
-            </td>
-        </tr>
-        <% } %>
-        </tbody>
-    </table>
+    <jsp:include page="/ListarEmpleados" />
 </div>
 
 <script>
@@ -236,14 +246,15 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        alert('Empleado eliminado con éxito');
-                        // Aquí puedes agregar código para actualizar la UI
-                        location.reload(); // Recargar la página para actualizar la lista
+                        alert('Usuario eliminado correctamente.');
+                        location.reload(); // Recargar la página para actualizar la lista de empleados
                     } else {
-                        alert('Hubo un problema al eliminar al Empleado');
+                        alert('Hubo un problema al eliminar el usuario.');
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    alert('Error en la solicitud: ' + error);
+                });
         }
     }
 </script>
