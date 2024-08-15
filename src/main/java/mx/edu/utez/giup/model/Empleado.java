@@ -2,7 +2,7 @@ package mx.edu.utez.giup.model;
 
 import java.sql.Date;
 
-public class Empleado public class Empleado {
+ public class Empleado {
 
     private int ID_Empleado;
     private int ID_Usuario;
