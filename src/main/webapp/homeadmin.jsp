@@ -42,15 +42,17 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white" data-target="clientes">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-            Clientes
-          </a>
-        </li>
-        <li>
           <a href="#" class="nav-link text-white" data-target="ventas">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
             Ventas
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link text-white" data-target="categoriasListadas">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#grid"/>
+            </svg>
+            Categorias
           </a>
         </li>
         <li>
@@ -67,12 +69,12 @@
             Empleados
           </a>
         </li>
-        <!-- <li>
-          <a href="#" class="nav-link text-white" data-target="inventario">
-            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-            Inventario
+        <li>
+          <a href="#" class="nav-link text-white" data-target="clientes">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+            Clientes
           </a>
-        </li>-->
+        </li>
         <li>
           <a href="index.jsp" class="nav-link text-white">
             Cerrar sesion
@@ -90,31 +92,34 @@
       <iframe src="inicio.jsp" width="100%" height="900px"></iframe>
 
     </div>
-    <!-- Parte Efrain -->
-    <div id="clientes" style="display:none;">
-
-      <iframe src="clientes.jsp" width="100%" height="500px"></iframe>
-
-    </div>
 
     <div id="ventas" style="display:none;">
       <iframe src="ventas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
 
+    <div id="categoriasListadas" style="display:none; margin-top: 100px;">
+
+      <iframe src="categoriasListadas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
+
+    </div>
+
     <div id="productos" style="display:none;">
-      <!-- Contenido cargado dinámicamente aquí -->
+
       <iframe src="productos.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
+
     </div>
     <!-- Parte Alison -->
     <div id="empleados" style="display:none;">
+
       <h2>Empleados</h2>
-      <p>Contenido de la página de empleados.</p>
       <iframe src="empleados.jsp" width="100%" height="500px"></iframe>
+
     </div>
 
-    <div id="inventario" style="display:none;">
-      <h2>Inventario</h2>
-      <p>Contenido de la página de Inventario.</p>
+    <div id="clientes" style="display:none;">
+
+      <iframe src="clientes.jsp" width="100%" height="500px"></iframe>
+
     </div>
   </div>
 </article>
