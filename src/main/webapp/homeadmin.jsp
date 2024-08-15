@@ -48,11 +48,7 @@
           </a>
         </li>
         <li>
-<<<<<<< HEAD
           <a href="#" class="nav-link text-white" data-target="categorias">
-=======
-          <a href="#" class="nav-link text-white" data-target="categoriasListadas">
->>>>>>> 23027b831f6657fc9c81a77124dd2a21d73b2c93
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#grid"/>
             </svg>
@@ -106,11 +102,6 @@
     <div id="categorias" style="display:none;">
       <!-- Contenido cargado dinámicamente aquí -->
       <iframe src="categorias.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
-
-    <div id="categoriasListadas" style="display:none; margin-top: 100px;">
-
-      <iframe src="categoriasListadas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
-
     </div>
 
     <div id="productos" style="display:none;">
@@ -131,6 +122,7 @@
       <iframe src="clientes.jsp" width="100%" height="500px"></iframe>
 
     </div>
+  </div>
   </div>
 </article>
 
