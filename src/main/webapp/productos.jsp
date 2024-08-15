@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorías</title>
+    <title>Productos</title>
     <link href="css/clientes.css" rel="stylesheet">
     <link href="css/productos.css" rel="stylesheet">
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,7 +15,7 @@
             padding: 0;
         }
 
-        .Categorias {
+        .Productos {
             text-align: center;
             font-size: 32px;
             font-weight: bold;
@@ -39,6 +38,7 @@
             color: white;
             border-radius: 5px;
             margin-bottom: 20px;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
@@ -68,6 +68,12 @@
             max-width: 600px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .close {
@@ -75,13 +81,14 @@
             float: right;
             font-size: 28px;
             font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
 
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
-            cursor: pointer;
         }
 
         form {
@@ -111,6 +118,16 @@
             box-sizing: border-box;
         }
 
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         .container-login100-form-btn {
             display: flex;
             justify-content: space-between;
@@ -120,109 +137,142 @@
             width: 48%;
         }
 
+        /* Estilo para la tabla de productos */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #60410d;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .img-fluid {
+            max-width: 100px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+            }
+
+            table {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            button {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .container-login100-form-btn button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-<h2 class="Categorias">Categorías</h2>
+<h2 class="Productos">Productos</h2>
 
 <!-- Botón para mostrar el formulario -->
 <div class="button-container">
-    <button class="login100-form-btn" type="button" id="agregar-empleado">Nueva categoría</button>
+    <button class="login100-form-btn" type="button" id="agregar-producto">Nuevo producto</button>
 </div>
 
 <!-- Contenedor para el formulario -->
-<div id="formularioContainer" class="modal">
+<div id="productModal" class="modal">
     <div class="modal-content">
-        <span class="close" id="closeForm">&times;</span>
-        <!-- Formulario para agregar categorías -->
-        <form id="registroForm" method="post" action="RegisterCategorias" onsubmit="return validarYEnviar()">
-            <h2>Agregar nueva categoría</h2>
-            <label class="label-input100" for="nombre">Nombre de categoría:</label>
-            <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba el nombre de la categoría" required>
-
-            <label class="label-input100" for="descripcion">Descripción:</label>
-            <input class="input100" type="text" id="descripcion" name="descripcion" placeholder="Escriba la descripción de la categoría" required>
-
-            <div class="container-login100-form-btn">
-                <button class="login100-form-btn" type="submit">Registrar Categoría</button>
-                <button class="login100-form-btn" type="button" onclick="borrarRegistro()">Borrar Categoría</button>
+        <span class="close-product">&times;</span>
+        <h2>Agregar Nuevo Producto</h2>
+        <form method="post" action="AgregarProducto" enctype="multipart/form-data" id="form-agregar-producto">
+            <div>
+                <label for="imagen-producto">Imagen:</label>
+                <input type="file" id="imagen-producto" name="imagen" accept="image/*" required>
+            </div>
+            <div>
+                <label for="nombre-producto">Nombre:</label>
+                <input type="text" id="nombre-producto" name="nombre" placeholder="Nombre del producto" required>
+            </div>
+            <div>
+                <label for="descripcion-producto">Descripción:</label>
+                <input type="text" id="descripcion-producto" name="descripcion" placeholder="Descripción del producto" required>
+            </div>
+            <div>
+                <label for="precio-producto">Precio:</label>
+                <input type="number" id="precio-producto" name="precio" placeholder="$00.00" step="0.01" required>
+            </div>
+            <div>
+                <label for="stock-producto">Stock:</label>
+                <input type="number" id="stock-producto" name="stock" placeholder="00">
+            </div>
+            <div>
+                <label for="categoria-producto">Categoría:</label>
+                <select id="categoria-producto" name="ID_Categoria" required>
+                    <!-- Aquí se cargan las opciones de categorías -->
+                </select>
+            </div>
+            <div>
+                <button type="submit">Agregar Producto</button>
             </div>
         </form>
     </div>
 </div>
 
-<!-- Contenedor para la tabla de categorías -->
+<!-- Contenedor para la tabla de productos -->
 <div id="categoriasContainer" style="background: white;">
-    <jsp:include page="/ObtenerCategorias" />
+    <table>
+        <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Estado</th>
+            <th>Categoria</th>
+        </tr>
+        </thead>
+        <tbody id="productos-tbody">
+        <!-- Aquí se cargan los productos desde el servlet -->
+        <jsp:include page="/CargarProductos" />
+        </tbody>
+    </table>
 </div>
 
 <script>
     // Mostrar el formulario
-    document.getElementById("agregar-empleado").addEventListener("click", function() {
-        document.getElementById("formularioContainer").style.display = "flex";
+    document.getElementById("agregar-producto").addEventListener("click", function() {
+        document.getElementById("productModal").style.display = "flex";
     });
 
     // Cerrar el formulario
-    document.getElementById("closeForm").addEventListener("click", function() {
-        document.getElementById("formularioContainer").style.display = "none";
+    document.querySelector(".close-product").addEventListener("click", function() {
+        document.getElementById("productModal").style.display = "none";
     });
 
-    // Cerrar el formulario si se hace clic fuera del formulario
+    // Cerrar el formulario si se hace clic fuera del modal
     window.addEventListener("click", function(event) {
-        if (event.target === document.getElementById("formularioContainer")) {
-            document.getElementById("formularioContainer").style.display = "none";
+        if (event.target === document.getElementById("productModal")) {
+            document.getElementById("productModal").style.display = "none";
         }
     });
-
-    function validarYEnviar() {
-        var nombre = document.getElementById("nombre").value.trim();
-        var descripcion = document.getElementById("descripcion").value.trim();
-
-        // Validar si algún campo está vacío
-        if (nombre === "" || descripcion === "") {
-            alert("Por favor, rellene todos los campos.");
-            return false;
-        }
-
-        // Validar si hay espacios en blanco en el nombre de la categoría
-        if (nombre.includes(" ")) {
-            alert("No se permiten espacios en blanco en el nombre de la categoría.");
-            return false;
-        }
-
-        return true;
-    }
-
-    function borrarRegistro() {
-        var confirmacion = confirm("¿Estás seguro de que deseas vaciar todos los registros? Esta acción no se puede deshacer.");
-
-        if (confirmacion) {
-            localStorage.clear();
-            location.reload();
-        }
-    }
-
-    function deleteCategory(categoryId) {
-        if (confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
-            fetch(`/delete_category/${categoryId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Categoría eliminada correctamente.');
-                        location.reload(); // Recargar la página para actualizar la lista de categorías
-                    } else {
-                        alert('Hubo un problema al eliminar la categoría.');
-                    }
-                })
-                .catch(error => {
-                    alert('Error en la solicitud: ' + error);
-                });
-        }
-    }
 </script>
 </body>
 </html>

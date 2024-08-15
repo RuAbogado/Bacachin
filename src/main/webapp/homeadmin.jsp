@@ -54,6 +54,14 @@
           </a>
         </li>
         <li>
+          <a href="#" class="nav-link text-white" data-target="categorias">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#grid"/>
+            </svg>
+            Categorias
+          </a>
+        </li>
+        <li>
           <a href="#" class="nav-link text-white" data-target="productos">
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#grid"/>
@@ -61,6 +69,7 @@
             Productos
           </a>
         </li>
+        <li>
         <li>
           <a href="#" class="nav-link text-white" data-target="empleados">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -99,6 +108,11 @@
 
     <div id="ventas" style="display:none;">
       <iframe src="ventas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
+    </div>
+
+    <div id="categorias" style="display:none;">
+      <!-- Contenido cargado dinámicamente aquí -->
+      <iframe src="categorias.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
 
     <div id="productos" style="display:none;">

@@ -15,9 +15,11 @@ public class Productos {
     private Date Fecha_creacion;
     private String Tipo;
     private String Imagen;
+    private Boolean Estado;
 
 
-    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_creacion, String tipo, String imagen) {
+
+    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_creacion, String tipo, String imagen, Boolean estado) {
         this.ID_Producto = ID_Producto;
         this.ID_Categoria = ID_Categoria;
         Nombre = nombre;
@@ -27,6 +29,7 @@ public class Productos {
         Fecha_creacion = fecha_creacion;
         Tipo = tipo;
         Imagen = imagen;
+        Estado = estado;
     }
 
 
@@ -101,4 +104,9 @@ public class Productos {
     public void setImagen(String imagen) {
         Imagen = imagen;
     }
+
+    public void setEstado(Boolean estado) {
+        Estado = estado;
+    }
+
 }
