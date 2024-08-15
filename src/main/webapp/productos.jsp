@@ -11,7 +11,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #FFE7C3FF;
             margin: 0;
             padding: 0;
         }
@@ -152,8 +152,8 @@
 </div>
 
 <!-- Contenedor para la tabla de categorías -->
-<div id="categoriasContainer">
-    <jsp:include page="/ListarCategorias" />
+<div id="categoriasContainer" style="background: white;">
+    <jsp:include page="/ObtenerCategorias" />
 </div>
 
 <script>
