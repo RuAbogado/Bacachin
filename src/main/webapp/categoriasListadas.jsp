@@ -17,7 +17,7 @@
             font-size: 32px;
             font-weight: bold;
             color: #30303F;
-            margin-top: 60px;
+            margin-top: 100px;
             margin-bottom: 20px;
         }
 
@@ -132,7 +132,7 @@
     <div class="modal-content">
         <span class="close" id="closeForm">&times;</span>
         <!-- Formulario para agregar categorías -->
-        <form id="registroForm" method="post" action="RegisterCategorias" onsubmit="return validarYEnviar()">
+        <form id="registroForm" method="post" action="AgregarCategoria" onsubmit="return validarYEnviar()">
             <h2>Agregar nueva categoría</h2>
             <label class="label-input100" for="nombre">Nombre de categoría:</label>
             <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba el nombre de la categoría" required>
@@ -148,7 +148,7 @@
     </div>
 </div>
 
-<!-- Contenedor para la tabla de clientes -->
+<!-- Contenedor para la tabla de Categorias -->
 <div id="clientesContainer">
     <jsp:include page="/ListarCategorias" />
 </div>
