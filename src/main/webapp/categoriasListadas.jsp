@@ -124,7 +124,7 @@
 
 <!-- Botón para mostrar el formulario -->
 <div class="button-container">
-    <button class="login100-form-btn" type="button" id="agregar-empleado">Nueva categoría</button>
+    <button class="login100-form-btn" type="button" id="agregar-categoria">Nueva categoría</button>
 </div>
 
 <!-- Contenedor para el formulario -->
@@ -148,14 +148,14 @@
     </div>
 </div>
 
-<!-- Contenedor para la tabla de Categorias -->
+<!-- Contenedor para la tabla de Categorías -->
 <div id="clientesContainer">
     <jsp:include page="/ListarCategorias" />
 </div>
 
 <script>
     // Mostrar el formulario
-    document.getElementById("agregar-empleado").addEventListener("click", function() {
+    document.getElementById("agregar-categoria").addEventListener("click", function() {
         document.getElementById("formularioContainer").style.display = "flex";
     });
 
@@ -222,5 +222,4 @@
     }
 </script>
 </body>
-</html>
 </html>

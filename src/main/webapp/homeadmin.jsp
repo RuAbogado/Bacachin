@@ -102,16 +102,15 @@
       <iframe src="ventas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
 
-<<<<<<< HEAD
+
     <div id="categorias" style="display:none;">
       <!-- Contenido cargado dinámicamente aquí -->
       <iframe src="categorias.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
-=======
+
     <div id="categoriasListadas" style="display:none; margin-top: 100px;">
 
       <iframe src="categoriasListadas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
 
->>>>>>> 23027b831f6657fc9c81a77124dd2a21d73b2c93
     </div>
 
     <div id="productos" style="display:none;">
