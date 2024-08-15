@@ -31,11 +31,9 @@ public class AgregarCategoriaServlet extends HttpServlet {
         int categoriaId = categoriasDao.addCategoria(nuevaCategoria);
 
         if (categoriaId != -1) {
-            //out.print("{\"success\":true}");
-            out.print("<h1>success=exitosamente</h1> <input name=\"ID_Categoria\" value=\""+ categoriaId + "\">");
+            out.print("{\"success\": true, \"message\": \"Categoría agregada exitosamente.\", \"ID_Categoria\": " + categoriaId + "}");
         } else {
-           // out.print("{\"success\":false}");
-            out.print("<h1>success=fallo</h1> <input name=\"ID_Categoria\" value=\"\">");
+            out.print("{\"success\": false, \"message\": \"Error al agregar la categoría.\"}");
         }
 
         out.flush();
