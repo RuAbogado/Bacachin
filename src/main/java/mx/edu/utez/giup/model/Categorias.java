@@ -4,7 +4,7 @@ public class  Categorias {
     private int ID_Categoria;
     private String nombre;
     private String descripcion;
-    private boolean estado;
+    private boolean Estado;
 
     public Categorias() {
     }
@@ -13,7 +13,7 @@ public class  Categorias {
         this.ID_Categoria = ID_Categoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.estado=estado;
+        this.Estado=estado;
     }
 
     public int getID_Categoria() {
@@ -40,6 +40,9 @@ public class  Categorias {
         this.descripcion = descripcion;
     }
 
-    public void setEstado(Boolean estado) {this.estado = estado;}
+
+    public boolean isEstado() {return Estado;}
+
+    public void setEstado(boolean estado) {this.Estado = estado;}
 
 }

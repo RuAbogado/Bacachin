@@ -14,18 +14,27 @@ public class CategoriasDao {
 
     // Método para agregar una nueva categoría
     public int addCategoria(Categorias categoria) {
-        String query = "INSERT INTO Categorias (Nombre, Descripcion) VALUES (?, ?)";
+        String query = "INSERT INTO Categorias (Nombre, Descripcion, estado) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
+            // Asignar valores a la consulta
             pstmt.setString(1, categoria.getNombre());
             pstmt.setString(2, categoria.getDescripcion());
+            pstmt.setBoolean(3, categoria.isEstado()); // Se corrigió el índice y el uso del campo estado
 
+            // Ejecutar la consulta
             int rowsAffected = pstmt.executeUpdate();
 
-            int categoriaId = this.getAllCategorias().stream().filter(cat -> cat.getNombre().equals(categoria.getNombre())).findFirst().get().getID_Categoria();
-
-            return categoriaId;
+            // Obtener el ID de la categoría recién insertada
+            if (rowsAffected > 0) {
+                return getAllCategorias().stream()
+                        .filter(cat -> cat.getNombre().equals(categoria.getNombre()))
+                        .findFirst()
+                        .map(Categorias::getID_Categoria)
+                        .orElse(-1);
+            }
+            return -1;
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
@@ -61,8 +70,9 @@ public class CategoriasDao {
                 int id = rs.getInt("ID_Categoria");
                 String nombre = rs.getString("Nombre");
                 String descripcion = rs.getString("Descripcion");
+                boolean estado = rs.getBoolean("estado"); // Obtener el valor del estado
 
-                Categorias categoria = new Categorias(id, nombre, descripcion);
+                Categorias categoria = new Categorias(id, nombre, descripcion, estado);
                 categorias.add(categoria);
             }
         } catch (SQLException e) {

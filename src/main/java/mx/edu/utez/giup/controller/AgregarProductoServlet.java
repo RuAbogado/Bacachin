@@ -33,6 +33,7 @@ public class AgregarProductoServlet extends HttpServlet {
         float precio = Float.parseFloat(request.getParameter("precio"));
         int stock = Integer.parseInt(request.getParameter("stock"));
         int categoria = Integer.parseInt(request.getParameter("ID_Categoria"));
+        boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
 
         // Obtener y guardar la imagen
         Part filePart = request.getPart("imagen");
@@ -50,8 +51,7 @@ public class AgregarProductoServlet extends HttpServlet {
         Date Fecha_creacion = Date.valueOf(fechaCreacionString);
 
         // Crear el objeto Producto
-        Productos producto = new Productos(0, categoria, nombre, descripcion, precio, stock, Fecha_creacion, "x", fileName);
-
+        Productos producto = new Productos(0, categoria, nombre, descripcion, precio, stock, Fecha_creacion, "x", fileName, estado);
 
         // Llamar al DAO para agregar el producto
         ProductosDao productosDao = new ProductosDao();
@@ -62,16 +62,17 @@ public class AgregarProductoServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         if (agregado) {
             out.println("<div class='producto'>");
-            out.println("<h1>exitosamente</h1>");
+            out.println("<h1>Producto agregado exitosamente</h1>");
             out.println("<img src='img/" + fileName + "' alt='" + nombre + "' />");
             out.println("<h3>" + nombre + "</h3>");
             out.println("<p>" + descripcion + "</p>");
             out.println("<p>Precio: $" + precio + "</p>");
             out.println("<p>Stock: " + stock + "</p>");
+            out.println("<p>Estado: " + (estado ? "Activo" : "Inactivo") + "</p>");
             out.println("</div>");
         } else {
             out.println("<p>Error al agregar el producto.</p>");
         }
         out.flush();
-        }
     }
+}

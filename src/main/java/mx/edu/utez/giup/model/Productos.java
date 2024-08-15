@@ -105,8 +105,8 @@ public class Productos {
         Imagen = imagen;
     }
 
-    public void setEstado(Boolean estado) {
-        Estado = estado;
-    }
+    public Boolean getEstado() {return Estado;}
+
+    public void setEstado(Boolean estado) {Estado = estado;}
 
 }

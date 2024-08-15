@@ -22,7 +22,7 @@ public class ProductosDao {
 
     // Método para agregar un producto
     public boolean agregarProducto(Productos producto) {
-        String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen) VALUES ( ?, ?, ?, ?, ?, ?, 'x', ?)";
+        String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen, Estado) VALUES ( ?, ?, ?, ?, ?, ?, 'x', ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, producto.getID_Categoria());
             stmt.setString(2, producto.getNombre());
@@ -31,6 +31,7 @@ public class ProductosDao {
             stmt.setInt(5, producto.getStock());
             stmt.setDate(6, producto.getFecha_creacion());
             stmt.setString(7, producto.getImagen());
+            stmt.setBoolean(8, producto.getEstado());  // Corregido índice aquí
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -38,7 +39,6 @@ public class ProductosDao {
             return false;
         }
     }
-
 
     // Método para cargar productos por categoría
     public List<Productos> cargarProductosPorCategoria(int categoriaID) {
@@ -59,7 +59,8 @@ public class ProductosDao {
                         rs.getInt("Stock"),
                         rs.getDate("Fecha_Creacion"),
                         rs.getString("Tipo"),
-                        rs.getString("Imagen")
+                        rs.getString("Imagen"),
+                        rs.getBoolean("Estado")
                 );
                 productosList.add(producto);
             }
@@ -68,7 +69,6 @@ public class ProductosDao {
         }
         return productosList;
     }
-
 
     // Método para eliminar un producto
     public boolean eliminarProducto(int idProducto) {
