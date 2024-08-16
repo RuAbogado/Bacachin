@@ -1,10 +1,13 @@
 package mx.edu.utez.giup.model;
 
-public class Categorias {
+public class  Categorias {
     private int ID_Categoria;
     private String Nombre;
     private String Descripcion;
     private boolean Estado;
+
+    public Categorias() {
+    }
 
     // Constructor con todos los parámetros
     public Categorias(int ID_Categoria, String Nombre, String Descripcion, boolean Estado) {
@@ -12,10 +15,6 @@ public class Categorias {
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
         this.Estado = Estado;
-    }
-
-    public Categorias() {
-
     }
 
     // Getters y Setters
@@ -43,7 +42,7 @@ public class Categorias {
         this.Descripcion = Descripcion;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return Estado;
     }
 

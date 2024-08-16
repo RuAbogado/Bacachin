@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Categorias</title>
     <link href="css/clientes.css" rel="stylesheet">
-    <link href="css/categorias.css" rel="stylesheet">
+    <link href="css/productos.css" rel="stylesheet">
 
 </head>
 <body>
@@ -11,27 +12,25 @@
 <h2 class="Categorias">Categorías</h2>
 
 <!-- Botón para mostrar el formulario -->
-<div class="button-container">
-    <button class="login100-form-btn" type="button" id="agregar-categoria">Nueva categoría</button>
+<div class="button-group">
+    <button type="button" id="add-category-btn">Agregar Categoria</button>
 </div>
 
 <!-- Contenedor para el formulario -->
-<div id="formularioContainer" class="modal">
+<div id="categoryModal" class="modal">
     <div class="modal-content">
-        <span class="close" id="closeForm">&times;</span>
-        <!-- Formulario para agregar categorías -->
-        <form id="registroForm">
-            <h2>Agregar nueva categoría</h2>
-            <label class="label-input100" for="Nombre">Nombre de categoría:</label>
-            <input class="input100" type="text" id="Nombre" name="Nombre" placeholder="Escriba el nombre de la categoría" required>
-
-            <label class="label-input100" for="Descripcion">Descripción:</label>
-            <input class="input100" type="text" id="Descripcion" name="Descripcion" placeholder="Escriba la descripción de la categoría" required>
-
-            <div class="container-login100-form-btn">
-                <button class="login100-form-btn" type="submit">Registrar Categoría</button>
-                <button class="login100-form-btn" type="button" onclick="borrarRegistro()">Borrar Registro</button>
+        <span class="close-category">&times;</span>
+        <h2>Agregar nueva categoria</h2>
+        <form id="category-form">
+            <div>
+                <label for="new-category">Nombre de la nueva categoria:</label>
+                <input type="text" id="new-category" required>
             </div>
+            <div>
+                <label for="category-description">Descripcion de la categoria:</label>
+                <textarea id="category-description" rows="4" required></textarea>
+            </div>
+            <button type="submit">Agregar</button>
         </form>
     </div>
 </div>

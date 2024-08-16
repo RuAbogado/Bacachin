@@ -14,27 +14,31 @@ import java.io.PrintWriter;
 @WebServlet("/AgregarCategoria")
 public class AgregarCategoriaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private CategoriasDao categoriasDao = new CategoriasDao();
 
-    @Override
+    private CategoriasDao categoriasDao = new CategoriasDao();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
-        String Nombre = request.getParameter("Nombre");
-        String Descripcion = request.getParameter("Descripcion");
+        String nombre = request.getParameter("nombre");
+        String descripcion = request.getParameter("descripcion");
+        boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
+
 
         Categorias nuevaCategoria = new Categorias();
-        nuevaCategoria.setNombre(Nombre);
-        nuevaCategoria.setDescripcion(Descripcion);
+        nuevaCategoria.setNombre(nombre);
+        nuevaCategoria.setDescripcion(descripcion);
+        nuevaCategoria.setEstado(estado);
 
         int categoriaId = categoriasDao.addCategoria(nuevaCategoria);
 
         if (categoriaId != -1) {
-            out.print("<p>Categoría agregada exitosamente con ID " + categoriaId + ".</p>");
+            //out.print("{\"success\":true}");
+            out.print("<h1>success=exitosamente</h1> <input name=\"ID_Categoria\" value=\""+ categoriaId + "\">");
         } else {
-            out.print("<p>Error al agregar la categoría.</p>");
+            // out.print("{\"success\":false}");
+            out.print("<h1>success=fallo</h1> <input name=\"ID_Categoria\" value=\"\">");
         }
 
         out.flush();

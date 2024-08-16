@@ -12,36 +12,32 @@ import java.util.List;
 
 public class CategoriasDao {
 
+    // Método para agregar una nueva categoría
     public int addCategoria(Categorias categoria) {
         String query = "INSERT INTO Categorias (Nombre, Descripcion, Estado) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnectionManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             // Asignar valores a la consulta
             pstmt.setString(1, categoria.getNombre());
             pstmt.setString(2, categoria.getDescripcion());
-            pstmt.setBoolean(3, categoria.isEstado());
+            pstmt.setBoolean(3, categoria.getEstado());
 
             // Ejecutar la consulta
             int rowsAffected = pstmt.executeUpdate();
 
-            if (rowsAffected > 0) {
-                var rs = pstmt.getGeneratedKeys();
-                if (rs.next()) {
-                    return rs.getInt(1);  // Retorna el ID generado de la categoría
-                }
-            }
-            return -1; // Indica que no se insertó la categoría
+            int categoriaId = this.getAllCategorias().stream().filter(cat -> cat.getNombre().equals(categoria.getNombre())).findFirst().get().getID_Categoria();
 
+            return categoriaId;
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
         }
     }
 
-    // Método para eliminar una categoría por ID
-    public static boolean deleteCategoria(int ID_Categoria) {
-        String query = "DELETE FROM Categorias WHERE ID_Categoria = ?";
+    // Método para deshabilitar una categoría por ID
+    public static boolean deshabilitarCategoria(int ID_Categoria) {
+        String query = "UPDATE Categorias SET Estado = 'false' WHERE ID_Categoria = ?";
         try (Connection conn = DatabaseConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -79,5 +75,4 @@ public class CategoriasDao {
 
         return categorias;
     }
-
-    }
+}

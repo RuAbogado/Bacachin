@@ -10,8 +10,8 @@ import mx.edu.utez.giup.dao.CategoriasDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/EliminarCategoria")
-public class EliminarCategoriaServlet extends HttpServlet {
+@WebServlet("/deshabilitarCategoria")
+public class deshabilitarCategoriaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private CategoriasDao categoriasDao = new CategoriasDao();
@@ -35,7 +35,7 @@ public class EliminarCategoriaServlet extends HttpServlet {
             int ID_Categoria = Integer.parseInt(ID_CategoriaParam);
 
             // Eliminar la categoría usando el DAO
-            boolean success = categoriasDao.deleteCategoria(ID_Categoria);
+            boolean success = categoriasDao.deshabilitarCategoria(ID_Categoria);
 
             if (success) {
                 out.print("{\"success\":true}");

@@ -1,77 +1,170 @@
-// Mostrar el formulario de agregar categoría
-document.getElementById("agregar-categoria").addEventListener("click", function() {
-    document.getElementById("formularioContainer").style.display = "flex";
-});
-
-// Cerrar el formulario de agregar categoría
-document.getElementById("closeForm").addEventListener("click", function() {
-    document.getElementById("formularioContainer").style.display = "none";
-});
-
-// Cerrar el formulario si se hace clic fuera del modal
-window.addEventListener("click", function(event) {
-    if (event.target === document.getElementById("formularioContainer")) {
-        document.getElementById("formularioContainer").style.display = "none";
-    }
-});
-
-// Validar y enviar el formulario de agregar categoría
-document.getElementById("registroForm").addEventListener("submit", function(event) {
-    event.preventDefault();  // Evita que el formulario se envíe de la manera tradicional
-
-    // Obtener y validar los campos del formulario cambios ya es actualizaron
-    var Nombre = document.getElementById("Nombre").value.trim();
-    var Descripcion = document.getElementById("Descripcion").value.trim();
+// Obtener elementos del DOM
+const btnAgregarProducto = document.getElementById('add-product-btn');
+const btnAgregarCategoria = document.getElementById('add-category-btn');
+const modalCategoria = document.getElementById('categoryModal');
+const spanCerrarCategoria = modalCategoria.getElementsByClassName('close-category')[0];
 
 
-    if (Nombre === "" || Descripcion === "") {
-        alert("Por favor, rellene todos los campos.");
-        return;
-    }
+// Mostrar modales
+btnAgregarCategoria.onclick = function() {
+    modalCategoria.style.display = "block";
+}
 
-    // Enviar el formulario usando fetch
-    var formData = new FormData();
-    formData.append("Nombre", Nombre);
-    formData.append("Descripcion", Descripcion);
+// Cerrar modales
+spanCerrarCategoria.onclick = function() {
+    modalCategoria.style.display = "none";
+}
 
-    console.log(formData);
-
-    fetch("AgregarCategoria", {
-        method: "POST",
-        body: formData
-    })
-        .then(response => response.text())  // Obtener la respuesta como texto HTML
-        .then(html => {
-            // Mostrar el resultado en el contenedor de resultados
-            document.getElementById("resultContainer").innerHTML = html;
-            // Actualizar la tabla de categorías
-            actualizarTablaCategorias();
-            // Ocultar el formulario y reiniciar el formulario
-            document.getElementById("formularioContainer").style.display = "none";
-            document.getElementById("registroForm").reset();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Ocurrió un error al procesar la solicitud. Por favor, intente nuevamente.');
-        });
-});
-
-// Función para borrar el registro en el formulario
-function borrarRegistro() {
-    if (confirm("¿Estás seguro de que deseas borrar el registro?")) {
-        document.getElementById("registroForm").reset();
+// Cerrar modal cuando se hace clic fuera de él
+window.onclick = function(event) {
+    if (event.target == modalCategoria) {
+        modalCategoria.style.display = "none";
     }
 }
 
-// Función para actualizar la tabla de categorías
-function actualizarTablaCategorias() {
-    fetch("ListarCategorias")  // URL del servlet o JSP para listar categorías
-        .then(response => response.text())  // Obtener el HTML de la tabla actualizada
-        .then(html => {
-            document.getElementById("clientesContainer").innerHTML = html;  // Actualizar el contenido de la tabla
+// Cargar categorías y productos desde el servidor
+function cargarCategoriasYProductos() {
+    // Primero, cargar las categorías
+    fetch('ObtenerCategorias')
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const categorias = doc.querySelectorAll('option');
+            categorias.forEach(category => {
+                const newCategoryContainer = document.createElement('div');
+                newCategoryContainer.className = 'categoria-container mb-5';
+                newCategoryContainer.id = `categoria-${category.value}`;
+                newCategoryContainer.innerHTML = `
+                <div class="categoria-header">
+                    <h1 class="encabezado">${category.text}</h1>
+                    <div class="container-btn">
+                        <button class="boton-agregar" onclick="mostrarFormulario(${category.value})">Agregar ${category.text}</button>
+                        <button class="boton-eliminar" onclick="eliminarCategoria(${category.value})">Eliminar Categoría</button>
+                    </div>
+                </div>
+                <div class="row" id="${category.value}"></div>
+                `;
+            });
+
         })
         .catch(error => {
-            console.error('Error al actualizar la tabla de categorías:', error);
-            alert('Ocurrió un error al actualizar la tabla de categorías.');
+            console.error('Error:', error);
+            alert('Error al cargar las categorías.');
         });
+}
+// Iniciar la carga cuando el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', function() {
+    cargarCategoriasYProductos();
+});
+//-------------------------------------------------
+
+
+// Agregar una nueva categoría
+document.getElementById('category-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const newCategory = document.getElementById('new-category').value;
+    const description = document.getElementById('category-description').value;
+
+    fetch('AgregarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `nombre=${encodeURIComponent(newCategory)}&descripcion=${encodeURIComponent(description)}`
+    })
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const success = doc.querySelector('h1').textContent.includes('exitosamente');
+            const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
+
+            if (success) {
+                const select = document.getElementById('categoria-producto');
+                const option = document.createElement('option');
+                option.value = ID_Categoria;
+                option.text = newCategory;
+                select.add(option);
+
+                const newCategoryContainer = document.createElement('div');
+                newCategoryContainer.className = 'categoria-container mb-5';
+                newCategoryContainer.id = `categoria-${ID_Categoria}`;
+                newCategoryContainer.innerHTML = `
+                <div class="categoria-header">
+                    <h1 class="encabezado">${newCategory}</h1>
+                    <div class="container-btn">
+                        <button class="boton-agregar" onclick="mostrarFormulario(${ID_Categoria})">Agregar ${newCategory}</button>
+                        <button class="boton-eliminar" onclick="eliminarCategoria(${ID_Categoria})">Eliminar Categoría</button>
+                    </div>
+                </div>
+                <div class="row" id="${ID_Categoria}"></div>
+            `;
+                document.getElementById('productos-container').appendChild(newCategoryContainer);
+
+                modalCategoria.style.display = "none";
+                document.getElementById('new-category').value = '';
+                document.getElementById('category-description').value = '';
+            } else {
+                alert('Error al agregar la categoría.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+});
+
+// Eliminar una categoría
+function DeshabilitarCategoria(ID_Categoria) {
+    if (!confirm('¿Estás seguro de que quieres deshabilitar esta categoría?')) {
+        return;
+    }
+
+    const categoria = document.getElementById(`categoria-${ID_Categoria}`);
+    if (categoria) {
+        categoria.parentNode.removeChild(categoria);
+    }
+
+    const select = document.getElementById('categoria-producto');
+    for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value == ID_Categoria) {
+            select.remove(i);
+            break;
+        }
+    }
+
+
+    //Si tengo un formulario con imagenes
+    //agarra el formulario en una var
+    //luego hacer un
+    //var datos= new FormData(x)
+    fetch('EliminarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
+    })
+        .then(response => response.text())
+        .then(data => {
+            data = JSON.parse(data);
+
+            if (!data.success) {
+                alert('Error al eliminar la categoría.');
+            }else{
+                alert('La categoria se elimino correctamente.')
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+}
+
+// Mostrar formulario para agregar producto en una categoría específica
+function mostrarFormulario(categoria) {
+    modalProducto.style.display = "block";
+    document.getElementById('categoria-producto').value = categoria;
 }
