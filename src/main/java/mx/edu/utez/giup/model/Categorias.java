@@ -1,21 +1,24 @@
 package mx.edu.utez.giup.model;
 
-public class  Categorias {
+public class Categorias {
     private int ID_Categoria;
-    private String nombre;
-    private String descripcion;
+    private String Nombre;
+    private String Descripcion;
     private boolean Estado;
 
-    public Categorias() {
-    }
-
-    public Categorias(int ID_Categoria, String nombre, String descripcion, boolean estado) {
+    // Constructor con todos los parámetros
+    public Categorias(int ID_Categoria, String Nombre, String Descripcion, boolean Estado) {
         this.ID_Categoria = ID_Categoria;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.Estado=estado;
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+        this.Estado = Estado;
     }
 
+    public Categorias() {
+
+    }
+
+    // Getters y Setters
     public int getID_Categoria() {
         return ID_Categoria;
     }
@@ -25,24 +28,26 @@ public class  Categorias {
     }
 
     public String getNombre() {
-        return nombre;
+        return Nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return Descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcion(String Descripcion) {
+        this.Descripcion = Descripcion;
     }
 
+    public boolean isEstado() {
+        return Estado;
+    }
 
-    public boolean isEstado() {return Estado;}
-
-    public void setEstado(boolean estado) {this.Estado = estado;}
-
+    public void setEstado(boolean Estado) {
+        this.Estado = Estado;
+    }
 }

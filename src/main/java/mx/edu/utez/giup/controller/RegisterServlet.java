@@ -32,7 +32,6 @@ public class RegisterServlet extends HttpServlet {
         user.setEstado(true);  // or set as per your logic
         user.setCodigo("x");  // generate or set the code as per your logic
         user.setTipo("cliente");
-        user.setImagen("user.png");
 
         UserDao userDao = new UserDao();
         try {

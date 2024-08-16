@@ -12,29 +12,27 @@ import java.util.List;
 
 public class CategoriasDao {
 
-    // Método para agregar una nueva categoría
     public int addCategoria(Categorias categoria) {
-        String query = "INSERT INTO Categorias (Nombre, Descripcion, estado) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Categorias (Nombre, Descripcion, Estado) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnectionManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             // Asignar valores a la consulta
             pstmt.setString(1, categoria.getNombre());
             pstmt.setString(2, categoria.getDescripcion());
-            pstmt.setBoolean(3, categoria.isEstado()); // Se corrigió el índice y el uso del campo estado
+            pstmt.setBoolean(3, categoria.isEstado());
 
             // Ejecutar la consulta
             int rowsAffected = pstmt.executeUpdate();
 
-            // Obtener el ID de la categoría recién insertada
             if (rowsAffected > 0) {
-                return getAllCategorias().stream()
-                        .filter(cat -> cat.getNombre().equals(categoria.getNombre()))
-                        .findFirst()
-                        .map(Categorias::getID_Categoria)
-                        .orElse(-1);
+                var rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    return rs.getInt(1);  // Retorna el ID generado de la categoría
+                }
             }
-            return -1;
+            return -1; // Indica que no se insertó la categoría
+
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
@@ -70,7 +68,7 @@ public class CategoriasDao {
                 int id = rs.getInt("ID_Categoria");
                 String nombre = rs.getString("Nombre");
                 String descripcion = rs.getString("Descripcion");
-                boolean estado = rs.getBoolean("estado"); // Obtener el valor del estado
+                boolean estado = rs.getBoolean("Estado"); // Asegúrate de que el nombre de la columna sea "Estado"
 
                 Categorias categoria = new Categorias(id, nombre, descripcion, estado);
                 categorias.add(categoria);
@@ -81,4 +79,5 @@ public class CategoriasDao {
 
         return categorias;
     }
-}
+
+    }

@@ -14,26 +14,27 @@ import java.io.PrintWriter;
 @WebServlet("/AgregarCategoria")
 public class AgregarCategoriaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     private CategoriasDao categoriasDao = new CategoriasDao();
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
+        response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
-        String nombre = request.getParameter("nombre");
-        String descripcion = request.getParameter("descripcion");
+        String Nombre = request.getParameter("Nombre");
+        String Descripcion = request.getParameter("Descripcion");
 
         Categorias nuevaCategoria = new Categorias();
-        nuevaCategoria.setNombre(nombre);
-        nuevaCategoria.setDescripcion(descripcion);
+        nuevaCategoria.setNombre(Nombre);
+        nuevaCategoria.setDescripcion(Descripcion);
 
         int categoriaId = categoriasDao.addCategoria(nuevaCategoria);
 
         if (categoriaId != -1) {
-            out.print("{\"success\": true, \"message\": \"Categoría agregada exitosamente.\", \"ID_Categoria\": " + categoriaId + "}");
+            out.print("<p>Categoría agregada exitosamente con ID " + categoriaId + ".</p>");
         } else {
-            out.print("{\"success\": false, \"message\": \"Error al agregar la categoría.\"}");
+            out.print("<p>Error al agregar la categoría.</p>");
         }
 
         out.flush();

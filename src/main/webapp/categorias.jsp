@@ -20,13 +20,13 @@
     <div class="modal-content">
         <span class="close" id="closeForm">&times;</span>
         <!-- Formulario para agregar categorías -->
-        <form id="registroForm" method="post" action="AgregarCategoria" onsubmit="return validarYEnviar()">
+        <form id="registroForm">
             <h2>Agregar nueva categoría</h2>
-            <label class="label-input100" for="nombre">Nombre de categoría:</label>
-            <input class="input100" type="text" id="nombre" name="nombre" placeholder="Escriba el nombre de la categoría" required>
+            <label class="label-input100" for="Nombre">Nombre de categoría:</label>
+            <input class="input100" type="text" id="Nombre" name="Nombre" placeholder="Escriba el nombre de la categoría" required>
 
-            <label class="label-input100" for="descripcion">Descripción:</label>
-            <input class="input100" type="text" id="descripcion" name="descripcion" placeholder="Escriba la descripción de la categoría" required>
+            <label class="label-input100" for="Descripcion">Descripción:</label>
+            <input class="input100" type="text" id="Descripcion" name="Descripcion" placeholder="Escriba la descripción de la categoría" required>
 
             <div class="container-login100-form-btn">
                 <button class="login100-form-btn" type="submit">Registrar Categoría</button>
@@ -40,6 +40,9 @@
 <div id="clientesContainer">
     <jsp:include page="/ListarCategorias" />
 </div>
+
+<!-- Contenedor para mostrar los resultados -->
+<div id="resultContainer"></div>
 
 <script src="js/categorias.js"></script>
 </body>

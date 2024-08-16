@@ -40,14 +40,12 @@ public class ProductosDao {
         }
     }
 
-    // Método para cargar productos por categoría
-    public List<Productos> cargarProductosPorCategoria(int categoriaID) {
+    public List<Productos> obtenerTodosLosProductos() {
         List<Productos> productosList = new ArrayList<>();
-        String query = "{CALL GetProductosPorCategoria(?)}";
+        String query = "SELECT * FROM Productos WHERE Estado = true";
 
-        try (CallableStatement stmt = connection.prepareCall(query)) {
-            stmt.setInt(1, categoriaID);
-            ResultSet rs = stmt.executeQuery();
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 Productos producto = new Productos(
@@ -57,13 +55,14 @@ public class ProductosDao {
                         rs.getString("Descripcion"),
                         rs.getFloat("Precio"),
                         rs.getInt("Stock"),
-                        rs.getDate("Fecha_Creacion"),
+                        rs.getDate("Fecha_creacion"),
                         rs.getString("Tipo"),
                         rs.getString("Imagen"),
                         rs.getBoolean("Estado")
                 );
                 productosList.add(producto);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

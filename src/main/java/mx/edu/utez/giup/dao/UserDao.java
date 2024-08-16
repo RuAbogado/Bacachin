@@ -34,7 +34,6 @@ public class UserDao {
                 user.setCodigo(resultSet.getString("Codigo_RE"));
                 user.setEstado(resultSet.getBoolean("Estado"));
                 user.setTipo(resultSet.getString("Tipo"));
-                user.setImagen(resultSet.getString("Imagen"));
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener el usuario: " + e.getMessage());
@@ -45,8 +44,8 @@ public class UserDao {
     // Método para registrar un nuevo usuario
     public boolean registerUser(User user) throws SQLException {
         boolean isRegistered = false;
-        String query = "INSERT INTO Usuarios (Nombre, Apellido, Nombre_Usuario, Telefono, Correo, Contraseña, Estado, Codigo_RE, Tipo, Imagen) " +
-                "VALUES (?, ?, ?, ?, ?, SHA2(?, 256), ?, ?, ?, ?)";
+        String query = "INSERT INTO Usuarios (Nombre, Apellido, Nombre_Usuario, Telefono, Correo, Contraseña, Estado, Codigo_RE, Tipo) " +
+                "VALUES (?, ?, ?, ?, ?, SHA2(?, 256), ?, ?, ?)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -60,7 +59,6 @@ public class UserDao {
             statement.setBoolean(7, user.isEstado());
             statement.setString(8, user.getCodigo());
             statement.setString(9, user.getTipo());
-            statement.setString(10, user.getImagen());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -96,7 +94,7 @@ public class UserDao {
     // Método para actualizar un usuario
     public boolean actualizarUsuario(User user) {
         boolean actualizado = false;
-        String query = "UPDATE Usuarios SET Nombre = ?, Apellido = ?, Nombre_Usuario = ?, Telefono = ?, Correo = ?, Contraseña = SHA2(?, 256), Estado = ?, Codigo_RE = ?, Tipo = ?, Imagen = ? WHERE ID_Usuario = ?";
+        String query = "UPDATE Usuarios SET Nombre = ?, Apellido = ?, Nombre_Usuario = ?, Telefono = ?, Correo = ?, Contraseña = SHA2(?, 256), Estado = ?, Codigo_RE = ?, Tipo = ? WHERE ID_Usuario = ?";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -110,7 +108,6 @@ public class UserDao {
             statement.setBoolean(7, user.isEstado());
             statement.setString(8, user.getCodigo());
             statement.setString(9, user.getTipo());
-            statement.setString(10, user.getImagen());
             statement.setInt(11, user.getId());
 
             int rowsUpdated = statement.executeUpdate();
@@ -146,7 +143,6 @@ public class UserDao {
                 user.setCodigo(resultSet.getString("Codigo_RE"));
                 user.setEstado(resultSet.getBoolean("Estado"));
                 user.setTipo(resultSet.getString("Tipo"));
-                user.setImagen(resultSet.getString("Imagen"));
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener el usuario: " + e.getMessage());

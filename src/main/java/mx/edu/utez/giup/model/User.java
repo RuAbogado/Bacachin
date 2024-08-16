@@ -11,12 +11,11 @@ public class User {
     private boolean estado;
     private String codigo;
     private String tipo;
-    private String imagen;
 
     public User() {
     }
 
-    public User(int id, String nombre, String apellido, String username, String telefono, String sexo, String correo, String password, boolean estado, String codigo, String tipo, String imagen) {
+    public User(int id, String nombre, String apellido, String username, String telefono, String sexo, String correo, String password, boolean estado, String codigo, String tipo) {
         this.ID_Usuario = ID_Usuario;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -27,7 +26,6 @@ public class User {
         this.estado = estado;
         this.codigo = codigo;
         this.tipo = tipo;
-        this.imagen = imagen;
     }
 
     public int getId() {
@@ -144,17 +142,6 @@ public class User {
         }
     }
 
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        if(imagen != null && !imagen.trim().isEmpty()) {
-            this.imagen = imagen;
-        } else {
-            throw new IllegalArgumentException("Imagen no puede estar vacía");
-        }
-    }
 
     @Override
     public String toString() {
@@ -168,7 +155,6 @@ public class User {
                 ", estado=" + estado +
                 ", codigo='" + codigo + '\'' +
                 ", tipo='" + tipo + '\'' +
-                ", imagen='" + imagen + '\'' +
                 '}';
     }
 }

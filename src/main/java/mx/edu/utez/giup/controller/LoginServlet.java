@@ -15,34 +15,47 @@ import java.sql.Date;
 @WebServlet(name = "LoginServlet", value = "/Login")
 public class LoginServlet extends HttpServlet {
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String correo = req.getParameter("correo");
         String contraseña = req.getParameter("contraseña");
 
+        // Validación básica
+        if (correo == null || correo.isEmpty() || contraseña == null || contraseña.isEmpty()) {
+            req.setAttribute("mensaje", "Correo o contraseña no pueden estar vacíos");
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
+            return;
+        }
+
         UserDao dao = new UserDao();
-        User user = dao.getOne(correo, contraseña);
-        HttpSession session = req.getSession();
+        User user = dao.getOne(correo, contraseña); // Aquí deberías comparar con la contraseña cifrada
 
         if (user == null) {
-            session.setAttribute("mensaje", "Correo o contraseña incorrectos");
-            resp.sendRedirect(req.getContextPath() + "/index.jsp?error=1"); // Pasa el parámetro de error en la URL
+            req.setAttribute("mensaje", "Correo o contraseña incorrectos");
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         } else {
+            // Crear o obtener sesión
+            HttpSession session = req.getSession();
             session.setAttribute("user", user);
+
+            // Crear carrito
             long millis = System.currentTimeMillis();
             session.setAttribute("carrito", new Carrito(user.getId(), new Date(millis)));
+
             session.removeAttribute("mensaje");
 
-            // Redirige según el tipo de usuario
+            // Redirección basada en el tipo de usuario
             if ("admin".equals(user.getTipo())) {
-                resp.sendRedirect(req.getContextPath() + "/homeadmin.jsp"); // Redirige a la página de inicio de administrador
+                resp.sendRedirect(req.getContextPath() + "/homeadmin.jsp");
             } else if ("cliente".equals(user.getTipo())) {
-                resp.sendRedirect(req.getContextPath() + "/homecliente.jsp"); // Redirige a la página de perfil de cliente
+                resp.sendRedirect(req.getContextPath() + "/homecliente.jsp");
             } else {
-                resp.sendRedirect(req.getContextPath() + "/homeempleados.jsp"); // Por si acaso no se tiene un tipo definido, redirige al login
+                resp.sendRedirect(req.getContextPath() + "/homeempleados.jsp");
             }
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }

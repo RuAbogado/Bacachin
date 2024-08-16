@@ -35,7 +35,6 @@ public class RegisterEmpleadosServlet extends HttpServlet {
         user.setEstado(true);  // or set as per your logic
         user.setCodigo("x");  // generate or set the code as per your logic
         user.setTipo("empleado");
-        user.setImagen("user.png");
 
         UserDao userDao = new UserDao();
 
