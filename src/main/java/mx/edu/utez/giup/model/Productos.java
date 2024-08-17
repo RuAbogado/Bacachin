@@ -8,13 +8,14 @@ public class Productos {
     private int ID_Categoria;
     private String Nombre;
     private String Descripcion;
-    private float Precio; // Mantén el tipo float para representar DECIMAL(10, 2)
+    private float Precio; // Cambiado a float
     private int Stock;
-    private Date Fecha_Creacion; // Asegúrate de usar el nombre correcto en español
+    private Date Fecha_Creacion;
     private String Marca;
     private String Imagen;
-    private boolean Estado; // Cambia Boolean a boolean para simplificar
+    private boolean Estado;
 
+    // Constructor
     public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_Creacion, String marca, String imagen, boolean estado) {
         this.ID_Producto = ID_Producto;
         this.ID_Categoria = ID_Categoria;

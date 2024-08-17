@@ -17,13 +17,18 @@ public class CargarProductosServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Establecer el tipo de contenido y la codificación
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
+        // Obtener los productos desde la base de datos
         ProductosDao productosDao = new ProductosDao();
         List<Productos> productos = productosDao.obtenerTodosLosProductos();
 
+        // Convertir la lista de productos a JSON
         String productosJson = new Gson().toJson(productos);
+
+        // Escribir el JSON en la respuesta
         response.getWriter().write(productosJson);
     }
 }
