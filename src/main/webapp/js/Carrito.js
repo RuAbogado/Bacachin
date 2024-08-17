@@ -125,3 +125,30 @@ const showHTML = () => {
     valorTotal.innerText = `$${total}`;
     countProducts.innerText = totalOfProducts;
 };
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch("/GIUP_war/CargarProductos")
+        .then(response => response.json())
+        .then(data => {
+            const container = document.querySelector(".container-items");
+            container.innerHTML = ''; // Limpiar contenido previo
+
+            data.forEach(producto => {
+                const item = document.createElement("div");
+                item.className = "item";
+                item.innerHTML = `
+                    <figure>
+                        <img src="${producto.imagen}" alt="${producto.nombre}" />
+                    </figure>
+                    <div class="info-product">
+                        <h2>${producto.nombre}</h2>
+                        <p class="price">$${producto.precio.toFixed(2)}</p>
+                        <button class="btn-add-cart">Añadir al carrito</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+});
+

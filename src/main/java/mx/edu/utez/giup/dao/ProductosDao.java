@@ -22,16 +22,17 @@ public class ProductosDao {
 
     // Método para agregar un producto
     public boolean agregarProducto(Productos producto) {
-        String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Tipo, Imagen, Estado) VALUES ( ?, ?, ?, ?, ?, ?, 'x', ?, ?)";
+        String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Marca, Imagen, Estado) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, producto.getID_Categoria());
             stmt.setString(2, producto.getNombre());
             stmt.setString(3, producto.getDescripcion());
             stmt.setFloat(4, producto.getPrecio());
             stmt.setInt(5, producto.getStock());
-            stmt.setDate(6, producto.getFecha_creacion());
-            stmt.setString(7, producto.getImagen());
-            stmt.setBoolean(8, producto.getEstado());  // Corregido índice aquí
+            stmt.setDate(6, producto.getFecha_Creacion());
+            stmt.setString(7, producto.getMarca());
+            stmt.setString(8, producto.getImagen());
+            stmt.setBoolean(9, producto.getEstado());  // Corregido índice aquí
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -56,7 +57,7 @@ public class ProductosDao {
                         rs.getFloat("Precio"),
                         rs.getInt("Stock"),
                         rs.getDate("Fecha_creacion"),
-                        rs.getString("Tipo"),
+                        rs.getString("Marca"),
                         rs.getString("Imagen"),
                         rs.getBoolean("Estado")
                 );

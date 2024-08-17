@@ -23,20 +23,20 @@ public class AgregarProductoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Permitir solicitudes CORS
-        response.setHeader("Access-Control-Allow-Origin", "*"); // Permitir solicitudes de cualquier origen
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE"); // Métodos permitidos
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type"); // Encabezados permitidos
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
         // Obtener los parámetros del formulario
-        String nombre = request.getParameter("nombre");
-        String descripcion = request.getParameter("descripcion");
-        float precio = Float.parseFloat(request.getParameter("precio"));
-        int stock = Integer.parseInt(request.getParameter("stock"));
+        String nombre = request.getParameter("Nombre");
+        String descripcion = request.getParameter("Descripcion");
+        float precio = Float.parseFloat(request.getParameter("Precio"));
+        int stock = Integer.parseInt(request.getParameter("Stock"));
         int categoria = Integer.parseInt(request.getParameter("ID_Categoria"));
-        boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
+        boolean estado = Boolean.parseBoolean(request.getParameter("Estado"));
 
         // Obtener y guardar la imagen
-        Part filePart = request.getPart("imagen");
+        Part filePart = request.getPart("Imagen");
         String fileName = filePart.getSubmittedFileName();
         String uploadPath = getServletContext().getRealPath("") + File.separator + "img";
         File uploadDir = new File(uploadPath);
@@ -48,10 +48,10 @@ public class AgregarProductoServlet extends HttpServlet {
         // Crear la fecha actual en formato "yyyy-MM-dd"
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String fechaCreacionString = formatter.format(new java.util.Date());
-        Date Fecha_creacion = Date.valueOf(fechaCreacionString);
+        Date fechaCreacion = Date.valueOf(fechaCreacionString);
 
         // Crear el objeto Producto
-        Productos producto = new Productos(0, categoria, nombre, descripcion, precio, stock, Fecha_creacion, "x", fileName, estado);
+        Productos producto = new Productos(0, categoria, nombre, descripcion, precio, stock, fechaCreacion, "Marca", fileName, estado);
 
         // Llamar al DAO para agregar el producto
         ProductosDao productosDao = new ProductosDao();

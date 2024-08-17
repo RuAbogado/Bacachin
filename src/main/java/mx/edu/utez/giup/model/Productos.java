@@ -1,8 +1,6 @@
 package mx.edu.utez.giup.model;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class Productos {
 
@@ -10,28 +8,27 @@ public class Productos {
     private int ID_Categoria;
     private String Nombre;
     private String Descripcion;
-    private float Precio; // Cambiado a float
+    private float Precio; // Mantén el tipo float para representar DECIMAL(10, 2)
     private int Stock;
-    private Date Fecha_creacion;
-    private String Tipo;
+    private Date Fecha_Creacion; // Asegúrate de usar el nombre correcto en español
+    private String Marca;
     private String Imagen;
-    private Boolean Estado;
+    private boolean Estado; // Cambia Boolean a boolean para simplificar
 
-
-
-    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_creacion, String tipo, String imagen, Boolean estado) {
+    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_Creacion, String marca, String imagen, boolean estado) {
         this.ID_Producto = ID_Producto;
         this.ID_Categoria = ID_Categoria;
-        Nombre = nombre;
-        Descripcion = descripcion;
-        Precio = precio;
-        Stock = stock;
-        Fecha_creacion = fecha_creacion;
-        Tipo = tipo;
-        Imagen = imagen;
-        Estado = estado;
+        this.Nombre = nombre;
+        this.Descripcion = descripcion;
+        this.Precio = precio;
+        this.Stock = stock;
+        this.Fecha_Creacion = fecha_Creacion;
+        this.Marca = marca;
+        this.Imagen = imagen;
+        this.Estado = estado;
     }
 
+    // Getters y Setters
 
     public int getID_Producto() {
         return ID_Producto;
@@ -54,7 +51,7 @@ public class Productos {
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.Nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -62,7 +59,7 @@ public class Productos {
     }
 
     public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
+        this.Descripcion = descripcion;
     }
 
     public float getPrecio() {
@@ -70,7 +67,7 @@ public class Productos {
     }
 
     public void setPrecio(float precio) {
-        Precio = precio;
+        this.Precio = precio;
     }
 
     public int getStock() {
@@ -78,23 +75,23 @@ public class Productos {
     }
 
     public void setStock(int stock) {
-        Stock = stock;
+        this.Stock = stock;
     }
 
-    public Date getFecha_creacion() {
-        return Fecha_creacion;
+    public Date getFecha_Creacion() {
+        return Fecha_Creacion;
     }
 
-    public void setFecha_creacion(Date fecha_creacion) {
-        Fecha_creacion = fecha_creacion;
+    public void setFecha_Creacion(Date fecha_Creacion) {
+        this.Fecha_Creacion = fecha_Creacion;
     }
 
-    public String getTipo() {
-        return Tipo;
+    public String getMarca() {
+        return Marca;
     }
 
-    public void setTipo(String tipo) {
-        Tipo = tipo;
+    public void setMarca(String marca) {
+        this.Marca = marca;
     }
 
     public String getImagen() {
@@ -102,11 +99,14 @@ public class Productos {
     }
 
     public void setImagen(String imagen) {
-        Imagen = imagen;
+        this.Imagen = imagen;
     }
 
-    public Boolean getEstado() {return Estado;}
+    public boolean getEstado() {
+        return Estado;
+    }
 
-    public void setEstado(Boolean estado) {Estado = estado;}
-
+    public void setEstado(boolean estado) {
+        this.Estado = estado;
+    }
 }
