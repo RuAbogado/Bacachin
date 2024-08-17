@@ -3,24 +3,24 @@ const btnAgregarProducto = document.getElementById('add-product-btn');
 const btnAgregarCategoria = document.getElementById('add-category-btn');
 const modalCategoria = document.getElementById('categoryModal');
 const spanCerrarCategoria = modalCategoria.getElementsByClassName('close-category')[0];
-
+const modalProducto = document.getElementById('productModal');
 
 // Mostrar modales
 btnAgregarCategoria.onclick = function() {
     modalCategoria.style.display = "block";
-}
+};
 
 // Cerrar modales
 spanCerrarCategoria.onclick = function() {
     modalCategoria.style.display = "none";
-}
+};
 
 // Cerrar modal cuando se hace clic fuera de él
 window.onclick = function(event) {
     if (event.target == modalCategoria) {
         modalCategoria.style.display = "none";
     }
-}
+};
 
 // Cargar categorías y productos desde el servidor
 function cargarCategoriasYProductos() {
@@ -45,20 +45,19 @@ function cargarCategoriasYProductos() {
                 </div>
                 <div class="row" id="${category.value}"></div>
                 `;
+                document.getElementById('productos-container').appendChild(newCategoryContainer);
             });
-
         })
         .catch(error => {
             console.error('Error:', error);
             alert('Error al cargar las categorías.');
         });
 }
+
 // Iniciar la carga cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
     cargarCategoriasYProductos();
 });
-//-------------------------------------------------
-
 
 // Agregar una nueva categoría
 document.getElementById('category-form').addEventListener('submit', function(e) {
@@ -82,27 +81,19 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
             const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
 
             if (success) {
-                const select = document.getElementById('categoria-producto');
-                const option = document.createElement('option');
-                option.value = ID_Categoria;
-                option.text = newCategory;
-                select.add(option);
+                // Actualizar la tabla de categorías
+                fetch('/ListarCategorias')
+                    .then(response => response.text())
+                    .then(data => {
+                        const tableContainer = document.getElementById('table-container'); // Contenedor de la tabla
+                        tableContainer.innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error al actualizar la tabla de categorías.');
+                    });
 
-                const newCategoryContainer = document.createElement('div');
-                newCategoryContainer.className = 'categoria-container mb-5';
-                newCategoryContainer.id = `categoria-${ID_Categoria}`;
-                newCategoryContainer.innerHTML = `
-                <div class="categoria-header">
-                    <h1 class="encabezado">${newCategory}</h1>
-                    <div class="container-btn">
-                        <button class="boton-agregar" onclick="mostrarFormulario(${ID_Categoria})">Agregar ${newCategory}</button>
-                        <button class="boton-eliminar" onclick="eliminarCategoria(${ID_Categoria})">Eliminar Categoría</button>
-                    </div>
-                </div>
-                <div class="row" id="${ID_Categoria}"></div>
-            `;
-                document.getElementById('productos-container').appendChild(newCategoryContainer);
-
+                // Cerrar el modal y limpiar campos
                 modalCategoria.style.display = "none";
                 document.getElementById('new-category').value = '';
                 document.getElementById('category-description').value = '';
@@ -116,9 +107,9 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
         });
 });
 
-// Eliminar una categoría
-function DeshabilitarCategoria(ID_Categoria) {
-    if (!confirm('¿Estás seguro de que quieres deshabilitar esta categoría?')) {
+// Deshabilitar una categoría
+function eliminarCategoria(ID_Categoria) {
+    if (!confirm('¿Estás seguro de que quieres eliminar esta categoría?')) {
         return;
     }
 
@@ -135,11 +126,6 @@ function DeshabilitarCategoria(ID_Categoria) {
         }
     }
 
-
-    //Si tengo un formulario con imagenes
-    //agarra el formulario en una var
-    //luego hacer un
-    //var datos= new FormData(x)
     fetch('EliminarCategoria', {
         method: 'POST',
         headers: {
@@ -150,11 +136,10 @@ function DeshabilitarCategoria(ID_Categoria) {
         .then(response => response.text())
         .then(data => {
             data = JSON.parse(data);
-
             if (!data.success) {
                 alert('Error al eliminar la categoría.');
-            }else{
-                alert('La categoria se elimino correctamente.')
+            } else {
+                alert('La categoría se eliminó correctamente.');
             }
         })
         .catch(error => {

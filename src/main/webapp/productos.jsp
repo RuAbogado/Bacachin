@@ -226,6 +226,7 @@
                 <label for="categoria-producto">Categoría:</label>
                 <select id="categoria-producto" name="ID_Categoria" required>
                     <!-- Aquí se cargan las opciones de categorías -->
+                    <jsp:include page="/CargarCategorias" />
                 </select>
             </div>
             <div>
