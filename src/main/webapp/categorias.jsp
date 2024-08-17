@@ -5,7 +5,29 @@
     <title>Categorias</title>
     <link href="css/clientes.css" rel="stylesheet">
     <link href="css/productos.css" rel="stylesheet">
+    <style>
+        .deshabilitada {
+            position: relative;
+            opacity: 0.5; /* Hacerla más tenue */
+        }
 
+        .deshabilitada::after {
+            content: 'Deshabilitada';
+            color: red;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none; /* Para que no sea clickeable */
+        }
+    </style>
 </head>
 <body>
 

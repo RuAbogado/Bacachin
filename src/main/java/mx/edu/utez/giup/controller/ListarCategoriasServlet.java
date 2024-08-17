@@ -24,7 +24,7 @@ public class ListarCategoriasServlet extends HttpServlet {
         ResultSet rs = null;
         try {
             conn = DatabaseConnectionManager.getConnection();
-            String sql = "SELECT Nombre,Descripcion FROM Categorias";
+            String sql = "SELECT ID_Categoria,Nombre,Descripcion,Estado FROM Categorias";
             ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = ps.executeQuery();
             rs.beforeFirst();
@@ -33,6 +33,8 @@ public class ListarCategoriasServlet extends HttpServlet {
             out.println("<tr>");
             out.println("<th>Nombre</th>");
             out.println("<th>Descripcion</th>");
+            out.println("<th>Estado</th>");
+            out.println("<th>Modificar Estado");
             out.println("</tr>");
             out.println("</thead>");
             out.println("<tbody>");
@@ -41,6 +43,25 @@ public class ListarCategoriasServlet extends HttpServlet {
                     out.println("<tr>");
                     out.println("<td>" + rs.getString("Nombre") + "</td>");
                     out.println("<td>" + rs.getString("Descripcion") + "</td>");
+                    int estado = rs.getInt("Estado");
+                    if (estado == 0) {
+                        out.println("<td>Habilitada</td>");
+                    }else if (estado == 1) {
+                        out.println("<td>Deshabilitada</td>");
+                    }else {
+                        out.println("<td>error en la solicitud</td>");
+                    }
+
+                    int idCategoria = rs.getInt("ID_Categoria");
+                    if (estado == 0) {
+                        out.println("<td><button type=\"button\" onclick=\"DeshabilitarCategoria(" + idCategoria + ")\">Deshabilitar</button></td>");
+                    }else if (estado == 1) {
+                        out.println("<td><button type=\"button\" onclick=\"HabilitarCategoria(" + idCategoria + ")\">Deshabilitar</button></td>");
+                    }else {
+                        out.println("<td>error en la solicitud</td>");
+                    }
+
+
                     out.println("</tr>");
                 }
 

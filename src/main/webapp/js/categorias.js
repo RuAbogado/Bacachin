@@ -82,79 +82,44 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
             const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
 
             if (success) {
-                const select = document.getElementById('categoria-producto');
-                const option = document.createElement('option');
-                option.value = ID_Categoria;
-                option.text = newCategory;
-                select.add(option);
-
-                const newCategoryContainer = document.createElement('div');
-                newCategoryContainer.className = 'categoria-container mb-5';
-                newCategoryContainer.id = `categoria-${ID_Categoria}`;
-                newCategoryContainer.innerHTML = `
-                <div class="categoria-header">
-                    <h1 class="encabezado">${newCategory}</h1>
-                    <div class="container-btn">
-                        <button class="boton-agregar" onclick="mostrarFormulario(${ID_Categoria})">Agregar ${newCategory}</button>
-                        <button class="boton-eliminar" onclick="eliminarCategoria(${ID_Categoria})">Eliminar Categoría</button>
-                    </div>
-                </div>
-                <div class="row" id="${ID_Categoria}"></div>
-            `;
-                document.getElementById('productos-container').appendChild(newCategoryContainer);
-
-                modalCategoria.style.display = "none";
-                document.getElementById('new-category').value = '';
-                document.getElementById('category-description').value = '';
+                // Recargar el iframe que contiene categorias.jsp
+                window.location.reload();
             } else {
-                alert('Error al agregar la categoría.');
+                alert('Error al agregar la categoría a la lista.');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error en la solicitud.');
+            alert('Error en la solicitud para agregar la categoria en la lista.');
         });
 });
 
-// Eliminar una categoría
+// Deshabilitar una categoría
 function DeshabilitarCategoria(ID_Categoria) {
     if (!confirm('¿Estás seguro de que quieres deshabilitar esta categoría?')) {
         return;
     }
 
+    // Obtener la fila de la tabla correspondiente a la categoría
     const categoria = document.getElementById(`categoria-${ID_Categoria}`);
     if (categoria) {
-        categoria.parentNode.removeChild(categoria);
+        // Añadir la clase 'deshabilitada' para simular que no está disponible
+        categoria.classList.add('deshabilitada');
     }
 
-    const select = document.getElementById('categoria-producto');
-    for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].value == ID_Categoria) {
-            select.remove(i);
-            break;
-        }
-    }
-
-
-    //Si tengo un formulario con imagenes
-    //agarra el formulario en una var
-    //luego hacer un
-    //var datos= new FormData(x)
-    fetch('EliminarCategoria', {
+    fetch('deshabilitarCategoriaServlet', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
     })
-        .then(response => response.text())
+        .then(response => response.json()) // Se espera una respuesta en formato JSON
         .then(data => {
-            data = JSON.parse(data);
-
             if (!data.success) {
-                alert('Error al eliminar la categoría.');
-            }else{
-                alert('La categoria se elimino correctamente.')
+                alert('Error al deshabilitar la categoría.');
+            } else {
+                alert('La categoría se deshabilitó correctamente.');
             }
         })
         .catch(error => {
@@ -166,5 +131,4 @@ function DeshabilitarCategoria(ID_Categoria) {
 // Mostrar formulario para agregar producto en una categoría específica
 function mostrarFormulario(categoria) {
     modalProducto.style.display = "block";
-    document.getElementById('categoria-producto').value = categoria;
 }
