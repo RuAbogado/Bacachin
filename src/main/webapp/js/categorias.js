@@ -3,24 +3,24 @@ const btnAgregarProducto = document.getElementById('add-product-btn');
 const btnAgregarCategoria = document.getElementById('add-category-btn');
 const modalCategoria = document.getElementById('categoryModal');
 const spanCerrarCategoria = modalCategoria.getElementsByClassName('close-category')[0];
-const modalProducto = document.getElementById('productModal');
+
 
 // Mostrar modales
 btnAgregarCategoria.onclick = function() {
     modalCategoria.style.display = "block";
-};
+}
 
 // Cerrar modales
 spanCerrarCategoria.onclick = function() {
     modalCategoria.style.display = "none";
-};
+}
 
 // Cerrar modal cuando se hace clic fuera de él
 window.onclick = function(event) {
     if (event.target == modalCategoria) {
         modalCategoria.style.display = "none";
     }
-};
+}
 
 // Cargar categorías y productos desde el servidor
 function cargarCategoriasYProductos() {
@@ -45,19 +45,20 @@ function cargarCategoriasYProductos() {
                 </div>
                 <div class="row" id="${category.value}"></div>
                 `;
-                document.getElementById('productos-container').appendChild(newCategoryContainer);
             });
+
         })
         .catch(error => {
             console.error('Error:', error);
             alert('Error al cargar las categorías.');
         });
 }
-
 // Iniciar la carga cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', function() {
     cargarCategoriasYProductos();
 });
+//-------------------------------------------------
+
 
 // Agregar una nueva categoría
 document.getElementById('category-form').addEventListener('submit', function(e) {
@@ -81,65 +82,44 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
             const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
 
             if (success) {
-                // Actualizar la tabla de categorías
-                fetch('/ListarCategorias')
-                    .then(response => response.text())
-                    .then(data => {
-                        const tableContainer = document.getElementById('table-container'); // Contenedor de la tabla
-                        tableContainer.innerHTML = data;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Error al actualizar la tabla de categorías.');
-                    });
-
-                // Cerrar el modal y limpiar campos
-                modalCategoria.style.display = "none";
-                document.getElementById('new-category').value = '';
-                document.getElementById('category-description').value = '';
+                // Recargar el iframe que contiene categorias.jsp
+                window.location.reload();
             } else {
-                alert('Error al agregar la categoría.');
+                alert('Error al agregar la categoría a la lista.');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error en la solicitud.');
+            alert('Error en la solicitud para agregar la categoria en la lista.');
         });
 });
 
 // Deshabilitar una categoría
-function eliminarCategoria(ID_Categoria) {
-    if (!confirm('¿Estás seguro de que quieres eliminar esta categoría?')) {
+function DeshabilitarCategoria(ID_Categoria) {
+    if (!confirm('¿Estás seguro de que quieres deshabilitar esta categoría?')) {
         return;
     }
 
+    // Obtener la fila de la tabla correspondiente a la categoría
     const categoria = document.getElementById(`categoria-${ID_Categoria}`);
     if (categoria) {
-        categoria.parentNode.removeChild(categoria);
+        // Añadir la clase 'deshabilitada' para simular que no está disponible
+        categoria.classList.add('deshabilitada');
     }
 
-    const select = document.getElementById('categoria-producto');
-    for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].value == ID_Categoria) {
-            select.remove(i);
-            break;
-        }
-    }
-
-    fetch('EliminarCategoria', {
+    fetch('deshabilitarCategoriaServlet', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
     })
-        .then(response => response.text())
+        .then(response => response.json()) // Se espera una respuesta en formato JSON
         .then(data => {
-            data = JSON.parse(data);
             if (!data.success) {
-                alert('Error al eliminar la categoría.');
+                alert('Error al deshabilitar la categoría.');
             } else {
-                alert('La categoría se eliminó correctamente.');
+                alert('La categoría se deshabilitó correctamente.');
             }
         })
         .catch(error => {
@@ -151,5 +131,4 @@ function eliminarCategoria(ID_Categoria) {
 // Mostrar formulario para agregar producto en una categoría específica
 function mostrarFormulario(categoria) {
     modalProducto.style.display = "block";
-    document.getElementById('categoria-producto').value = categoria;
 }
