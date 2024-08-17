@@ -14,9 +14,10 @@ public class CategoriasDao {
 
     // Método para agregar una nueva categoría
     public int addCategoria(Categorias categoria) {
+        int categoriaId = 0;
         String query = "INSERT INTO Categorias (Nombre, Descripcion, Estado) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseConnectionManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             // Asignar valores a la consulta
             pstmt.setString(1, categoria.getNombre());
@@ -25,8 +26,15 @@ public class CategoriasDao {
 
             // Ejecutar la consulta
             int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    categoriaId = generatedKeys.getInt(1);
+                }
+            }
 
-            int categoriaId = this.getAllCategorias().stream().filter(cat -> cat.getNombre().equals(categoria.getNombre())).findFirst().get().getID_Categoria();
+
+//            int categoriaId = this.getAllCategorias().stream().filter(cat -> cat.getNombre().equals(categoria.getNombre())).findFirst().get().getID_Categoria();
 
             return categoriaId;
         } catch (SQLException e) {

@@ -37,10 +37,13 @@ public class ListarCategoriasServlet extends HttpServlet {
             out.println("</thead>");
             out.println("<tbody>");
             while (rs.next()) {
-                out.println("<tr>");
-                out.println("<td>" + rs.getString("Nombre") + "</td>");
-                out.println("<td>" + rs.getString("Descripcion") + "</td>");
-                out.println("</tr>");
+                if(rs.getString("Nombre") != null){
+                    out.println("<tr>");
+                    out.println("<td>" + rs.getString("Nombre") + "</td>");
+                    out.println("<td>" + rs.getString("Descripcion") + "</td>");
+                    out.println("</tr>");
+                }
+
             }
             out.println("</tbody>");
             out.println("</table>");
