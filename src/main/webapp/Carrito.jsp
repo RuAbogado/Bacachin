@@ -1,60 +1,142 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>git
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Productos</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <style>
-        body {
-            background: #FFE7C3FF;
-            margin-top: 90px;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    />
+    <title>Tienda</title>
+    <link rel="stylesheet" href="css/Carrito.css" />
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <!-- Tabla de productos -->
-        <main id="items" class="col-md-8">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Fecha de Creación</th>
-                    <th>Tipo</th>
-                    <th>Imagen</th>
-                    <th>Acción</th>
-                </tr>
-                </thead>
-                <tbody id="productos-tbody">
-                <!-- Los productos se insertarán aquí con JavaScript -->
-                </tbody>
-            </table>
-        </main>
-        <!-- Carrito -->
-        <aside class="col-md-4">
-            <h2>Carrito</h2>
-            <ul id="carrito" class="list-group"></ul>
-            <hr>
-            <p class="text-right">Total: $<span id="total"></span></p>
-            <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
-            <button id="boton-solicitud" class="btn btn-danger">Realizar Solicitud</button>
-        </aside>
+<header>
+    <h1>Tienda</h1>
+
+    <div class="container-icon">
+        <div class="container-cart-icon">
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="icon-cart"
+            >
+                <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+            </svg>
+            <div class="count-products">
+                <span id="contador-productos">0</span>
+            </div>
+        </div>
+
+        <div class="container-cart-products hidden-cart">
+            <div class="row-product hidden">
+                <div class="cart-product">
+                    <div class="info-cart-product">
+                        <span class="cantidad-producto-carrito">1</span>
+                        <p class="titulo-producto-carrito">Zapatos Nike</p>
+                        <span class="precio-producto-carrito">$80</span>
+                    </div>
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="icon-close"
+                    >
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="cart-total hidden">
+                <h3>Total:</h3>
+                <span class="total-pagar">$200</span>
+            </div>
+            <p class="cart-empty">El carrito está vacío</p>
+        </div>
+    </div>
+</header>
+<div class="container-items">
+    <div class="item">
+        <figure>
+            <img
+                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                    alt="producto"
+            />
+        </figure>
+        <div class="info-product">
+            <h2>Zapatos Nike</h2>
+            <p class="price">$80</p>
+            <button class="btn-add-cart">Añadir al carrito</button>
+        </div>
+    </div>
+    <div class="item">
+        <figure>
+            <img
+                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                    alt="producto"
+            />
+        </figure>
+        <div class="info-product">
+            <h2>Audifonos</h2>
+            <p class="price">$20</p>
+            <button class="btn-add-cart">Añadir al carrito</button>
+        </div>
+    </div>
+    <div class="item">
+        <figure>
+            <img
+                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1099&q=80"
+                    alt="producto"
+            />
+        </figure>
+        <div class="info-product">
+            <h2>Reloj</h2>
+            <p class="price">$50</p>
+            <button class="btn-add-cart">Añadir al carrito</button>
+        </div>
+    </div>
+    <div class="item">
+        <figure>
+            <img
+                    src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
+                    alt="producto"
+            />
+        </figure>
+        <div class="info-product">
+            <h2>Smartwatch</h2>
+            <p class="price">$90</p>
+            <button class="btn-add-cart">Añadir al carrito</button>
+        </div>
+    </div>
+    <div class="item">
+        <figure>
+            <img
+                    src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
+                    alt="producto"
+            />
+        </figure>
+        <div class="info-product">
+            <h2>Perfume</h2>
+            <p class="price">$50</p>
+            <button class="btn-add-cart">Añadir al carrito</button>
+        </div>
     </div>
 </div>
 
-<!-- Cargar jQuery antes de Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<!-- Cargar tu script después de jQuery y Bootstrap -->
 <script src="js/Carrito.js"></script>
-
 </body>
 </html>
