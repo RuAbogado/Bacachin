@@ -119,6 +119,7 @@ function DeshabilitarCategoria(ID_Categoria) {
             if (!data.success) {
                 alert('Error al deshabilitar la categoría.');
             } else {
+                window.location.reload();
                 alert('La categoría se deshabilitó correctamente.');
             }
         })
