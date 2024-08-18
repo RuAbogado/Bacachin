@@ -107,7 +107,7 @@ function DeshabilitarCategoria(ID_Categoria) {
         categoria.classList.add('deshabilitada');
     }
 
-    fetch('deshabilitarCategoriaServlet', {
+    fetch('deshabilitarCategoria', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
