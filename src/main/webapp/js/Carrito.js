@@ -153,6 +153,7 @@ const obtenerIdProductoPorTitulo = (title) => {
     return 1; // Retorna el ID del producto correspondiente
 };
 
+
 document.addEventListener("DOMContentLoaded", function() {
     fetch("/GIUP_war/CargarProductos")
         .then(response => response.json())
