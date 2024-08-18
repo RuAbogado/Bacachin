@@ -59,24 +59,6 @@
             position: relative;
         }
 
-        .circle-img {
-            width: 200px;
-            height: 200px;
-            margin-bottom: 20px;
-            border-radius: 50%;
-            display: block;
-            margin-left: -20px;
-            margin-right: auto;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .circle-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .boton-modificar,
         .boton-guardar,
         .boton-cancelar {
@@ -100,10 +82,6 @@
             width: 100%;
             position: relative;
             margin-bottom: 20px;
-        }
-
-        .input-file {
-            display: none;
         }
 
         .label-input100 {
@@ -183,15 +161,9 @@
     <div class="container-login100">
         <div class="wrap-login100">
             <div class="container contenedor-perfil">
-                <div class="close-icon" onclick="window.location.href='homecliente.jsp';">✖️</div>
+                <div class="close-icon" onclick="window.location.href='homeempleados.jsp';">✖️</div>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <label for="file-upload" class="circle-img">
-                            <img id="foto-perfil" src="img/icons/imagen.png" alt="Foto de perfil">
-                        </label>
-                        <input type="file" id="file-upload" class="input-file" accept="image/*"
-                               onchange="cargarFoto(this)">
-
                         <div>
                             <span>Nombres: </span><span id="nombre" class="font-weight-bold"></span>
                         </div>
@@ -199,14 +171,10 @@
                             <span>Apellidos: </span><span id="apellido" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Nombre usuario: </span><span id="nombre_usuario"
-                                                               class="font-weight-bold"></span>
+                            <span>Nombre usuario: </span><span id="nombre_usuario" class="font-weight-bold"></span>
                         </div>
                         <div>
                             <span>Teléfono: </span><span id="telefono" class="font-weight-bold"></span>
-                        </div>
-                        <div>
-                            <span>Sexo: </span><span id="sexo" class="font-weight-bold"></span>
                         </div>
                         <div>
                             <span>E-mail: </span><span id="email-usuario" class="font-weight-bold"></span>
@@ -229,30 +197,49 @@
 <script src="js/main.js"></script>
 <script>
 
-        const usuarioId = 1; // ID del usuario que quieres cargar
-        let datosOriginales = {};
+    const usuarioId = 1; // ID del usuario que quieres cargar
+    let datosOriginales = {};
 
-        document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
         cargarDatosUsuario();
     });
 
-        const cargarDatosUsuario = () => {
-        fetch(`usuarioId${usuarioId}`)
+    const cargarDatosUsuario = () => {
+        console.log(usuarioId);
+        fetch(`cargarUsuario/${usuarioId}`)  // Asegúrate de que esta sea la ruta correcta de tu API
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');
                 }
-                return response.json();
+                return response.text();  // Cambiado a texto para usar un DOMParser
             })
             .then(data => {
-                datosOriginales = data;  // Guardar los datos originales
-                document.getElementById("nombre").textContent = data.nombre;
-                document.getElementById("apellido").textContent = data.apellido;
-                document.getElementById("nombre_usuario").textContent = data.nombreUsuario;
-                document.getElementById("telefono").textContent = data.telefono;
-                document.getElementById("sexo").textContent = data.sexo;
-                document.getElementById("email-usuario").textContent = data.email;
-                document.getElementById("foto-perfil").src = data.fotoPerfil || "img/icons/imagen.png";
+                // Si la respuesta es HTML, parsear el texto
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+
+                // Suponiendo que el HTML de respuesta tiene los datos en elementos específicos
+                const nombre = doc.querySelector('#nombre').textContent;
+                const apellido = doc.querySelector('#apellido').textContent;
+                const nombreUsuario = doc.querySelector('#nombre_usuario').textContent;
+                const telefono = doc.querySelector('#telefono').textContent;
+                const correo = doc.querySelector('#correo').textContent; // Asegúrate de que el nombre coincida con tu respuesta
+
+                // Actualizar el DOM
+                document.getElementById("nombre").textContent = nombre;
+                document.getElementById("apellido").textContent = apellido;
+                document.getElementById("nombre_usuario").textContent = nombreUsuario;
+                document.getElementById("telefono").textContent = telefono;
+                document.getElementById("email-usuario").textContent = correo;
+
+                // Guardar los datos originales
+                datosOriginales = {
+                    nombre,
+                    apellido,
+                    nombreUsuario,
+                    telefono,
+                    correo
+                };
             })
             .catch(error => {
                 console.error('Error al cargar los datos del usuario:', error);
@@ -260,104 +247,72 @@
             });
     };
 
-        const habilitarEdicion = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'sexo', 'email-usuario'];
+
+
+    const habilitarEdicion = () => {
+        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
         campos.forEach(campo => {
-        const span = document.getElementById(campo);
-        let input;
-        if (campo === 'sexo') {
-        input = document.createElement('select');
-        input.id = `input-${campo}`;
-        input.classList.add('input-select');
-        ['Masculino', 'Femenino', 'Otro'].forEach(optionText => {
-        const option = document.createElement('option');
-        option.value = optionText;
-        option.textContent = optionText;
-        if (optionText === span.textContent) {
-        option.selected = true;
-    }
-        input.appendChild(option);
-    });
-    } else {
-        input = document.createElement('input');
-        input.id = `input-${campo}`;
-        input.type = 'text';
-        input.value = span.textContent;
-        input.classList.add('input100');
-    }
-        span.parentNode.replaceChild(input, span);
-    });
+            const span = document.getElementById(campo);
+            let input = document.createElement('input');
+            input.id = `input-${campo}`;
+            input.type = 'text';
+            input.value = span.textContent;
+            input.classList.add('input100');
+            span.parentNode.replaceChild(input, span);
+        });
         document.querySelector('.boton-modificar').style.display = 'none';
         document.querySelector('.boton-guardar').style.display = 'inline-block';
         document.querySelector('.boton-cancelar').style.display = 'inline-block';
     };
 
-        const cancelarCambios = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'sexo', 'email-usuario'];
+    const cancelarCambios = () => {
+        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
         campos.forEach(campo => {
-        const input = document.getElementById(`input-${campo}`);
-        const span = document.createElement('span');
-        span.id = campo;
-        span.classList.add('font-weight-bold');
-        span.textContent = datosOriginales[campo];
-        input.parentNode.replaceChild(span, input);
-    });
-        document.getElementById("foto-perfil").src = datosOriginales.fotoPerfil || "img/icons/imagen.png";
+            const input = document.getElementById(`input-${campo}`);
+            const span = document.createElement('span');
+            span.id = campo;
+            span.classList.add('font-weight-bold');
+            span.textContent = datosOriginales[campo];
+            input.parentNode.replaceChild(span, input);
+        });
         document.querySelector('.boton-modificar').style.display = 'inline-block';
         document.querySelector('.boton-guardar').style.display = 'none';
         document.querySelector('.boton-cancelar').style.display = 'none';
     };
 
-        const guardarCambios = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'sexo', 'email-usuario'];
-        const datosNuevos = {};
+    const guardarCambios = () => {
+        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
+        let datosActualizados = {};
 
         campos.forEach(campo => {
-        const input = document.getElementById(`input-${campo}`);
-        if (input.value.trim() !== '') {
-        datosNuevos[campo] = input.value.trim();
-    } else {
-        alert(`El campo ${campo} no puede estar vacío`);
-        return;
-    }
-    });
+            const input = document.getElementById(`input-${campo}`);
+            datosActualizados[campo] = input.value;
+        });
 
-        datosNuevos.id = usuarioId;
-        datosNuevos.fotoPerfil = document.getElementById("foto-perfil").src;
-
-        fetch('http://localhost:8080/api/usuario/actualizar', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-    },
-        body: JSON.stringify(datosNuevos)
-    })
-        .then(response => response.json())
-        .then(response => {
-        if (response.id) {
-        cargarDatosUsuario();
-        document.querySelector('.boton-modificar').style.display = 'inline-block';
-        document.querySelector('.boton-guardar').style.display = 'none';
-        document.querySelector('.boton-cancelar').style.display = 'none';
-    } else {
-        alert('Error al actualizar los datos');
-    }
-    })
-        .catch(error => {
-        console.error('Error al actualizar los datos:', error);
-        alert('Error al actualizar los datos. Por favor, inténtalo de nuevo más tarde.');
-    });
+        fetch(`usuarioId${usuarioId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datosActualizados)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al guardar los cambios');
+                }
+                return response.json();
+            })
+            .then(data => {
+                datosOriginales = data;  // Actualizar los datos originales
+                cancelarCambios();
+                alert('Los cambios se guardaron correctamente.');
+            })
+            .catch(error => {
+                console.error('Error al guardar los cambios:', error);
+                alert('Error al guardar los cambios. Por favor, inténtalo de nuevo más tarde.');
+            });
     };
 
-        const cargarFoto = (input) => {
-        if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-        document.getElementById('foto-perfil').src = e.target.result;
-    };
-        reader.readAsDataURL(input.files[0]);
-    }
-    };
 </script>
 </body>
 
