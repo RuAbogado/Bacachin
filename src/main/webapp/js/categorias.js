@@ -16,7 +16,7 @@ spanCerrarCategoria.onclick = function() {
 
 // Cerrar modal cuando se hace clic fuera de él
 window.onclick = function(event) {
-    if (event.target == modalCategoria) {
+    if (event.target === modalCategoria) {
         modalCategoria.style.display = "none";
     }
 }
@@ -41,7 +41,6 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
             const success = doc.querySelector('h1').textContent.includes('exitosamente');
-            const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
 
             if (success) {
                 // Recargar el iframe que contiene categorias.jsp

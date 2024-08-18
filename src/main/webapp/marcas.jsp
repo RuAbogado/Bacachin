@@ -3,7 +3,6 @@
 <html>
 <head>
     <title>Marcas</title>
-    <link href="css/clientes.css" rel="stylesheet">
     <link href="css/productos.css" rel="stylesheet">
     <style>
         .deshabilitada {

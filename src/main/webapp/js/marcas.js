@@ -16,7 +16,7 @@ spanCerrarmarca.onclick = function() {
 
 // Cerrar modal cuando se hace clic fuera de él
 window.onclick = function(event) {
-    if (event.target == modalmarca) {
+    if (event.target === modalmarca) {
         modalmarca.style.display = "none";
     }
 }
