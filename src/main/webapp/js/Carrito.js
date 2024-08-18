@@ -130,11 +130,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 item.className = "item";
                 item.innerHTML = `
                     <figure>
-                        <img src="${producto.imagen}" alt="${producto.nombre}" />
+                        <img src="img/${producto.Imagen}" alt="${producto.Nombre}" />
                     </figure>
                     <div class="info-product">
-                        <h2>${producto.nombre}</h2>
-                        <p class="price">$${producto.precio}</p>
+                        <h2>${producto.Nombre}</h2>
+                        <p class="price">$${producto.Precio}</p>
                         <button class="btn-add-cart">Añadir al carrito</button>
                     </div>
                 `;
