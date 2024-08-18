@@ -14,10 +14,19 @@ const productsList = document.querySelector('.container-items');
 // Variable de arreglos de Productos
 let allProducts = [];
 
+// Elementos del carrito
 const valorTotal = document.querySelector('.total-pagar');
 const countProducts = document.querySelector('#contador-productos');
 const cartEmpty = document.querySelector('.cart-empty');
 const cartTotal = document.querySelector('.cart-total');
+
+// Función para obtener el ID del carrito
+const obtenerIdCarrito = () => {
+    // Implementa esta función para obtener el ID del carrito
+    const idCarrito = 1; // Ejemplo: reemplaza con la lógica real para obtener el ID
+    console.log("ID_Carrito obtenido:", idCarrito); // Verificar el ID_Carrito
+    return idCarrito;
+};
 
 productsList.addEventListener('click', e => {
     if (e.target.classList.contains('btn-add-cart')) {
@@ -28,6 +37,8 @@ productsList.addEventListener('click', e => {
             title: product.querySelector('h2').textContent,
             price: parseFloat(product.querySelector('p').textContent.slice(1)) // Convertir a float
         };
+
+        console.log("Producto añadido:", infoProduct); // Verificar datos del producto
 
         const exists = allProducts.some(
             product => product.title === infoProduct.title
@@ -48,7 +59,6 @@ productsList.addEventListener('click', e => {
         }
 
         showHTML();
-        // Llamar a la función para enviar los datos al servlet
         enviarProductoAlCarrito(infoProduct);
     }
 });
@@ -123,10 +133,14 @@ const showHTML = () => {
 // Función para enviar producto al servlet
 const enviarProductoAlCarrito = (product) => {
     const idProducto = obtenerIdProductoPorTitulo(product.title); // Implementa esta función para obtener el ID del producto
+    const idCarrito = obtenerIdCarrito(); // Obtén el ID del carrito
     const data = {
+        idCarrito: idCarrito,
         idProducto: idProducto,
         quantity: product.quantity
     };
+
+    console.log("Datos enviados al servidor:", data); // Verificar los datos enviados al servidor
 
     fetch("/GIUP_war/AgregarProductoCarrito", {
         method: "POST",
@@ -153,12 +167,12 @@ const obtenerIdProductoPorTitulo = (title) => {
     return 1; // Retorna el ID del producto correspondiente
 };
 
-
-
 document.addEventListener("DOMContentLoaded", function() {
     fetch("/GIUP_war/CargarProductos")
         .then(response => response.json())
         .then(data => {
+            console.log("Productos cargados:", data); // Verificar los productos cargados
+
             const container = document.querySelector(".container-items");
             container.innerHTML = ''; // Limpiar contenido previo
 

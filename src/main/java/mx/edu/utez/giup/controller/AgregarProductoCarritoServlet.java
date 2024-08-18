@@ -59,9 +59,6 @@ public class AgregarProductoCarritoServlet extends HttpServlet {
             detalleCarritoDao.agregarDetalleCarrito(detalleCarrito);
 
             out.write("{\"status\":\"success\"}");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            out.write("{\"status\":\"error\", \"message\":\"" + e.getMessage() + "\"}");
         } catch (Exception e) {
             e.printStackTrace();
             out.write("{\"status\":\"error\", \"message\":\"" + e.getMessage() + "\"}");

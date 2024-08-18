@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mx.edu.utez.giup.dao.UserDao;
+import mx.edu.utez.giup.dao.CarritoDao;
 import mx.edu.utez.giup.model.Carrito;
 import mx.edu.utez.giup.model.User;
 import java.io.IOException;
@@ -27,8 +28,8 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        UserDao dao = new UserDao();
-        User user = dao.getOne(correo, contraseña); // Aquí deberías comparar con la contraseña cifrada
+        UserDao userDao = new UserDao();
+        User user = userDao.getOne(correo, contraseña); // Aquí deberías comparar con la contraseña cifrada
 
         if (user == null) {
             req.setAttribute("mensaje", "Correo o contraseña incorrectos");
@@ -38,9 +39,18 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
 
-            // Crear carrito
-            long millis = System.currentTimeMillis();
-            session.setAttribute("carrito", new Carrito(user.getId(), new Date(millis)));
+            // Obtener o crear el carrito asociado al usuario
+            CarritoDao carritoDao = new CarritoDao();
+            Carrito carrito = carritoDao.getCarritoByUserId(user.getId());
+            if (carrito == null) {
+                // Si no existe carrito, se crea uno nuevo
+                long millis = System.currentTimeMillis();
+                carrito = carritoDao.createCarrito(new Carrito(user.getId(), new Date(millis)));
+            }
+
+// Almacenar el carrito y el ID del carrito en la sesión
+            session.setAttribute("carrito", carrito);
+            session.setAttribute("ID_Carrito", carrito.getID_Carrito());
 
             session.removeAttribute("mensaje");
 

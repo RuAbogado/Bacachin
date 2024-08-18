@@ -1,6 +1,7 @@
 package mx.edu.utez.giup.model;
 
 public class DetalleCarrito {
+    private int idDetalleCarrito;
     private int idCarrito;
     private int idProducto;
     private int cantidad;
@@ -11,6 +12,14 @@ public class DetalleCarrito {
         this.idCarrito = idCarrito;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
+    }
+
+    public int getIdDetalleCarrito() {
+        return idDetalleCarrito;
+    }
+
+    public void setIdDetalleCarrito(int idDetalleCarrito) {
+        this.idDetalleCarrito = idDetalleCarrito;
     }
 
     public int getIdCarrito() {
