@@ -48,8 +48,6 @@ productsList.addEventListener('click', e => {
         }
 
         showHTML();
-        // Llamar a la función para enviar los datos al servlet
-        enviarProductoAlCarrito(infoProduct);
     }
 });
 
@@ -66,7 +64,7 @@ rowProduct.addEventListener('click', e => {
     }
 });
 
-// Función para mostrar HTML
+// Funcion para mostrar HTML
 const showHTML = () => {
     if (!allProducts.length) {
         cartEmpty.classList.remove('hidden');
@@ -118,39 +116,6 @@ const showHTML = () => {
 
     valorTotal.innerText = `$${total.toFixed(2)}`;
     countProducts.innerText = totalOfProducts;
-};
-
-// Función para enviar producto al servlet
-const enviarProductoAlCarrito = (product) => {
-    const idProducto = obtenerIdProductoPorTitulo(product.title); // Implementa esta función para obtener el ID del producto
-    const data = {
-        idProducto: idProducto,
-        quantity: product.quantity
-    };
-
-    fetch("/GIUP_war/AgregarProductoCarrito", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(result => {
-            if (result.status === "success") {
-                console.log("Producto agregado al carrito exitosamente.");
-            } else {
-                console.error("Error al agregar producto al carrito:", result.message);
-            }
-        })
-        .catch(error => console.error("Error:", error));
-};
-
-// Ejemplo de función para obtener ID del producto (deberás implementarla)
-const obtenerIdProductoPorTitulo = (title) => {
-    // Lógica para obtener el ID del producto según su título
-    // Puedes mantener un mapeo de productos en una variable o realizar una consulta al servidor
-    return 1; // Retorna el ID del producto correspondiente
 };
 
 document.addEventListener("DOMContentLoaded", function() {
