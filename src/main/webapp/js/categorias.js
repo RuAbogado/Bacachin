@@ -1,5 +1,4 @@
 // Obtener elementos del DOM
-const btnAgregarProducto = document.getElementById('add-product-btn');
 const btnAgregarCategoria = document.getElementById('add-category-btn');
 const modalCategoria = document.getElementById('categoryModal');
 const spanCerrarCategoria = modalCategoria.getElementsByClassName('close-category')[0];
@@ -21,43 +20,6 @@ window.onclick = function(event) {
         modalCategoria.style.display = "none";
     }
 }
-
-// Cargar categorías y productos desde el servidor
-function cargarCategoriasYProductos() {
-    // Primero, cargar las categorías
-    fetch('ObtenerCategorias')
-        .then(response => response.text())
-        .then(data => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data, 'text/html');
-            const categorias = doc.querySelectorAll('option');
-            categorias.forEach(category => {
-                const newCategoryContainer = document.createElement('div');
-                newCategoryContainer.className = 'categoria-container mb-5';
-                newCategoryContainer.id = `categoria-${category.value}`;
-                newCategoryContainer.innerHTML = `
-                <div class="categoria-header">
-                    <h1 class="encabezado">${category.text}</h1>
-                    <div class="container-btn">
-                        <button class="boton-agregar" onclick="mostrarFormulario(${category.value})">Agregar ${category.text}</button>
-                        <button class="boton-eliminar" onclick="eliminarCategoria(${category.value})">Eliminar Categoría</button>
-                    </div>
-                </div>
-                <div class="row" id="${category.value}"></div>
-                `;
-            });
-
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al cargar las categorías.');
-        });
-}
-// Iniciar la carga cuando el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', function() {
-    cargarCategoriasYProductos();
-});
-//-------------------------------------------------
 
 
 // Agregar una nueva categoría
@@ -162,9 +124,4 @@ function HabilitarCategoria(ID_Categoria) {
             console.error('Error:', error);
             alert('Error en la solicitud.');
         });
-}
-
-// Mostrar formulario para agregar producto en una categoría específica
-function mostrarFormulario(categoria) {
-    modalProducto.style.display = "block";
 }

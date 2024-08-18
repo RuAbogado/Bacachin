@@ -56,6 +56,14 @@
           </a>
         </li>
         <li>
+          <a href="#" class="nav-link text-white" data-target="marcas">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#grid"/>
+            </svg>
+            Marcas
+          </a>
+        </li>
+        <li>
           <a href="#" class="nav-link text-white" data-target="productos">
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#grid"/>
@@ -110,6 +118,11 @@
     <div id="categorias" style="display:none;">
       <!-- Contenido cargado dinámicamente aquí -->
       <iframe src="categorias.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
+    </div>
+
+    <div id="marcas" style="display:none;">
+      <!-- Contenido cargado dinámicamente aquí -->
+      <iframe src="marcas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
 
     <div id="productos" style="display:none;">
