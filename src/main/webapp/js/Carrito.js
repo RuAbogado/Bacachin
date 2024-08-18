@@ -154,6 +154,7 @@ const obtenerIdProductoPorTitulo = (title) => {
 };
 
 
+
 document.addEventListener("DOMContentLoaded", function() {
     fetch("/GIUP_war/CargarProductos")
         .then(response => response.json())
