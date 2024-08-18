@@ -59,6 +59,22 @@ public class CategoriasDao {
         }
     }
 
+    // Método para deshabilitar una categoría por ID
+    public static boolean habilitarCategoria(int ID_Categoria) {
+        String query = "UPDATE Categorias SET Estado = '0' WHERE ID_Categoria = ?";
+        try (Connection conn = DatabaseConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, ID_Categoria);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // Método para obtener todas las categorías
     public List<Categorias> getAllCategorias() {
         List<Categorias> categorias = new ArrayList<>();

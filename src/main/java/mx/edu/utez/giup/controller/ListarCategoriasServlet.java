@@ -56,7 +56,7 @@ public class ListarCategoriasServlet extends HttpServlet {
                     if (estado == 0) {
                         out.println("<td><button type=\"button\" onclick=\"DeshabilitarCategoria(" + idCategoria + ")\">Deshabilitar</button></td>");
                     }else if (estado == 1) {
-                        out.println("<td><button type=\"button\" onclick=\"HabilitarCategoria(" + idCategoria + ")\">Deshabilitar</button></td>");
+                        out.println("<td><button type=\"button\" onclick=\"HabilitarCategoria(" + idCategoria + ")\">Habilitar</button></td>");
                     }else {
                         out.println("<td>error en la solicitud</td>");
                     }

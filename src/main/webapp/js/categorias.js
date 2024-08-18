@@ -128,6 +128,41 @@ function DeshabilitarCategoria(ID_Categoria) {
         });
 }
 
+// Deshabilitar una categoría
+function HabilitarCategoria(ID_Categoria) {
+    if (!confirm('¿Estás seguro de que quieres deshabilitar esta categoría?')) {
+        return;
+    }
+
+    // Obtener la fila de la tabla correspondiente a la categoría
+    const categoria = document.getElementById(`categoria-${ID_Categoria}`);
+    if (categoria) {
+        // Añadir la clase 'deshabilitada' para simular que no está disponible
+        categoria.classList.add('deshabilitada');
+    }
+
+    fetch('habilitarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
+    })
+        .then(response => response.json()) // Se espera una respuesta en formato JSON
+        .then(data => {
+            if (!data.success) {
+                alert('Error al habilitar la categoría.');
+            } else {
+                window.location.reload();
+                alert('La categoría se habilitó correctamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+}
+
 // Mostrar formulario para agregar producto en una categoría específica
 function mostrarFormulario(categoria) {
     modalProducto.style.display = "block";
