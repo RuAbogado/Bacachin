@@ -65,6 +65,8 @@ public class AgregarProductoCarritoServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             out.write("{\"status\":\"error\", \"message\":\"" + e.getMessage() + "\"}");
+        } finally {
+            out.close();
         }
     }
 }
