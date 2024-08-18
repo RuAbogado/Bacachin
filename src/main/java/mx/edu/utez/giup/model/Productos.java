@@ -11,12 +11,12 @@ public class Productos {
     private float Precio; // Cambiado a float
     private int Stock;
     private Date Fecha_Creacion;
-    private String Marca;
+    private int ID_Marca; // Cambiado de String Marca a int ID_Marca
     private String Imagen;
     private boolean Estado;
 
     // Constructor
-    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_Creacion, String marca, String imagen, boolean estado) {
+    public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_Creacion, int ID_Marca, String imagen, boolean estado) {
         this.ID_Producto = ID_Producto;
         this.ID_Categoria = ID_Categoria;
         this.Nombre = nombre;
@@ -24,7 +24,7 @@ public class Productos {
         this.Precio = precio;
         this.Stock = stock;
         this.Fecha_Creacion = fecha_Creacion;
-        this.Marca = marca;
+        this.ID_Marca = ID_Marca; // Ajustado para reflejar la clave externa de Marcas
         this.Imagen = imagen;
         this.Estado = estado;
     }
@@ -87,12 +87,12 @@ public class Productos {
         this.Fecha_Creacion = fecha_Creacion;
     }
 
-    public String getMarca() {
-        return Marca;
+    public int getID_Marca() {
+        return ID_Marca; // Devuelve el ID de la marca en lugar del nombre
     }
 
-    public void setMarca(String marca) {
-        this.Marca = marca;
+    public void setID_Marca(int ID_Marca) {
+        this.ID_Marca = ID_Marca; // Ajustado para la clave externa
     }
 
     public String getImagen() {

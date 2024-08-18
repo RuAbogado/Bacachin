@@ -22,7 +22,7 @@ public class ProductosDao {
 
     // Método para agregar un producto
     public boolean agregarProducto(Productos producto) {
-        String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, Marca, Imagen, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, ID_Marca, Imagen, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, producto.getID_Categoria());
             stmt.setString(2, producto.getNombre());
@@ -30,7 +30,7 @@ public class ProductosDao {
             stmt.setFloat(4, producto.getPrecio());  // Cambiado a float
             stmt.setInt(5, producto.getStock());
             stmt.setDate(6, producto.getFecha_Creacion());
-            stmt.setString(7, producto.getMarca());
+            stmt.setInt(7, producto.getID_Marca());  // Cambiado a int ID_Marca
             stmt.setString(8, producto.getImagen());
             stmt.setBoolean(9, producto.getEstado());
             int rowsAffected = stmt.executeUpdate();
@@ -41,6 +41,7 @@ public class ProductosDao {
         }
     }
 
+    // Método para obtener todos los productos
     public List<Productos> obtenerTodosLosProductos() {
         List<Productos> productosList = new ArrayList<>();
         String query = "SELECT * FROM Productos WHERE Estado = true";
@@ -57,7 +58,7 @@ public class ProductosDao {
                         rs.getFloat("Precio"),  // Cambiado a float
                         rs.getInt("Stock"),
                         rs.getDate("Fecha_creacion"),
-                        rs.getString("Marca"),
+                        rs.getInt("ID_Marca"),  // Cambiado a int ID_Marca
                         rs.getString("Imagen"),
                         rs.getBoolean("Estado")
                 );
@@ -72,7 +73,7 @@ public class ProductosDao {
 
     // Método para eliminar un producto
     public boolean eliminarProducto(int idProducto) {
-        String query = "DELETE FROM productos WHERE ID_Producto = ?";
+        String query = "DELETE FROM Productos WHERE ID_Producto = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, idProducto);
             int rowsAffected = stmt.executeUpdate();

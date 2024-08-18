@@ -34,6 +34,7 @@ public class AgregarProductoServlet extends HttpServlet {
             float precio = Float.parseFloat(request.getParameter("Precio")); // Usar float
             int stock = Integer.parseInt(request.getParameter("Stock"));
             int categoria = Integer.parseInt(request.getParameter("ID_Categoria"));
+            int marca = Integer.parseInt(request.getParameter("ID_Marca")); // Obtener el ID de la marca
             boolean estado = Boolean.parseBoolean(request.getParameter("Estado"));
 
             // Obtener y guardar la imagen
@@ -52,7 +53,7 @@ public class AgregarProductoServlet extends HttpServlet {
             Date fechaCreacion = Date.valueOf(fechaCreacionString);
 
             // Crear el objeto Producto
-            Productos producto = new Productos(0, categoria, nombre, descripcion, precio, stock, fechaCreacion, "Marca", fileName, estado);
+            Productos producto = new Productos(0, categoria, nombre, descripcion, precio, stock, fechaCreacion, marca, fileName, estado);
 
             // Llamar al DAO para agregar el producto
             ProductosDao productosDao = new ProductosDao();
