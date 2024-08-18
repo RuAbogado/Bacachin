@@ -45,7 +45,7 @@ public class CategoriasDao {
 
     // Método para deshabilitar una categoría por ID
     public static boolean deshabilitarCategoria(int ID_Categoria) {
-        String query = "UPDATE Categorias SET Estado = '1' WHERE ID_Categoria = ?";
+        String query = "UPDATE Categorias SET Estado = '0' WHERE ID_Categoria = ?";
         try (Connection conn = DatabaseConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -61,7 +61,7 @@ public class CategoriasDao {
 
     // Método para deshabilitar una categoría por ID
     public static boolean habilitarCategoria(int ID_Categoria) {
-        String query = "UPDATE Categorias SET Estado = '0' WHERE ID_Categoria = ?";
+        String query = "UPDATE Categorias SET Estado = '1' WHERE ID_Categoria = ?";
         try (Connection conn = DatabaseConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 

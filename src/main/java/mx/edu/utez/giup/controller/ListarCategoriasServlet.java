@@ -44,18 +44,18 @@ public class ListarCategoriasServlet extends HttpServlet {
                     out.println("<td>" + rs.getString("Nombre") + "</td>");
                     out.println("<td>" + rs.getString("Descripcion") + "</td>");
                     int estado = rs.getInt("Estado");
-                    if (estado == 0) {
+                    if (estado == 1) {
                         out.println("<td>Habilitada</td>");
-                    }else if (estado == 1) {
+                    }else if (estado == 0) {
                         out.println("<td>Deshabilitada</td>");
                     }else {
                         out.println("<td>error en la solicitud</td>");
                     }
 
                     int idCategoria = rs.getInt("ID_Categoria");
-                    if (estado == 0) {
+                    if (estado == 1) {
                         out.println("<td><button type=\"button\" onclick=\"DeshabilitarCategoria(" + idCategoria + ")\">Deshabilitar</button></td>");
-                    }else if (estado == 1) {
+                    }else if (estado == 0) {
                         out.println("<td><button type=\"button\" onclick=\"HabilitarCategoria(" + idCategoria + ")\">Habilitar</button></td>");
                     }else {
                         out.println("<td>error en la solicitud</td>");
