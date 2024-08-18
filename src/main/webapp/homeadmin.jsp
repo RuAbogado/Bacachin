@@ -77,6 +77,12 @@
           </a>
         </li>
         <li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white" data-target="Carrito">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            Carrito
+          </a>
+        </li>
           <a href="index.jsp" class="nav-link text-white">
             Cerrar sesion
           </a>
@@ -124,6 +130,12 @@
       <iframe src="clientes.jsp" width="100%" height="500px"></iframe>
 
     </div>
+
+    <div id="Carrito" style="margin-top: 70px; display:none;">
+      <iframe src="Carrito.jsp" width="100%" height="100%"></iframe>
+
+    </div>
+
   </div>
   </div>
 </article>
