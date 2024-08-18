@@ -83,4 +83,20 @@ public class ProductosDao {
             return false;
         }
     }
+
+    public int obtenerIdPorNombre(String nombre) {
+        String query = "SELECT ID_Producto FROM Productos WHERE Nombre = ? AND Estado = true";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, nombre);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("ID_Producto");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Retorna -1 si no se encuentra el producto
+    }
+
 }
