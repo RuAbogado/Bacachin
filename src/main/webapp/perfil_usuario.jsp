@@ -233,7 +233,7 @@
     });
 
     const cargarDatosUsuario = () => {
-        fetch(`CargarUsuario?ID_Usuario=${usuarioId}`)  // Cambié la URL para que use la variable usuarioId
+        fetch(`/GIUP_war/CargarUsuario?ID_Usuario=${usuarioId}`)  // Cambié la URL para que use la variable usuarioId
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');
