@@ -56,7 +56,7 @@ public class AgregarProductoCarritoServlet extends HttpServlet {
             DetalleCarrito detalleCarrito = new DetalleCarrito(idCarrito, idProducto, cantidad);
 
             // Usar DAO para insertar en la base de datos
-            detalleCarritoDao.agregarDetalleCarrito(detalleCarrito);
+            detalleCarritoDao.agregarOActualizarDetalleCarrito(detalleCarrito);
 
             out.write("{\"status\":\"success\"}");
         } catch (Exception e) {
