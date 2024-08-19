@@ -42,6 +42,24 @@ document.getElementById('marca-form').addEventListener('submit', function(e) {
             const success = doc.querySelector('h1').textContent.includes('exitosamente');
 
             if (success) {
+                //Habilitar marca
+                fetch('habilitarMarca', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `ID_Marcas=${encodeURIComponent(ID_Marcas)}`
+                })
+                    .then(response => response.json()) // Se espera una respuesta en formato JSON
+                    .then(data => {
+                        if (!data.success) {
+                            alert('Error al habilitar la marca.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error en la solicitud.');
+                    });
                 // Recargar el iframe que contiene marcas.jsp
                 window.location.reload();
             } else {

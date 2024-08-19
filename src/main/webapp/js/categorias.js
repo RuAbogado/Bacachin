@@ -41,9 +41,27 @@ document.getElementById('category-form').addEventListener('submit', function(e) 
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
             const success = doc.querySelector('h1').textContent.includes('exitosamente');
+            const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
 
             if (success) {
                 // Recargar el iframe que contiene categorias.jsp
+                fetch('habilitarCategoria', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
+                })
+                    .then(response => response.json()) // Se espera una respuesta en formato JSON
+                    .then(data => {
+                        if (!data.success) {
+                            alert('Error al habilitar la categoría.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error en la solicitud.');
+                    });
                 window.location.reload();
             } else {
                 alert('Error al agregar la categoría a la lista.');
@@ -90,18 +108,12 @@ function DeshabilitarCategoria(ID_Categoria) {
         });
 }
 
-// Deshabilitar una categoría
+// Habilitar una categoría
 function HabilitarCategoria(ID_Categoria) {
-    if (!confirm('¿Estás seguro de que quieres deshabilitar esta categoría?')) {
+    if (!confirm('¿Estás seguro de que quieres habilitar esta categoría?')) {
         return;
     }
 
-    // Obtener la fila de la tabla correspondiente a la categoría
-    const categoria = document.getElementById(`categoria-${ID_Categoria}`);
-    if (categoria) {
-        // Añadir la clase 'deshabilitada' para simular que no está disponible
-        categoria.classList.add('deshabilitada');
-    }
 
     fetch('habilitarCategoria', {
         method: 'POST',
@@ -123,4 +135,8 @@ function HabilitarCategoria(ID_Categoria) {
             console.error('Error:', error);
             alert('Error en la solicitud.');
         });
+}
+
+function mostrarFormulario(categoria) {
+    modalProducto.style.display = "block";
 }
