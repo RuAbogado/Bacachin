@@ -50,6 +50,7 @@ const obtenerDetallesDelCarrito = async () => {
         const detallesCarrito = await response.json();
         console.log("Detalles del carrito:", detallesCarrito);
 
+        // Asegúrate de que cada detalle del carrito incluya el nombre y el precio
         allProducts = detallesCarrito.map(detalle => ({
             title: detalle.nombreProducto,
             quantity: detalle.cantidad,
@@ -166,7 +167,7 @@ productsList.addEventListener('click', e => {
         const infoProduct = {
             quantity: 1,
             title: product.querySelector('h2').textContent,
-            price: parseFloat(product.querySelector('p').textContent.slice(1)) // Convertir a float
+            price: parseFloat(product.querySelector('.price').textContent.slice(1)) // Convertir a float
         };
 
         console.log("Producto añadido:", infoProduct);
@@ -176,7 +177,7 @@ productsList.addEventListener('click', e => {
         );
 
         if (exists) {
-            const products = allProducts.map(p => {
+            allProducts = allProducts.map(p => {
                 if (p.title === infoProduct.title) {
                     p.quantity++;
                     return p;
@@ -184,7 +185,6 @@ productsList.addEventListener('click', e => {
                     return p;
                 }
             });
-            allProducts = [...products];
         } else {
             allProducts = [...allProducts, infoProduct];
         }

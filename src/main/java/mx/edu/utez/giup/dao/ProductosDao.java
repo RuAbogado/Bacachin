@@ -83,4 +83,33 @@ public class ProductosDao {
             return false;
         }
     }
+
+    // Método para obtener un producto por su ID
+    public Productos getProductoById(int idProducto) {
+        Productos producto = null;
+        String query = "SELECT * FROM Productos WHERE ID_Producto = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, idProducto);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    producto = new Productos(
+                            rs.getInt("ID_Producto"),
+                            rs.getInt("ID_Categoria"),
+                            rs.getString("Nombre"),
+                            rs.getString("Descripcion"),
+                            rs.getFloat("Precio"),  // Cambiado a float
+                            rs.getInt("Stock"),
+                            rs.getDate("Fecha_creacion"),
+                            rs.getInt("ID_Marca"),  // Cambiado a int ID_Marca
+                            rs.getString("Imagen"),
+                            rs.getBoolean("Estado")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return producto;
+    }
 }

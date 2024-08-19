@@ -44,10 +44,12 @@ public class DetalleCarritoDao {
         }
     }
 
-    // Método para obtener los detalles del carrito por ID_Carrito
     public List<DetalleCarrito> getDetallesByCarritoId(int carritoId) {
         List<DetalleCarrito> detalles = new ArrayList<>();
-        String sql = "SELECT * FROM Detalle_carrito WHERE ID_Carrito = ?";
+        String sql = "SELECT d.ID_Carrito, d.ID_Producto, d.Cantidad, p.Nombre, p.Precio " +
+                "FROM Detalle_carrito d " +
+                "JOIN Productos p ON d.ID_Producto = p.ID_Producto " +
+                "WHERE d.ID_Carrito = ?";
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -60,7 +62,13 @@ public class DetalleCarritoDao {
                         resultSet.getInt("ID_Producto"),
                         resultSet.getInt("Cantidad")
                 );
-                detalleCarrito.setIdDetalleCarrito(resultSet.getInt("ID_DetalleCarrito")); // Asigna el ID
+                // Aquí no modificamos la clase DetalleCarrito, solo utilizamos los datos recuperados
+                String nombreProducto = resultSet.getString("Nombre");
+                double precio = resultSet.getDouble("Precio");
+
+                // Imprime o utiliza estos valores según sea necesario en la capa de presentación
+                System.out.println("Producto: " + nombreProducto + ", Precio: " + precio);
+
                 detalles.add(detalleCarrito);
             }
 
