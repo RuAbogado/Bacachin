@@ -29,6 +29,10 @@ public class Productos {
         this.Estado = estado;
     }
 
+    public Productos() {
+
+    }
+
     // Getters y Setters
 
     public int getID_Producto() {

@@ -5,6 +5,7 @@ public class DetalleCarrito {
     private int idCarrito;
     private int idProducto;
     private int cantidad;
+    private Productos producto;  // Objeto de tipo Productos
 
     public DetalleCarrito() {}
 
@@ -44,5 +45,13 @@ public class DetalleCarrito {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Productos getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Productos producto) {
+        this.producto = producto;
     }
 }

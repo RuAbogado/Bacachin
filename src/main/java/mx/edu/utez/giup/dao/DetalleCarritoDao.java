@@ -1,6 +1,7 @@
 package mx.edu.utez.giup.dao;
 
 import mx.edu.utez.giup.model.DetalleCarrito;
+import mx.edu.utez.giup.model.Productos;
 import mx.edu.utez.giup.utis.DatabaseConnectionManager;
 
 import java.sql.*;
@@ -44,37 +45,42 @@ public class DetalleCarritoDao {
         }
     }
 
-    public List<DetalleCarrito> getDetallesByCarritoId(int carritoId) {
+    public List<DetalleCarrito> getDetallesByCarritoId(int idCarrito) {
         List<DetalleCarrito> detalles = new ArrayList<>();
-        String sql = "SELECT d.ID_Carrito, d.ID_Producto, d.Cantidad, p.Nombre, p.Precio " +
-                "FROM Detalle_carrito d " +
-                "JOIN Productos p ON d.ID_Producto = p.ID_Producto " +
-                "WHERE d.ID_Carrito = ?";
-        try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, carritoId);
+        try (Connection connection = DatabaseConnectionManager.getConnection()) {
+            // Consulta SQL actualizada
+            String sql = "SELECT dc.ID_DetalleCarrito, dc.ID_Carrito, dc.ID_Producto, dc.Cantidad, p.Nombre, p.Precio " +
+                    "FROM Detalle_carrito dc " +
+                    "JOIN Productos p ON dc.ID_Producto = p.ID_Producto " +
+                    "WHERE dc.ID_Carrito = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idCarrito);
+
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                DetalleCarrito detalleCarrito = new DetalleCarrito(
-                        resultSet.getInt("ID_Carrito"),
-                        resultSet.getInt("ID_Producto"),
-                        resultSet.getInt("Cantidad")
-                );
-                // Aquí no modificamos la clase DetalleCarrito, solo utilizamos los datos recuperados
-                String nombreProducto = resultSet.getString("Nombre");
-                double precio = resultSet.getDouble("Precio");
+                DetalleCarrito detalle = new DetalleCarrito();
+                detalle.setIdDetalleCarrito(resultSet.getInt("ID_DetalleCarrito"));
+                detalle.setIdCarrito(resultSet.getInt("ID_Carrito"));
+                detalle.setIdProducto(resultSet.getInt("ID_Producto"));
+                detalle.setCantidad(resultSet.getInt("Cantidad"));
 
-                // Imprime o utiliza estos valores según sea necesario en la capa de presentación
-                System.out.println("Producto: " + nombreProducto + ", Precio: " + precio);
+                // Crear y setear el objeto Producto
+                Productos producto = new Productos();
+                producto.setNombre(resultSet.getString("Nombre"));
+                producto.setPrecio(resultSet.getFloat("Precio"));
 
-                detalles.add(detalleCarrito);
+                // Asignar el producto al detalle
+                detalle.setProducto(producto);
+
+                detalles.add(detalle);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return detalles;
     }
 

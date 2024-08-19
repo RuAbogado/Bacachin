@@ -52,9 +52,9 @@ const obtenerDetallesDelCarrito = async () => {
 
         // Asegúrate de que cada detalle del carrito incluya el nombre y el precio
         allProducts = detallesCarrito.map(detalle => ({
-            title: detalle.nombreProducto,
+            title: detalle.producto.nombre,  // Asegúrate de que este campo sea correcto
             quantity: detalle.cantidad,
-            price: detalle.precio
+            price: detalle.producto.precio  // Asegúrate de que este campo sea correcto
         }));
 
         showHTML();
@@ -98,7 +98,8 @@ const enviarProductoAlCarrito = async (product) => {
 // Ejemplo de función para obtener ID del producto (deberás implementarla)
 const obtenerIdProductoPorTitulo = (title) => {
     // Lógica para obtener el ID del producto según su título
-    return 1; // Retorna el ID del producto correspondiente
+    // Implementa aquí la lógica para obtener el ID del producto basado en el título
+    return 1; // Devuelve el ID correspondiente del producto
 };
 
 // Función para mostrar HTML

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import mx.edu.utez.giup.dao.CarritoDao;
 import mx.edu.utez.giup.dao.DetalleCarritoDao;
 import mx.edu.utez.giup.model.Carrito;
 import mx.edu.utez.giup.model.DetalleCarrito;
@@ -36,6 +35,7 @@ public class ObtenerDetallesCarritoServlet extends HttpServlet {
 
         int idCarrito = carrito.getID_Carrito();
 
+        // Instanciar el DAO para obtener los detalles del carrito
         DetalleCarritoDao detalleCarritoDao = new DetalleCarritoDao();
         List<DetalleCarrito> detalles = detalleCarritoDao.getDetallesByCarritoId(idCarrito);
 
