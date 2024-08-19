@@ -20,12 +20,24 @@ const countProducts = document.querySelector('#contador-productos');
 const cartEmpty = document.querySelector('.cart-empty');
 const cartTotal = document.querySelector('.cart-total');
 
-// Función para obtener el ID del carrito
-const obtenerIdCarrito = () => {
-    // Implementa esta función para obtener el ID del carrito
-    const idCarrito = 1; // Ejemplo: reemplaza con la lógica real para obtener el ID
-    console.log("ID_Carrito obtenido:", idCarrito); // Verificar el ID_Carrito
+const obtenerIdCarrito = async () => {
+try {
+    const response = await fetch('/GIUP_war/ObtenerIdCarrito', { // Actualiza esta ruta con la ruta real de tu servlet
+        method: 'GET',
+        credentials: 'include' // Importante para incluir cookies si usas sesiones
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const idCarrito = await response.text(); // Asumiendo que el servidor devuelve el ID como texto
+    console.log("ID_Carrito obtenido:", idCarrito);
     return idCarrito;
+} catch (error) {
+    console.error("Error al obtener el ID del carrito:", error);
+    return null; // Devuelve null o un valor por defecto en caso de error
+}
 };
 
 productsList.addEventListener('click', e => {

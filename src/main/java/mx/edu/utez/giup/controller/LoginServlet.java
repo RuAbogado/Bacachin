@@ -21,52 +21,43 @@ public class LoginServlet extends HttpServlet {
         String correo = req.getParameter("correo");
         String contraseña = req.getParameter("contraseña");
 
-        // Validación básica
-        if (correo == null || correo.isEmpty() || contraseña == null || contraseña.isEmpty()) {
-            req.setAttribute("mensaje", "Correo o contraseña no pueden estar vacíos");
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
-            return;
-        }
-
         UserDao userDao = new UserDao();
-        User user = userDao.getOne(correo, contraseña); // Aquí deberías comparar con la contraseña cifrada
+        User user = userDao.getOne(correo, contraseña);
 
-        if (user == null) {
-            req.setAttribute("mensaje", "Correo o contraseña incorrectos");
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
-        } else {
-            // Crear o obtener sesión
+        if (user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
 
             // Obtener o crear el carrito asociado al usuario
             CarritoDao carritoDao = new CarritoDao();
             Carrito carrito = carritoDao.getCarritoByUserId(user.getId());
+
+            System.out.println("ID del carrito recuperado: " + (carrito != null ? carrito.getID_Carrito() : "N/A"));
+
             if (carrito == null) {
-                // Si no existe carrito, se crea uno nuevo
                 long millis = System.currentTimeMillis();
                 carrito = carritoDao.createCarrito(new Carrito(user.getId(), new Date(millis)));
+
+                System.out.println("Nuevo ID del carrito creado: " + carrito.getID_Carrito());
             }
 
-// Almacenar el carrito y el ID del carrito en la sesión
             session.setAttribute("carrito", carrito);
             session.setAttribute("ID_Carrito", carrito.getID_Carrito());
 
-            session.removeAttribute("mensaje");
-
-            // Redirección basada en el tipo de usuario
+            // Redirigir según el tipo de usuario
             if ("admin".equals(user.getTipo())) {
                 resp.sendRedirect(req.getContextPath() + "/homeadmin.jsp");
             } else if ("cliente".equals(user.getTipo())) {
                 resp.sendRedirect(req.getContextPath() + "/homecliente.jsp");
-            } else {
+            } else if ("empleado".equals(user.getTipo())) {
                 resp.sendRedirect(req.getContextPath() + "/homeempleados.jsp");
+            } else {
+                // Redirigir a una página de error o de acceso no permitido si el tipo de usuario no es reconocido
+                resp.sendRedirect(req.getContextPath() + "/error.jsp");
             }
+        } else {
+            req.setAttribute("mensaje", "Correo o contraseña incorrectos");
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
     }
 }

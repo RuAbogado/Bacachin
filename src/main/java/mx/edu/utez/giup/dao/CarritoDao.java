@@ -10,7 +10,9 @@ public class CarritoDao {
     // Método para obtener un carrito por el ID del usuario
     public Carrito getCarritoByUserId(int userId) {
         Carrito carrito = null;
-        String sql = "SELECT * FROM Carrito WHERE ID_Cliente = ?";
+        String sql = "SELECT c.* FROM Carrito c " +
+                "INNER JOIN Cliente cl ON c.ID_Cliente = cl.ID_Cliente " +
+                "WHERE cl.ID_Usuario = ?";
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
