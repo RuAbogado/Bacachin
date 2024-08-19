@@ -22,8 +22,17 @@
         <h2>Agregar Nuevo Producto</h2>
         <form method="post" action="AgregarProducto" enctype="multipart/form-data" id="form-agregar-producto">
             <div>
-                <label for="categoria-producto">Categoria:</label>
+                <label for="categoria-producto">Categoría:</label>
                 <select id="categoria-producto" name="ID_Categoria" required>
+                    <!-- Aquí se cargan las opciones de categorías -->
+                    <jsp:include page="/ObtenerCategorias" />
+                </select>
+            </div>
+            <div>
+                <label for="marca-producto">Categoría:</label>
+                <select id="marca-producto" name="ID_Marca" required>
+                    <!-- Aquí se cargan las opciones de categorías -->
+                    <jsp:include page="/ObtenerMarcas" />
                 </select>
             </div>
             <div>
