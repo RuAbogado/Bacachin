@@ -197,7 +197,7 @@
 <script src="js/main.js"></script>
 <script>
 
-    const usuarioId = 1; // ID del usuario que quieres cargar
+    const usuarioId = ID_Usuario; // ID del usuario que quieres cargar
     let datosOriginales = {};
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -205,15 +205,17 @@
     });
 
     const cargarDatosUsuario = () => {
-        fetch(`cargarDatosUsuario`)
+        fetch(`GIUP_war/index.jsp/cargarUsuario?id=${usuarioId}`)
             .then(response => {
+                console.log('Status:', response.status); // Log del estado HTTP
+                console.log('Response:', response); // Log de la respuesta completa
                 if (!response.ok) {
-                    throw new Error('Error al cargar los datos del usuario');
+                    return response.text().then(text => { throw new Error(`Error ${response.status}: ${text}`); });
                 }
                 return response.json();
             })
             .then(data => {
-                datosOriginales = data;  // Guardar los datos originales
+                datosOriginales = { ...data };  // Guardar los datos originales
                 document.getElementById("nombre").textContent = data.nombre;
                 document.getElementById("apellido").textContent = data.apellido;
                 document.getElementById("nombre_usuario").textContent = data.nombreUsuario;
@@ -222,7 +224,7 @@
             })
             .catch(error => {
                 console.error('Error al cargar los datos del usuario:', error);
-                alert('Error al cargar los datos del usuario. Por favor, inténtalo de nuevo más tarde.');
+                alert(`Error al cargar los datos del usuario: ${error.message}`);
             });
     };
 
@@ -258,36 +260,17 @@
     };
 
     const guardarCambios = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
-        let datosActualizados = {};
+        const nombre = document.getElementById('input-nombre').value;
+        const apellido = document.getElementById('input-apellido').value;
+        const nombreUsuario = document.getElementById('input-nombre_usuario').value;
+        const telefono = document.getElementById('input-telefono').value;
+        const correo = document.getElementById('input-email-usuario').value;
 
-        campos.forEach(campo => {
-            const input = document.getElementById(`input-${campo}`);
-            datosActualizados[campo] = input.value;
-        });
+        // Lógica para guardar los cambios, por ejemplo, enviar los datos al servidor
 
-        fetch(`usuarioId${usuarioId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(datosActualizados)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al guardar los cambios');
-                }
-                return response.json();
-            })
-            .then(data => {
-                datosOriginales = data;  // Actualizar los datos originales
-                cancelarCambios();
-                alert('Los cambios se guardaron correctamente.');
-            })
-            .catch(error => {
-                console.error('Error al guardar los cambios:', error);
-                alert('Error al guardar los cambios. Por favor, inténtalo de nuevo más tarde.');
-            });
+        datosOriginales = { nombre, apellido, nombreUsuario, telefono, correo };
+
+        cancelarCambios();
     };
 
 </script>

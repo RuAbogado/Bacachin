@@ -47,14 +47,8 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-    const usuarioId = 1; // ID del usuario que quieres cargar
-
-    document.addEventListener("DOMContentLoaded", function () {
-        cargarDatosUsuario();
-    });
-
     const cargarDatosUsuario = () => {
-        fetch('getUsuario')
+        fetch(`GIUP_war/getUsuario?id=${usuarioId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');
@@ -74,6 +68,7 @@
                 alert('Error al cargar los datos del usuario. Por favor, inténtalo de nuevo más tarde.');
             });
     };
+
 </script>
 </body>
 
