@@ -30,19 +30,23 @@ public class LoginServlet extends HttpServlet {
 
             // Obtener o crear el carrito asociado al usuario
             CarritoDao carritoDao = new CarritoDao();
-            Carrito carrito = carritoDao.getCarritoByUserId(user.getId());
+            Carrito carrito = null;
 
-            System.out.println("ID del carrito recuperado: " + (carrito != null ? carrito.getID_Carrito() : "N/A"));
+            if ("cliente".equals(user.getTipo())) {
+                // Obtener el ID_Cliente del usuario
+                int idCliente = userDao.getClienteId(user.getId());
+                carrito = carritoDao.getCarritoByClienteId(idCliente);
 
-            if (carrito == null) {
-                long millis = System.currentTimeMillis();
-                carrito = carritoDao.createCarrito(new Carrito(user.getId(), new Date(millis)));
+                // Si el carrito no existe, crear uno nuevo
+                if (carrito == null) {
+                    long millis = System.currentTimeMillis();
+                    carrito = carritoDao.createCarrito(new Carrito(idCliente, new Date(millis)));
+                    System.out.println("Nuevo ID del carrito creado: " + carrito.getID_Carrito());
+                }
 
-                System.out.println("Nuevo ID del carrito creado: " + carrito.getID_Carrito());
+                session.setAttribute("carrito", carrito);
+                session.setAttribute("ID_Carrito", carrito.getID_Carrito());
             }
-
-            session.setAttribute("carrito", carrito);
-            session.setAttribute("ID_Carrito", carrito.getID_Carrito());
 
             // Redirigir según el tipo de usuario
             if ("admin".equals(user.getTipo())) {

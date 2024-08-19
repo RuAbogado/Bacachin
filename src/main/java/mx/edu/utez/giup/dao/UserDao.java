@@ -108,7 +108,7 @@ public class UserDao {
             statement.setBoolean(7, user.isEstado());
             statement.setString(8, user.getCodigo());
             statement.setString(9, user.getTipo());
-            statement.setInt(11, user.getId());
+            statement.setInt(10, user.getId()); // Corregido el índice aquí
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -120,7 +120,7 @@ public class UserDao {
         return actualizado;
     }
 
-
+    // Método para obtener un usuario por ID
     public User getOne(int ID_Usuario) {
         User user = null;
         String query = "SELECT * FROM Usuarios WHERE ID_Usuario = ?";
@@ -150,4 +150,23 @@ public class UserDao {
         return user;
     }
 
+    // Método para obtener el ID_Cliente basado en el ID_Usuario
+    public int getClienteId(int idUsuario) {
+        int idCliente = -1;
+        String query = "SELECT ID_Cliente FROM Clientes WHERE ID_Usuario = ?";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, idUsuario);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                idCliente = resultSet.getInt("ID_Cliente");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener el ID_Cliente: " + e.getMessage());
+        }
+        return idCliente;
+    }
 }
