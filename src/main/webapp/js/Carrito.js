@@ -1,17 +1,7 @@
 const btnCart = document.querySelector('.container-cart-icon');
 const containerCartProducts = document.querySelector('.container-cart-products');
-
-btnCart.addEventListener('click', () => {
-    containerCartProducts.classList.toggle('hidden-cart');
-});
-
-/* ========================= */
 const rowProduct = document.querySelector('.row-product');
-
-// Lista de todos los contenedores de productos
 const productsList = document.querySelector('.container-items');
-
-// Variable de arreglos de Productos
 let allProducts = [];
 
 // Elementos del carrito
@@ -20,73 +10,95 @@ const countProducts = document.querySelector('#contador-productos');
 const cartEmpty = document.querySelector('.cart-empty');
 const cartTotal = document.querySelector('.cart-total');
 
+// Función para obtener el ID del carrito
 const obtenerIdCarrito = async () => {
-try {
-    const response = await fetch('/GIUP_war/ObtenerIdCarrito', { // Actualiza esta ruta con la ruta real de tu servlet
-        method: 'GET',
-        credentials: 'include' // Importante para incluir cookies si usas sesiones
-    });
+    try {
+        const response = await fetch('/GIUP_war/ObtenerIdCarrito', {
+            method: 'GET',
+            credentials: 'include'
+        });
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const idCarrito = await response.text(); // Asumiendo que el servidor devuelve el ID como texto
-    console.log("ID_Carrito obtenido:", idCarrito);
-    return idCarrito;
-} catch (error) {
-    console.error("Error al obtener el ID del carrito:", error);
-    return null; // Devuelve null o un valor por defecto en caso de error
-}
-};
-
-productsList.addEventListener('click', e => {
-    if (e.target.classList.contains('btn-add-cart')) {
-        const product = e.target.parentElement;
-
-        const infoProduct = {
-            quantity: 1,
-            title: product.querySelector('h2').textContent,
-            price: parseFloat(product.querySelector('p').textContent.slice(1)) // Convertir a float
-        };
-
-        console.log("Producto añadido:", infoProduct); // Verificar datos del producto
-
-        const exists = allProducts.some(
-            product => product.title === infoProduct.title
-        );
-
-        if (exists) {
-            const products = allProducts.map(product => {
-                if (product.title === infoProduct.title) {
-                    product.quantity++;
-                    return product;
-                } else {
-                    return product;
-                }
-            });
-            allProducts = [...products];
-        } else {
-            allProducts = [...allProducts, infoProduct];
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        showHTML();
-        enviarProductoAlCarrito(infoProduct);
+        const idCarrito = await response.text(); // Asumiendo que el servidor devuelve el ID como texto
+        console.log("ID_Carrito obtenido:", idCarrito);
+        return idCarrito;
+    } catch (error) {
+        console.error("Error al obtener el ID del carrito:", error);
+        return null;
     }
-});
+};
 
-rowProduct.addEventListener('click', e => {
-    if (e.target.classList.contains('icon-close')) {
-        const product = e.target.parentElement;
-        const title = product.querySelector('.titulo-producto-carrito').textContent;
+// Función para obtener los detalles del carrito
+const obtenerDetallesDelCarrito = async () => {
+    try {
+        const idCarrito = await obtenerIdCarrito();
 
-        allProducts = allProducts.filter(
-            product => product.title !== title
-        );
+        if (!idCarrito) return;
+
+        const response = await fetch(`/GIUP_war/ObtenerDetallesCarrito?idCarrito=${idCarrito}`, {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const detallesCarrito = await response.json();
+        console.log("Detalles del carrito:", detallesCarrito);
+
+        allProducts = detallesCarrito.map(detalle => ({
+            title: detalle.nombreProducto,
+            quantity: detalle.cantidad,
+            price: detalle.precio
+        }));
 
         showHTML();
+    } catch (error) {
+        console.error("Error al obtener detalles del carrito:", error);
     }
-});
+};
+
+// Función para enviar producto al servlet
+const enviarProductoAlCarrito = async (product) => {
+    const idProducto = obtenerIdProductoPorTitulo(product.title); // Implementa esta función para obtener el ID del producto
+    const idCarrito = await obtenerIdCarrito(); // Obtén el ID del carrito
+    const data = {
+        idCarrito: idCarrito,
+        idProducto: idProducto,
+        quantity: product.quantity
+    };
+
+    console.log("Datos enviados al servidor:", data);
+
+    try {
+        const response = await fetch("/GIUP_war/AgregarProductoCarrito", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (result.status === "success") {
+            console.log("Producto agregado al carrito exitosamente.");
+        } else {
+            console.error("Error al agregar producto al carrito:", result.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+
+// Ejemplo de función para obtener ID del producto (deberás implementarla)
+const obtenerIdProductoPorTitulo = (title) => {
+    // Lógica para obtener el ID del producto según su título
+    return 1; // Retorna el ID del producto correspondiente
+};
 
 // Función para mostrar HTML
 const showHTML = () => {
@@ -100,7 +112,6 @@ const showHTML = () => {
         cartTotal.classList.remove('hidden');
     }
 
-    // Limpiar HTML
     rowProduct.innerHTML = '';
 
     let total = 0;
@@ -142,48 +153,67 @@ const showHTML = () => {
     countProducts.innerText = totalOfProducts;
 };
 
-// Función para enviar producto al servlet
-const enviarProductoAlCarrito = (product) => {
-    const idProducto = obtenerIdProductoPorTitulo(product.title); // Implementa esta función para obtener el ID del producto
-    const idCarrito = obtenerIdCarrito(); // Obtén el ID del carrito
-    const data = {
-        idCarrito: idCarrito,
-        idProducto: idProducto,
-        quantity: product.quantity
-    };
+// Event Listener para abrir y cerrar el carrito
+btnCart.addEventListener('click', () => {
+    containerCartProducts.classList.toggle('hidden-cart');
+});
 
-    console.log("Datos enviados al servidor:", data); // Verificar los datos enviados al servidor
+// Event Listener para añadir productos al carrito
+productsList.addEventListener('click', e => {
+    if (e.target.classList.contains('btn-add-cart')) {
+        const product = e.target.parentElement;
 
-    fetch("/GIUP_war/AgregarProductoCarrito", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(result => {
-            if (result.status === "success") {
-                console.log("Producto agregado al carrito exitosamente.");
-            } else {
-                console.error("Error al agregar producto al carrito:", result.message);
-            }
-        })
-        .catch(error => console.error("Error:", error));
-};
+        const infoProduct = {
+            quantity: 1,
+            title: product.querySelector('h2').textContent,
+            price: parseFloat(product.querySelector('p').textContent.slice(1)) // Convertir a float
+        };
 
-// Ejemplo de función para obtener ID del producto (deberás implementarla)
-const obtenerIdProductoPorTitulo = (title) => {
-    // Lógica para obtener el ID del producto según su título
-    // Puedes mantener un mapeo de productos en una variable o realizar una consulta al servidor
-    return 1; // Retorna el ID del producto correspondiente
-};
+        console.log("Producto añadido:", infoProduct);
 
+        const exists = allProducts.some(
+            p => p.title === infoProduct.title
+        );
+
+        if (exists) {
+            const products = allProducts.map(p => {
+                if (p.title === infoProduct.title) {
+                    p.quantity++;
+                    return p;
+                } else {
+                    return p;
+                }
+            });
+            allProducts = [...products];
+        } else {
+            allProducts = [...allProducts, infoProduct];
+        }
+
+        showHTML();
+        enviarProductoAlCarrito(infoProduct);
+    }
+});
+
+// Event Listener para eliminar productos del carrito
+rowProduct.addEventListener('click', e => {
+    if (e.target.classList.contains('icon-close')) {
+        const product = e.target.parentElement;
+        const title = product.querySelector('.titulo-producto-carrito').textContent;
+
+        allProducts = allProducts.filter(
+            p => p.title !== title
+        );
+
+        showHTML();
+    }
+});
+
+// Cargar productos al inicio
 document.addEventListener("DOMContentLoaded", function() {
     fetch("/GIUP_war/CargarProductos")
         .then(response => response.json())
         .then(data => {
-            console.log("Productos cargados:", data); // Verificar los productos cargados
+            console.log("Productos cargados:", data);
 
             const container = document.querySelector(".container-items");
             container.innerHTML = ''; // Limpiar contenido previo
@@ -203,6 +233,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 `;
                 container.appendChild(item);
             });
+
+            // Cargar detalles del carrito después de cargar los productos
+            obtenerDetallesDelCarrito();
         })
         .catch(error => console.error('Error:', error));
 });
