@@ -47,12 +47,12 @@ public class getUsuarioServlet extends HttpServlet {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     JsonObject userData = new JsonObject();
-                    userData.addProperty("Nombre", resultSet.getString("Nombre"));
-                    userData.addProperty("Apellido", resultSet.getString("Apellido"));
-                    userData.addProperty("Nombre_Usuario", resultSet.getString("Nombre_Usuario"));
-                    userData.addProperty("Telefono", resultSet.getString("Telefono"));
-                    userData.addProperty("Correo", resultSet.getString("Correo"));
-                    userData.addProperty("Estado", resultSet.getString("Estado"));
+                    userData.addProperty("nombre", resultSet.getString("nombre"));
+                    userData.addProperty("apellido", resultSet.getString("apellido"));
+                    userData.addProperty("username", resultSet.getString("username"));
+                    userData.addProperty("telefono", resultSet.getString("telefono"));
+                    userData.addProperty("correo", resultSet.getString("correo"));
+                    userData.addProperty("estado", resultSet.getString("estado"));
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");

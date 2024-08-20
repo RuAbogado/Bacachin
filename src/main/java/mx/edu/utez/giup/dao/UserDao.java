@@ -133,7 +133,7 @@ public class UserDao {
     // Método para actualizar un usuario
     public boolean actualizarUsuario(User user) {
         boolean actualizado = false;
-        String query = "UPDATE Usuarios SET Nombre = ?, Apellido = ?, Nombre_Usuario = ?, Telefono = ?, Correo = ?, Contraseña = SHA2(?, 256), Estado = ?, Codigo_RE = ?, Tipo = ? WHERE ID_Usuario = ?";
+        String query = "UPDATE Usuarios SET nombre = ?, apellido = ?, username = ?, telefono = ?, correo = ?, password = SHA2(?, 256), estado = ?, codigo = ?, tipo = ? WHERE ID_Usuario = ?";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -173,15 +173,15 @@ public class UserDao {
             if (resultSet.next()) {
                 user = new User();
                 user.setId(resultSet.getInt("ID_Usuario"));
-                user.setNombre(resultSet.getString("Nombre"));
-                user.setApellido(resultSet.getString("Apellido"));
-                user.setCorreo(resultSet.getString("Correo"));
-                user.setTelefono(resultSet.getString("Telefono"));
-                user.setUsername(resultSet.getString("Nombre_Usuario"));
-                user.setPassword(resultSet.getString("Contraseña"));
-                user.setCodigo(resultSet.getString("Codigo_RE"));
-                user.setEstado(resultSet.getBoolean("Estado"));
-                user.setTipo(resultSet.getString("Tipo"));
+                user.setNombre(resultSet.getString("nombre"));
+                user.setApellido(resultSet.getString("apellido"));
+                user.setCorreo(resultSet.getString("correo"));
+                user.setTelefono(resultSet.getString("telefono"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setCodigo(resultSet.getString("codigo"));
+                user.setEstado(resultSet.getBoolean("estado"));
+                user.setTipo(resultSet.getString("tipo"));
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener el usuario: " + e.getMessage());

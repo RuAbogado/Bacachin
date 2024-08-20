@@ -122,15 +122,15 @@
                             <span>Apellidos: </span><span id="apellido" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Nombre usuario: </span><span id="nombre_usuario" class="font-weight-bold"></span>
+                            <span>Nombre usuario: </span><span id="username" class="font-weight-bold"></span>
                         </div>
                         <div>
                             <span>Teléfono: </span><span id="telefono" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>E-mail: </span><span id="email-usuario" class="font-weight-bold"></span>
+                            <span>E-mail: </span><span id="correo" class="font-weight-bold"></span>
                         </div>
-                        <p class="estado mt-3">Estado: <span id="estado-usuario"></span></p>
+                        <p class="estado mt-3">Estado: <span id="estado"></span></p>
                     </div>
                 </div>
             </div>
@@ -163,9 +163,9 @@
                 datosOriginales = { ...data };  // Guardar los datos originales
                 document.getElementById("nombre").textContent = data.nombre;
                 document.getElementById("apellido").textContent = data.apellido;
-                document.getElementById("nombre_usuario").textContent = data.nombreUsuario;
+                document.getElementById("username").textContent = data.username;
                 document.getElementById("telefono").textContent = data.telefono;
-                document.getElementById("email-usuario").textContent = data.correo;
+                document.getElementById("correo").textContent = data.correo;
             })
             .catch(error => {
                 console.error('Error al cargar los datos del usuario:', error);
