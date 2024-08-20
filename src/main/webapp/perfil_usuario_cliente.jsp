@@ -208,21 +208,21 @@
             })
             .then(data => {
                 // Actualizar el DOM con los datos recibidos
-                document.getElementById("Nombre").textContent = data.nombre;
-                document.getElementById("Apellido").textContent = data.apellido;
-                document.getElementById("Nombre_Usuario").textContent = data.username;
-                document.getElementById("Telefono").textContent = data.telefono;
-                document.getElementById("Correo").textContent = data.correo;
-                document.getElementById("Estado").textContent = data.estado ? 'Activo' : 'Inactivo';
+                document.getElementById("Nombre").textContent = data.Nombre;
+                document.getElementById("Apellido").textContent = data.Apellido;
+                document.getElementById("Nombre_Usuario").textContent = data.Nombre_Usuario;
+                document.getElementById("Telefono").textContent = data.Telefono;
+                document.getElementById("Correo").textContent = data.Correo;
+                document.getElementById("Estado").textContent = data.Estado ? 'Activo' : 'Inactivo';
 
                 // Guardar los datos originales
                 datosOriginales = {
-                    Nombre: data.nombre,
-                    Apellido: data.apellido,
-                    Nombre_Usuario: data.username,
-                    Telefono: data.telefono,
-                    Correo: data.correo,
-                    Estado: data.estado ? 'Activo' : 'Inactivo'
+                    Nombre: data.Nombre,
+                    Apellido: data.Apellido,
+                    Nombre_Usuario: data.Nombre_Usuario,
+                    Telefono: data.Telefono,
+                    Correo: data.Correo,
+                    Estado: data.Estado ? 'Activo' : 'Inactivo'
                 };
             })
             .catch(error => {
