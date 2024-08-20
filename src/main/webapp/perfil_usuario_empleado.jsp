@@ -116,21 +116,21 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div>
-                            <span>Nombres: </span><span id="Nombre" class="font-weight-bold"></span>
+                            <span>Nombres: </span><span id="nombre" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Apellidos: </span><span id="Apellido" class="font-weight-bold"></span>
+                            <span>Apellidos: </span><span id="apellido" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Nombre usuario: </span><span id="Nombre_Usuario" class="font-weight-bold"></span>
+                            <span>Nombre usuario: </span><span id="username" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Teléfono: </span><span id="Telefono" class="font-weight-bold"></span>
+                            <span>Teléfono: </span><span id="telefono" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>E-mail: </span><span id="Correo" class="font-weight-bold"></span>
+                            <span>E-mail: </span><span id="correo" class="font-weight-bold"></span>
                         </div>
-                        <p class="Estado mt-3">Estado: <span id="Estado"></span></p>
+                        <p class="estado mt-3">Estado: <span id="estado"></span></p>
                     </div>
                 </div>
             </div>
@@ -161,11 +161,11 @@
             })
             .then(data => {
                 datosOriginales = { ...data };  // Guardar los datos originales
-                document.getElementById("Nombre").textContent = data.Nombre;
-                document.getElementById("Apellido").textContent = data.Apellido;
-                document.getElementById("Nombre_Usuario").textContent = data.Nombre_Usuario;
-                document.getElementById("Telefono").textContent = data.Telefono;
-                document.getElementById("Correo").textContent = data.Correo;
+                document.getElementById("nombre").textContent = data.nombre;
+                document.getElementById("apellido").textContent = data.apellido;
+                document.getElementById("username").textContent = data.username;
+                document.getElementById("telefono").textContent = data.telefono;
+                document.getElementById("correo").textContent = data.correo;
             })
             .catch(error => {
                 console.error('Error al cargar los datos del usuario:', error);
