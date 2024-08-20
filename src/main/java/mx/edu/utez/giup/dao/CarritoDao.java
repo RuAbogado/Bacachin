@@ -135,7 +135,7 @@ public class CarritoDao {
 
     // Método para eliminar un producto del carrito
     public boolean eliminarProductoDelCarrito(int idCarrito, int idProducto) {
-        String query = "DELETE FROM DetalleCarrito WHERE ID_Carrito = ? AND ID_Producto = ?";
+        String query = "DELETE FROM Detalle_carrito WHERE ID_Carrito = ? AND ID_Producto = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, idCarrito);
             stmt.setInt(2, idProducto);

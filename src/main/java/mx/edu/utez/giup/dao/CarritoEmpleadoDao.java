@@ -52,7 +52,7 @@ public class CarritoEmpleadoDao {
     }
 
     public boolean eliminarProductoDelCarrito(int idCarrito, int idProducto) {
-        String query = "DELETE FROM DetalleCarritoEmpleado WHERE ID_Carrito_empleado = ? AND ID_Producto = ?";
+        String query = "DELETE FROM Detalle_carrito_empleado WHERE ID_Carrito_empleado = ? AND ID_Producto = ?";
         boolean success = false;
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
