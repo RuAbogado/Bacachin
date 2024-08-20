@@ -44,12 +44,12 @@
             fetch(`GIUP_war/getUsuario?ID_Usuario=${usuarioId}`)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById("nombre").textContent = data.nombre;
-                    document.getElementById("apellido").textContent = data.apellido;
-                    document.getElementById("nombre_usuario").textContent = data.nombre_usuario;
-                    document.getElementById("telefono").textContent = data.telefono;
-                    document.getElementById("email-usuario").textContent = data.correo;
-                    document.getElementById("estado-usuario").textContent = data.estado;
+                    document.getElementById("Nombre").textContent = data.Nombre;
+                    document.getElementById("Apellido").textContent = data.Apellido;
+                    document.getElementById("Nombre_Usuario").textContent = data.Nombre_Usuario;
+                    document.getElementById("Telefono").textContent = data.Telefono;
+                    document.getElementById("Correo").textContent = data.Correo;
+                    document.getElementById("Estado").textContent = data.Estado;
                 })
                 .catch(error => console.error('Error:', error));
         }

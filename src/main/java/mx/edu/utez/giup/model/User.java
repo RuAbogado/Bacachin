@@ -144,14 +144,14 @@ public class User {
     public String toString() {
         return "User{" +
                 "ID_Usuario=" + ID_Usuario +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
+                ", Nombre='" + nombre + '\'' +
+                ", Apellido='" + apellido + '\'' +
                 ", Nombre_Usuario='" + Nombre_Usuario + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", correo='" + correo + '\'' +
-                ", estado=" + estado +
-                ", codigo='" + codigo + '\'' +
-                ", tipo='" + tipo + '\'' +
+                ", Telefono='" + telefono + '\'' +
+                ", Correo='" + correo + '\'' +
+                ", Estado=" + estado +
+                ", Codigo_RE='" + codigo + '\'' +
+                ", Tipo='" + tipo + '\'' +
                 '}';
     }
 }
