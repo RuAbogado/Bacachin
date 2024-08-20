@@ -235,11 +235,11 @@
 
                 // Guardar los datos originales
                 datosOriginales = {
-                    nombre,
-                    apellido,
-                    nombreUsuario,
-                    telefono,
-                    correo
+                    Nombre,
+                    Apellido,
+                    Nombre_Usuario,
+                    Telefono,
+                    Estado
                 };
             })
             .catch(error => {
