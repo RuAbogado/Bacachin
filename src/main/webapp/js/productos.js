@@ -19,7 +19,7 @@ window.onclick = function(event) {
         modalProducto.style.display = "none";
     }
 }
-
+/*
 // Agregar un nuevo producto
 const formAgregarProducto = document.getElementById('form-agregar-producto');
 formAgregarProducto.addEventListener('submit', async function(event) {
@@ -33,26 +33,31 @@ formAgregarProducto.addEventListener('submit', async function(event) {
     const precio = document.querySelector('[name="precio"]').value;
     const stock = document.querySelector('[name="stock"]').value;
     const idCategoria = document.querySelector('[name="ID_Categoria"]').value;
+    const idMarca = document.querySelector('[name="ID_Marca"]').value;
     const tipo = ' ';
     const imagen = document.querySelector('[name="imagen"]').files[0];
-    const categoria = idCategoria;
-    const modalProducto = document.getElementById('productModal');
 
-    if (!nombre || !descripcion || isNaN(parseFloat(precio)) || isNaN(parseInt(stock)) || !idCategoria || !imagen) {
+    if (!nombre || !descripcion || isNaN(parseFloat(precio)) || isNaN(parseInt(stock)) || !idCategoria || !imagen || !idMarca) {
         alert('Por favor complete todos los campos requeridos.');
         return;
     }
 
     let formData = new FormData();
+    formData.append('ID_Categoria', idCategoria);
+    formData.append('ID_Marca', idMarca);
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
     formData.append('precio', parseFloat(precio));
     formData.append('stock', parseInt(stock));
-    formData.append('ID_Categoria', idCategoria);
-    formData.append('Tipo', tipo);
     formData.append('imagen', imagen);
 
+    if (!idCategoria || !idMarca || !nombre || !descripcion || isNaN(parseFloat(precio)) || isNaN(parseInt(stock)) || !imagen) {
+        alert('Por favor complete todos los campos requeridos.');
+        return;
+    }
+
     try {
+        //Fetch
         const response = await fetch('AgregarProducto', {
             method: 'POST',
             body: formData
@@ -68,26 +73,8 @@ formAgregarProducto.addEventListener('submit', async function(event) {
         const success = doc.querySelector('h1') && doc.querySelector('h1').textContent.includes('exitosamente');
 
         if (success) {
-            const nuevoProducto = document.createElement('div');
-            // Asumiendo que `nuevoProducto` es un elemento de producto que se está creando
-            nuevoProducto.className = 'producto'; // Cambiado a 'producto' para coincidir con el CSS
-            nuevoProducto.innerHTML = `
-    <div class="producto-content">
-        <img src="${URL.createObjectURL(imagen)}" class="imagen-curso" alt="${nombre}">
-        <div class="info-card">
-            <h5 class="card-title">${nombre}</h5>
-            <p class="card-text">${descripcion}</p>
-            <p class="card-text text-muted">${stock} <span class="u-pull-right">$${precio}</span></p>
-            <a href="#" class="boton-cancelar button input eliminar-producto" data-id="${Date.now()}">Eliminar Producto</a>
-        </div>
-    </div>
-`;
-
-            document.getElementById(categoria).appendChild(nuevoProducto);
-
-            modalProducto.style.display = "none";
-            formAgregarProducto.reset();
-            cargarEventListenersEliminar();
+            window.location.reload();
+            alert('El producto se habilitó correctamente.');
         } else {
             alert('Error al agregar el producto.');
         }
@@ -95,7 +82,116 @@ formAgregarProducto.addEventListener('submit', async function(event) {
         console.error('Error:', error);
         alert('Error en la solicitud.');
     }
+});*/
+
+document.getElementById('form-agregar-producto').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nombre = document.querySelector('[name="nombre"]').value;
+    const descripcion = document.querySelector('[name="descripcion"]').value;
+    const precio = document.querySelector('[name="precio"]').value;
+    const stock = document.querySelector('[name="stock"]').value;
+    const idCategoria = document.querySelector('[name="ID_Categoria"]').value;
+    const idMarca = document.querySelector('[name="ID_Marca"]').value;
+    const imagen = document.querySelector('[name="imagen"]').files[0];
+
+    if (!nombre || !descripcion || isNaN(parseFloat(precio)) || isNaN(parseInt(stock)) || !idCategoria || !imagen || !idMarca) {
+        alert('Por favor complete todos los campos requeridos.');
+        return;
+    }
+
+    // Crear un FormData
+    let formData = new FormData();
+    formData.append('ID_Categoria', idCategoria);
+    formData.append('ID_Marca', idMarca);
+    formData.append('nombre', nombre);
+    formData.append('descripcion', descripcion);
+    formData.append('precio', parseFloat(precio));
+    formData.append('stock', parseInt(stock));
+    formData.append('imagen', imagen);
+
+    fetch('AgregarProducto', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data)
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const success = doc.querySelector('h1').textContent.includes('exitosamente');
+
+            if (success) {
+                window.location.reload();
+            } else {
+                alert('Error al agregar el producto a la lista.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud para agregar el producto en la lista.');
+        });
 });
+
+/*
+// Agregar una nueva categoría
+document.getElementById('category-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nombre = document.querySelector('[name="nombre"]').value;
+    const descripcion = document.querySelector('[name="descripcion"]').value;
+    const precio = document.querySelector('[name="precio"]').value;
+    const stock = document.querySelector('[name="stock"]').value;
+    const idCategoria = document.querySelector('[name="ID_Categoria"]').value;
+    const tipo = ' ';
+    const imagen = document.querySelector('[name="imagen"]').files[0];
+    const categoria = idCategoria;
+    const modalProducto = document.getElementById('productModal');
+
+    fetch('AgregarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `nombre=${encodeURIComponent(newCategory)}&descripcion=${encodeURIComponent(description)}`
+    })
+        .then(response => response.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const success = doc.querySelector('h1').textContent.includes('exitosamente');
+            const ID_Categoria = doc.querySelector('input[name="ID_Categoria"]').value;
+
+            if (success) {
+                // Recargar el iframe que contiene categorias.jsp
+                fetch('habilitarCategoria', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `ID_Categoria=${encodeURIComponent(ID_Categoria)}`
+                })
+                    .then(response => response.json()) // Se espera una respuesta en formato JSON
+                    .then(data => {
+                        if (!data.success) {
+                            alert('Error al habilitar la categoría.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error en la solicitud.');
+                    });
+                window.location.reload();
+            } else {
+                alert('Error al agregar la categoría a la lista.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud para agregar la categoria en la lista.');
+        });
+});*/
+
 
 // Deshabilitar una categoría
 function DeshabilitarProducto(ID_Producto) {

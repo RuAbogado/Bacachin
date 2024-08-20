@@ -16,6 +16,10 @@ public class Productos {
     private boolean Estado;
 
     // Constructor
+    public Productos() {
+
+    }
+    // Constructor con todos los parámetros
     public Productos(int ID_Producto, int ID_Categoria, String nombre, String descripcion, float precio, int stock, Date fecha_Creacion, int ID_Marca, String imagen, boolean estado) {
         this.ID_Producto = ID_Producto;
         this.ID_Categoria = ID_Categoria;
@@ -29,9 +33,7 @@ public class Productos {
         this.Estado = estado;
     }
 
-    public Productos() {
 
-    }
 
     // Getters y Setters
 

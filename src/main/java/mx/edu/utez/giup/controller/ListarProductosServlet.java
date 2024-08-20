@@ -83,10 +83,10 @@ public class ListarProductosServlet extends HttpServlet {
                     int ID_Producto = rs.getInt("ID_Producto");
                     int Marcas_ID = rs.getInt("ID_Marca");
                     if (estado == 1 && Categorias_Estado == 1 && Marcas_Estado == 1) {
-                        out.println("<td><button type=\"button\" onclick=\"DeshabilitarProducto(" + ID_Producto + ")\">Deshabilitar Producto</button></td>");
+                        out.println("<td><button type=\"button\" onclick=\"DeshabilitarProducto(" + ID_Producto + ")\">Deshabilitar</button></td>");
                     }else {
                         if (estado == 0 && Categorias_Estado == 1 && Marcas_Estado == 1) {
-                            out.println("<td><button type=\"button\" onclick=\"HabilitarProducto(" + ID_Producto + ")\">Habilitar Producto</button></td>");
+                            out.println("<td><button type=\"button\" onclick=\"HabilitarProducto(" + ID_Producto + ")\">Habilitar</button></td>");
                         } else {
                             if (Categorias_Estado == 0 && Marcas_Estado == 1) {
                                 out.println("<td><button type=\"button\" onclick=\"HabilitarCategoria(" + Categorias_id + ")\">Habilitar Categoria</button></td>");

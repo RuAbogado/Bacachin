@@ -20,7 +20,7 @@
     <div class="modal-content">
         <span class="close-product">&times;</span>
         <h2>Agregar Nuevo Producto</h2>
-        <form method="post" action="AgregarProducto" enctype="multipart/form-data" id="form-agregar-producto">
+        <form id="form-agregar-producto">
             <div>
                 <label for="categoria-producto">Categoría:</label>
                 <select id="categoria-producto" name="ID_Categoria" required>
@@ -29,7 +29,7 @@
                 </select>
             </div>
             <div>
-                <label for="marca-producto">Categoría:</label>
+                <label for="marca-producto">Marca:</label>
                 <select id="marca-producto" name="ID_Marca" required>
                     <!-- Aquí se cargan las opciones de categorías -->
                     <jsp:include page="/ObtenerMarcas" />
@@ -57,7 +57,7 @@
             </div>
 
             <div>
-                <button type="submit">Agregar Producto</button>
+                <button type="submit">Agregar</button>
             </div>
         </form>
     </div>
@@ -66,9 +66,6 @@
 <div id="clientesContainer">
     <jsp:include page="/ListarProductos" />
 </div>
-
-<!-- Contenedor para mostrar los resultados -->
-<div id="resultContainer"></div>
 
 <script src="js/productos.js"></script>
 </body>
