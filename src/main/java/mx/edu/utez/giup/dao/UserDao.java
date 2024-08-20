@@ -110,15 +110,15 @@ public class UserDao {
     }
 
     // Método para obtener el tipo de usuario por correo y contraseña
-    public String getTipoUsuario(String Correo, String Contraseña) {
+    public String getTipoUsuario(String correo, String contraseña) {
         String tipo = null;
         String query = "SELECT Tipo FROM Usuarios WHERE Correo = ? AND Contraseña = SHA2(?, 256)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, Correo);
-            statement.setString(2, Contraseña);
+            statement.setString(1, correo);
+            statement.setString(2, contraseña);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -147,7 +147,7 @@ public class UserDao {
             statement.setBoolean(7, user.isEstado());
             statement.setString(8, user.getCodigo());
             statement.setString(9, user.getTipo());
-            statement.setInt(10, user.getId()); // Corregido el índice aquí
+            statement.setInt(10, user.getId());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -160,14 +160,14 @@ public class UserDao {
     }
 
     // Método para obtener un usuario por ID
-    public User getOne(int ID_Usuario) {
+    public User getOne(int idUsuario) {
         User user = null;
         String query = "SELECT * FROM Usuarios WHERE ID_Usuario = ?";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, ID_Usuario);
+            statement.setInt(1, idUsuario);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

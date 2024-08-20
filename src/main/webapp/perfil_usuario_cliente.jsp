@@ -196,50 +196,33 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-
-    const usuarioId = 1; // ID del usuario que quieres cargar
-    let datosOriginales = {};
-
-    document.addEventListener("DOMContentLoaded", function () {
-        cargarDatosUsuario();
-    });
+    const usuarioId = 1; // O el ID de usuario que necesites
 
     const cargarDatosUsuario = () => {
-        console.log(usuarioId);
-        fetch(`cargarUsuario/${usuarioId}`)  // Asegúrate de que esta sea la ruta correcta de tu API
+        fetch(`cargarUsuario?ID_Usuario=${usuarioId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');
                 }
-                return response.text();  // Cambiado a texto para usar un DOMParser
+                return response.json();
             })
             .then(data => {
-                // Si la respuesta es HTML, parsear el texto
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data, 'text/html');
-
-                // Suponiendo que el HTML de respuesta tiene los datos en elementos específicos
-                const Nombre = doc.querySelector('#Nombre').textContent;
-                const Apellido = doc.querySelector('#Apellido').textContent;
-                const Nombre_Usuario = doc.querySelector('#Nombre_Usuario').textContent;
-                const Telefono = doc.querySelector('#Telefono').textContent;
-                const Correo = doc.querySelector('#Correo').textContent; // Asegúrate de que el nombre coincida con tu respuesta
-
-                // Actualizar el DOM
-                document.getElementById("Nombre").textContent = data.Nombre;
-                document.getElementById("Apellido").textContent = data.Apellido;
-                document.getElementById("Nombre_Usuario").textContent = data.Nombre_Usuario;
-                document.getElementById("Telefono").textContent = data.Telefono;
-                document.getElementById("Correo").textContent = data.Correo;
-                document.getElementById("Estado").textContent = data.Estado;
+                // Actualizar el DOM con los datos recibidos
+                document.getElementById("Nombre").textContent = data.nombre;
+                document.getElementById("Apellido").textContent = data.apellido;
+                document.getElementById("Nombre_Usuario").textContent = data.username;
+                document.getElementById("Telefono").textContent = data.telefono;
+                document.getElementById("Correo").textContent = data.correo;
+                document.getElementById("Estado").textContent = data.estado ? 'Activo' : 'Inactivo';
 
                 // Guardar los datos originales
                 datosOriginales = {
-                    Nombre,
-                    Apellido,
-                    Nombre_Usuario,
-                    Telefono,
-                    Estado
+                    Nombre: data.nombre,
+                    Apellido: data.apellido,
+                    Nombre_Usuario: data.username,
+                    Telefono: data.telefono,
+                    Correo: data.correo,
+                    Estado: data.estado ? 'Activo' : 'Inactivo'
                 };
             })
             .catch(error => {
@@ -248,54 +231,21 @@
             });
     };
 
-
-
-    const habilitarEdicion = () => {
-        const campos = ['Nombre', 'Apellido', 'Nombre_Usuario', 'Telefono', 'Correo'];
-        campos.forEach(campo => {
-            const span = document.getElementById(campo);
-            let input = document.createElement('input');
-            input.id = `input-${campo}`;
-            input.type = 'text';
-            input.value = span.textContent;
-            input.classList.add('input100');
-            span.parentNode.replaceChild(input, span);
-        });
-        document.querySelector('.boton-modificar').style.display = 'none';
-        document.querySelector('.boton-guardar').style.display = 'inline-block';
-        document.querySelector('.boton-cancelar').style.display = 'inline-block';
-    };
-
-    const cancelarCambios = () => {
-        const campos = ['Nombre', 'Apellido', 'Nombre_Usuario', 'Telefono', 'Correo'];
-        campos.forEach(campo => {
-            const input = document.getElementById(`input-${campo}`);
-            const span = document.createElement('span');
-            span.id = campo;
-            span.classList.add('font-weight-bold');
-            span.textContent = datosOriginales[campo];
-            input.parentNode.replaceChild(span, input);
-        });
-        document.querySelector('.boton-modificar').style.display = 'inline-block';
-        document.querySelector('.boton-guardar').style.display = 'none';
-        document.querySelector('.boton-cancelar').style.display = 'none';
-    };
-
     const guardarCambios = () => {
         const campos = ['Nombre', 'Apellido', 'Nombre_Usuario', 'Telefono', 'Correo'];
         let datosActualizados = {};
 
         campos.forEach(campo => {
             const input = document.getElementById(`input-${campo}`);
-            datosActualizados[campo] = input.value;
+            datosActualizados[campo.toLowerCase()] = input.value;
         });
 
-        fetch(`usuarioId${usuarioId}`, {
+        fetch(`actualizarUsuario`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(datosActualizados)
+            body: JSON.stringify({ ...datosActualizados, id: usuarioId })
         })
             .then(response => {
                 if (!response.ok) {
@@ -304,17 +254,21 @@
                 return response.json();
             })
             .then(data => {
-                datosOriginales = data;  // Actualizar los datos originales
-                cancelarCambios();
-                alert('Los cambios se guardaron correctamente.');
+                if (data.success) {
+                    cargarDatosUsuario();  // Recargar los datos para reflejar cambios
+                    cancelarCambios();
+                    alert('Los cambios se guardaron correctamente.');
+                } else {
+                    alert('No se pudieron guardar los cambios.');
+                }
             })
             .catch(error => {
                 console.error('Error al guardar los cambios:', error);
                 alert('Error al guardar los cambios. Por favor, inténtalo de nuevo más tarde.');
             });
     };
-
 </script>
+
 </body>
 
 </html>

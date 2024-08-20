@@ -1,39 +1,24 @@
 package mx.edu.utez.giup.model;
 
 public class User {
-    private int ID_Usuario;
+    private int id;
     private String nombre;
     private String apellido;
-    private String Nombre_Usuario;
-    private String telefono;
     private String correo;
+    private String telefono;
+    private String username;
     private String password;
-    private boolean estado;
     private String codigo;
+    private boolean estado;
     private String tipo;
 
-    public User() {
-    }
-
-    public User(int ID_Usuario, String nombre, String apellido, String Nombre_Usuario, String telefono, String correo, String password, boolean estado, String codigo, String tipo) {
-        this.ID_Usuario = ID_Usuario;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.Nombre_Usuario = Nombre_Usuario;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.password = password;
-        this.estado = estado;
-        this.codigo = codigo;
-        this.tipo = tipo;
-    }
-
+    // Getters y Setters para cada atributo
     public int getId() {
-        return ID_Usuario;
+        return id;
     }
 
     public void setId(int id) {
-        this.ID_Usuario = id;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -41,11 +26,7 @@ public class User {
     }
 
     public void setNombre(String nombre) {
-        if (nombre != null && !nombre.trim().isEmpty()) {
-            this.nombre = nombre;
-        } else {
-            throw new IllegalArgumentException("Nombre no puede estar vacío");
-        }
+        this.nombre = nombre;
     }
 
     public String getApellido() {
@@ -53,35 +34,7 @@ public class User {
     }
 
     public void setApellido(String apellido) {
-        if (apellido != null && !apellido.trim().isEmpty()) {
-            this.apellido = apellido;
-        } else {
-            throw new IllegalArgumentException("Apellido no puede estar vacío");
-        }
-    }
-
-    public String getUsername() {
-        return Nombre_Usuario;
-    }
-
-    public void setUsername(String username) {
-        if (username != null && !username.trim().isEmpty()) {
-            this.Nombre_Usuario = username;
-        } else {
-            throw new IllegalArgumentException("Username no puede estar vacío");
-        }
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        if (telefono != null && !telefono.trim().isEmpty()) {
-            this.telefono = telefono;
-        } else {
-            throw new IllegalArgumentException("Teléfono no puede estar vacío");
-        }
+        this.apellido = apellido;
     }
 
     public String getCorreo() {
@@ -89,11 +42,23 @@ public class User {
     }
 
     public void setCorreo(String correo) {
-        if (correo != null && correo.matches("^[\\w-\\.]+@[\\w-]+\\.[a-z]{2,4}$")) {
-            this.correo = correo;
-        } else {
-            throw new IllegalArgumentException("Correo no es válido");
-        }
+        this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -101,11 +66,15 @@ public class User {
     }
 
     public void setPassword(String password) {
-        if (password != null && password.length() >= 6) {
-            this.password = password;
-        } else {
-            throw new IllegalArgumentException("Contraseña debe tener al menos 6 caracteres");
-        }
+        this.password = password;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public boolean isEstado() {
@@ -116,42 +85,11 @@ public class User {
         this.estado = estado;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        if (codigo != null && !codigo.trim().isEmpty()) {
-            this.codigo = codigo;
-        } else {
-            throw new IllegalArgumentException("Código no puede estar vacío");
-        }
-    }
-
     public String getTipo() {
         return tipo;
     }
 
     public void setTipo(String tipo) {
-        if (tipo != null && !tipo.trim().isEmpty()) {
-            this.tipo = tipo;
-        } else {
-            throw new IllegalArgumentException("Tipo no puede estar vacío");
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "ID_Usuario=" + ID_Usuario +
-                ", Nombre='" + nombre + '\'' +
-                ", Apellido='" + apellido + '\'' +
-                ", Nombre_Usuario='" + Nombre_Usuario + '\'' +
-                ", Telefono='" + telefono + '\'' +
-                ", Correo='" + correo + '\'' +
-                ", Estado=" + estado +
-                ", Codigo_RE='" + codigo + '\'' +
-                ", Tipo='" + tipo + '\'' +
-                '}';
+        this.tipo = tipo;
     }
 }
