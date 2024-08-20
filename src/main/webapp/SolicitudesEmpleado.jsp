@@ -19,13 +19,13 @@
 <script>
     function Estatus(value, ID_Solicitud) {
         switch(value) {
-            case 'cancelar':
+            case 'Cancelar':
                 console.log("Solicitud " + ID_Solicitud + " cancelada.");
                 break;
-            case 'proceso':
+            case 'Proceso':
                 console.log("Solicitud " + ID_Solicitud + " en proceso.");
                 break;
-            case 'terminada':
+            case 'Terminada':
                 console.log("Solicitud " + ID_Solicitud + " terminada.");
                 break;
             default:
@@ -33,12 +33,24 @@
                 break;
         }
 
-        // Aquí podrías agregar lógica para enviar la actualización del estado al servidor si es necesario
+        // Enviar la actualización del estado al servidor
+        fetch('/GIUP_war/ActualizarEstadoSolicitud', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'ID_Solicitud=' + ID_Solicitud + '&estado=' + encodeURIComponent(value)
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Estado actualizado: ' + data);
+            })
+            .catch(error => console.error('Error:', error));
     }
 
     function mostrarDetalleVenta(ID_Solicitud) {
         // Realiza una petición AJAX para obtener los detalles de la venta
-        fetch('localhost:8080/GIUP_war/DetalleVenta?ID_Solicitud=' + ID_Solicitud)
+        fetch('/GIUP_war/DetalleVenta?ID_Solicitud=' + ID_Solicitud)
             .then(response => response.text())
             .then(data => {
                 // Aquí puedes mostrar los detalles en un modal o en un div
