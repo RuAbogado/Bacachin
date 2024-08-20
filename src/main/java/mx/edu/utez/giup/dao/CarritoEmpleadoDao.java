@@ -50,4 +50,24 @@ public class CarritoEmpleadoDao {
         }
         return carrito;
     }
+
+    public boolean eliminarProductoDelCarrito(int idCarrito, int idProducto) {
+        String query = "DELETE FROM DetalleCarritoEmpleado WHERE ID_Carrito_empleado = ? AND ID_Producto = ?";
+        boolean success = false;
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setInt(1, idCarrito);
+            stmt.setInt(2, idProducto);
+
+            int rowsAffected = stmt.executeUpdate();
+            success = rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar el producto del carrito del empleado: " + e.getMessage());
+        }
+
+        return success;
+    }
 }

@@ -7,6 +7,17 @@ import java.sql.*;
 
 public class CarritoDao {
 
+    private Connection connection;
+
+    public CarritoDao() {
+        try {
+            this.connection = DatabaseConnectionManager.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener la conexión a la base de datos.", e);
+        }
+    }
+
     // Método generalizado para obtener un carrito por ID de usuario y tipo
     public Carrito getCarritoByUsuarioId(int userId, String userType) {
         Carrito carrito = null;
@@ -26,9 +37,7 @@ public class CarritoDao {
                 return null; // Tipo de usuario no reconocido
         }
 
-        try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -47,6 +56,7 @@ public class CarritoDao {
         return carrito;
     }
 
+    // Método para crear un carrito
     public Carrito createCarrito(Carrito carrito) {
         String sql = "";
         // Elegir la tabla correcta en base al tipo de usuario
@@ -64,8 +74,7 @@ public class CarritoDao {
                 return null; // Tipo de usuario no reconocido
         }
 
-        try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, carrito.getUserID());
             statement.setDate(2, new java.sql.Date(carrito.getFecha_Creacion().getTime()));
@@ -89,8 +98,7 @@ public class CarritoDao {
         boolean updated = false;
         String sql = "UPDATE Carrito SET Fecha_Creacion = ?, Cantidad = ? WHERE ID_Carrito = ?";
 
-        try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setDate(1, new java.sql.Date(carrito.getFecha_Creacion().getTime())); // Convierte java.util.Date a java.sql.Date
             statement.setInt(2, carrito.getCantidad());
@@ -111,8 +119,7 @@ public class CarritoDao {
         boolean deleted = false;
         String sql = "DELETE FROM Carrito WHERE ID_Carrito = ?";
 
-        try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, carritoId);
 
@@ -124,5 +131,19 @@ public class CarritoDao {
             System.err.println("Error al eliminar el carrito: " + e.getMessage());
         }
         return deleted;
+    }
+
+    // Método para eliminar un producto del carrito
+    public boolean eliminarProductoDelCarrito(int idCarrito, int idProducto) {
+        String query = "DELETE FROM DetalleCarrito WHERE ID_Carrito = ? AND ID_Producto = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, idCarrito);
+            stmt.setInt(2, idProducto);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;  // Retorna true si se eliminó al menos una fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

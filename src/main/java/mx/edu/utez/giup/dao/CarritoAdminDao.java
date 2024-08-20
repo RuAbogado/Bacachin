@@ -93,4 +93,26 @@ public class CarritoAdminDao {
         }
         return deleted;
     }
+
+
+    // Método para eliminar un producto específico del carrito del administrador
+    public boolean eliminarProductoDelCarrito(int idCarritoAdmin, int idProducto) {
+        boolean success = false;
+        String sql = "DELETE FROM DetalleCarritoAdmin WHERE ID_Carrito_admin = ? AND ID_Producto = ?";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, idCarritoAdmin);
+            statement.setInt(2, idProducto);
+
+            int rowsAffected = statement.executeUpdate();
+            success = rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar el producto del carrito del administrador: " + e.getMessage());
+        }
+
+        return success;
+    }
 }

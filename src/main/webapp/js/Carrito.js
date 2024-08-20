@@ -75,8 +75,6 @@ const obtenerDetallesDelCarrito = async () => {
         allProducts = detallesCarrito.map(detalle => {
             console.log("Detalle actual:", detalle);  // Esto imprimirá cada detalle en la consola
 
-            // Verifica si las propiedades están directamente en detalle (caso de admin)
-            // o si están dentro de un objeto producto (caso de cliente)
             let title, price;
             if (detalle.nombreProducto && detalle.precioProducto) {
                 // Caso de admin
@@ -247,16 +245,48 @@ productsList.addEventListener('click', e => {
 });
 
 // Event Listener para eliminar productos del carrito
-rowProduct.addEventListener('click', e => {
+rowProduct.addEventListener('click', async (e) => {
     if (e.target.classList.contains('icon-close')) {
         const product = e.target.parentElement;
         const title = product.querySelector('.titulo-producto-carrito').textContent;
 
-        allProducts = allProducts.filter(
-            p => p.title !== title
-        );
+        // Encuentra el producto en la lista
+        const productToRemove = allProducts.find(p => p.title === title);
 
-        showHTML();
+        if (productToRemove) {
+            const idProducto = obtenerIdProductoPorTitulo(productToRemove.title); // Implementa esta función para obtener el ID del producto
+            const idCarrito = await obtenerIdCarrito(); // Obtén el ID del carrito
+
+            try {
+                // Enviar la solicitud al servidor para eliminar el producto del carrito
+                const response = await fetch('/GIUP_war/EliminarProductoCarrito', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `idProducto=${encodeURIComponent(idProducto)}&ID_Carrito=${encodeURIComponent(idCarrito)}&tipoUsuario=${encodeURIComponent(tipoUsuario)}`
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Eliminar el producto de la lista en el frontend si se eliminó con éxito en el servidor
+                    allProducts = allProducts.filter(
+                        p => p.title !== title
+                    );
+
+                    showHTML(); // Actualizar la vista del carrito
+                } else {
+                    console.error('Error al eliminar el producto del carrito:', result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
     }
 });
 
@@ -274,15 +304,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 const item = document.createElement("div");
                 item.className = "item";
                 item.innerHTML = `
-                    <figure>
-                        <img src="img/${producto.Imagen}" alt="${producto.Nombre}" />
-                    </figure>
-                    <div class="info-product">
+                <figure>
+                    <img src="img/${producto.Imagen}" alt="${producto.Nombre}" />
+                </figure>
+                <div class="info-product">
                     <h2>${producto.Nombre}</h2>
                     <p class="price">$${producto.Precio}</p>
                     <button class="btn-add-cart">Añadir al carrito</button>
                 </div>
-            `;
+                `;
                 container.appendChild(item);
             });
             // Cargar detalles del carrito después de cargar los productos
