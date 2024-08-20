@@ -77,7 +77,7 @@
                 <img src="img/GIUP.png" alt="Imagen" class="imagen-circular">
                 <div class="envoltura-input100 validate-input" data-validate="Correo es requerido">
                     <label class="etiqueta-input100" for="correo">Correo</label>
-                    <input class="input100" type="email" id="correo" name="correo" placeholder="Correo" required>
+                    <input class="input100" type="email" id="correo" name="correo" placeholder="Correo Electronico" required>
                 </div>
                 <div class="envoltura-input100 validate-input" data-validate="Contraseña es requerida">
                     <label class="etiqueta-input100" for="contraseña">Contraseña</label>
