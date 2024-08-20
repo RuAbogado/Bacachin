@@ -7,24 +7,25 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mx.edu.utez.giup.utis.DatabaseConnectionManager;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet("/getUsuario")
-public class getUsuarioServlet extends HttpServlet {
+@WebServlet("/getUsuarioEmpleado")
+public class getUsuarioClienteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // ID de usuario establecido a 4 directamente
-        int idUsuario = 1;
+        int idUsuario = 2;
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM Usuarios WHERE ID_Usuario = ?")) {
 
-            statement.setInt(1, idUsuario);
+            statement.setInt(2, idUsuario);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

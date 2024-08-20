@@ -180,11 +180,7 @@
                             <span>E-mail: </span><span id="correo" class="font-weight-bold"></span>
                         </div>
                         <p class="estado mt-3">Estado: <span id="estado"></span></p>
-                        <button class="boton-modificar" onclick="habilitarEdicion()">Modificar Todos</button>
-                        <button class="boton-guardar" onclick="guardarCambios()" style="display:none;">Guardar
-                            Cambios</button>
-                        <button class="boton-cancelar" onclick="cancelarCambios()" style="display:none;">Cancelar
-                            Cambios</button>
+
                     </div>
                 </div>
             </div>
@@ -196,77 +192,28 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-    const usuarioId = 1; // O el ID de usuario que necesites
-
-    const cargarDatosUsuario = () => {
-        fetch(`cargarUsuario?ID_Usuario=${usuarioId}`)
+    function cargarDatosUsuario() {
+        fetch('getUsuarioCliente') // No se pasa ID porque siempre es 4
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al cargar los datos del usuario');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
-                // Actualizar el DOM con los datos recibidos
                 document.getElementById("nombre").textContent = data.nombre;
                 document.getElementById("apellido").textContent = data.apellido;
                 document.getElementById("username").textContent = data.username;
                 document.getElementById("telefono").textContent = data.telefono;
                 document.getElementById("correo").textContent = data.correo;
-                document.getElementById("estado").textContent = data.estado ? 'Activo' : 'Inactivo';
-
-                // Guardar los datos originales
-                datosOriginales = {
-                    nombre: data.nombre,
-                    apellido: data.apellido,
-                    username: data.username,
-                    telefono: data.telefono,
-                    correo: data.correo,
-                    estado: data.estado ? 'Activo' : 'Inactivo'
-                };
+                document.getElementById("estado").textContent = data.estado;
             })
-            .catch(error => {
-                console.error('Error al cargar los datos del usuario:', error);
-                alert('Error al cargar los datos del usuario. Por favor, inténtalo de nuevo más tarde.');
-            });
-    };
+            .catch(error => console.error('Error:', error));
+    }
 
-    const guardarCambios = () => {
-        const campos = ['nombre', 'apellido', 'username', 'telefono', 'correo'];
-        let datosActualizados = {};
-
-        campos.forEach(campo => {
-            const input = document.getElementById(`input-${campo}`);
-            datosActualizados[campo.toLowerCase()] = input.value;
-        });
-
-        fetch(`actualizarUsuario`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ ...datosActualizados, id: usuarioId })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al guardar los cambios');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    cargarDatosUsuario();  // Recargar los datos para reflejar cambios
-                    cancelarCambios();
-                    alert('Los cambios se guardaron correctamente.');
-                } else {
-                    alert('No se pudieron guardar los cambios.');
-                }
-            })
-            .catch(error => {
-                console.error('Error al guardar los cambios:', error);
-                alert('Error al guardar los cambios. Por favor, inténtalo de nuevo más tarde.');
-            });
-    };
+    document.addEventListener("DOMContentLoaded", function() {
+        cargarDatosUsuario();  // Llamada a la función después de que el DOM esté listo
+    });
 </script>
 
 </body>

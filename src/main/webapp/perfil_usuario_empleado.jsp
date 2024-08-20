@@ -142,36 +142,28 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-    const usuarioId = ID_Usuario; // ID del usuario que quieres cargar
-    let datosOriginales = {};
-
-    document.addEventListener("DOMContentLoaded", function () {
-        cargarDatosUsuario();
-    });
-
-    const cargarDatosUsuario = () => {
-        fetch(`GIUP_war/index.jsp/cargarUsuario?id=${usuarioId}`)
+    function cargarDatosUsuario() {
+        fetch('getUsuarioEmpleados') // No se pasa ID porque siempre es 4
             .then(response => {
-                console.log('Status:', response.status); // Log del estado HTTP
-                console.log('Response:', response); // Log de la respuesta completa
                 if (!response.ok) {
-                    return response.text().then(text => { throw new Error(`Error ${response.status}: ${text}`); });
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
-                datosOriginales = { ...data };  // Guardar los datos originales
                 document.getElementById("nombre").textContent = data.nombre;
                 document.getElementById("apellido").textContent = data.apellido;
                 document.getElementById("username").textContent = data.username;
                 document.getElementById("telefono").textContent = data.telefono;
                 document.getElementById("correo").textContent = data.correo;
+                document.getElementById("estado").textContent = data.estado;
             })
-            .catch(error => {
-                console.error('Error al cargar los datos del usuario:', error);
-                alert(`Error al cargar los datos del usuario: ${error.message}`);
-            });
-    };
+            .catch(error => console.error('Error:', error));
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        cargarDatosUsuario();  // Llamada a la función después de que el DOM esté listo
+    });
 </script>
 </body>
 
