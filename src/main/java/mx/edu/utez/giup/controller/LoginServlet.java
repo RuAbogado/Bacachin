@@ -8,8 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mx.edu.utez.giup.dao.UserDao;
 import mx.edu.utez.giup.dao.CarritoDao;
+import mx.edu.utez.giup.dao.CarritoEmpleadoDao;
+import mx.edu.utez.giup.dao.CarritoAdminDao;
 import mx.edu.utez.giup.model.Carrito;
+import mx.edu.utez.giup.model.CarritoEmpleado;
+import mx.edu.utez.giup.model.CarritoAdmin;
 import mx.edu.utez.giup.model.User;
+
 import java.io.IOException;
 import java.sql.Date;
 
@@ -28,36 +33,73 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
 
-            // Obtener o crear el carrito asociado al usuario
-            CarritoDao carritoDao = new CarritoDao();
-            Carrito carrito = null;
+            int userId = user.getId();
+            switch (user.getTipo()) {
+                case "cliente": {
+                    userId = userDao.getClienteId(user.getId());
+                    CarritoDao carritoDao = new CarritoDao();
+                    Carrito carrito = carritoDao.getCarritoByUsuarioId(userId, "cliente");
 
-            if ("cliente".equals(user.getTipo())) {
-                // Obtener el ID_Cliente del usuario
-                int idCliente = userDao.getClienteId(user.getId());
-                carrito = carritoDao.getCarritoByClienteId(idCliente);
+                    if (carrito == null) {
+                        long millis = System.currentTimeMillis();
+                        carrito = carritoDao.createCarrito(new Carrito(userId, new Date(millis), "cliente"));
+                        System.out.println("Nuevo ID del carrito creado: " + carrito.getID_Carrito());
+                    }
 
-                // Si el carrito no existe, crear uno nuevo
-                if (carrito == null) {
-                    long millis = System.currentTimeMillis();
-                    carrito = carritoDao.createCarrito(new Carrito(idCliente, new Date(millis)));
-                    System.out.println("Nuevo ID del carrito creado: " + carrito.getID_Carrito());
+                    session.setAttribute("carrito", carrito);
+                    session.setAttribute("ID_Carrito", carrito.getID_Carrito());
+                    break;
                 }
+                case "empleado": {
+                    userId = userDao.getEmpleadoId(user.getId());
+                    CarritoEmpleadoDao carritoEmpleadoDao = new CarritoEmpleadoDao();
+                    CarritoEmpleado carritoEmpleado = carritoEmpleadoDao.getCarritoByEmpleadoId(userId);
 
-                session.setAttribute("carrito", carrito);
-                session.setAttribute("ID_Carrito", carrito.getID_Carrito());
+                    if (carritoEmpleado == null) {
+                        long millis = System.currentTimeMillis();
+                        carritoEmpleado = carritoEmpleadoDao.createCarrito(new CarritoEmpleado(userId, new Date(millis)));
+                        System.out.println("Nuevo ID del carrito de empleado creado: " + carritoEmpleado.getID_Carrito_empleado());
+                    }
+
+                    session.setAttribute("carritoEmpleado", carritoEmpleado);
+                    session.setAttribute("ID_CarritoEmpleado", carritoEmpleado.getID_Carrito_empleado());
+                    break;
+                }
+                case "admin": {
+                    userId = userDao.getAdminId(user.getId());
+                    CarritoAdminDao carritoAdminDao = new CarritoAdminDao();
+                    CarritoAdmin carritoAdmin = carritoAdminDao.getCarritoByAdminId(userId);
+
+                    if (carritoAdmin == null) {
+                        long millis = System.currentTimeMillis();
+                        carritoAdmin = carritoAdminDao.createCarrito(new CarritoAdmin(userId, new Date(millis)));
+                        System.out.println("Nuevo ID del carrito de admin creado: " + carritoAdmin.getID_Carrito_admin());
+                    }
+
+                    session.setAttribute("carritoAdmin", carritoAdmin);
+                    session.setAttribute("ID_CarritoAdmin", carritoAdmin.getID_Carrito_admin());
+                    break;
+                }
+                default: {
+                    resp.sendRedirect(req.getContextPath() + "/error.jsp");
+                    return;
+                }
             }
 
             // Redirigir según el tipo de usuario
-            if ("admin".equals(user.getTipo())) {
-                resp.sendRedirect(req.getContextPath() + "/homeadmin.jsp");
-            } else if ("cliente".equals(user.getTipo())) {
-                resp.sendRedirect(req.getContextPath() + "/homecliente.jsp");
-            } else if ("empleado".equals(user.getTipo())) {
-                resp.sendRedirect(req.getContextPath() + "/homeempleados.jsp");
-            } else {
-                // Redirigir a una página de error o de acceso no permitido si el tipo de usuario no es reconocido
-                resp.sendRedirect(req.getContextPath() + "/error.jsp");
+            switch (user.getTipo()) {
+                case "admin":
+                    resp.sendRedirect(req.getContextPath() + "/homeadmin.jsp");
+                    break;
+                case "cliente":
+                    resp.sendRedirect(req.getContextPath() + "/homecliente.jsp");
+                    break;
+                case "empleado":
+                    resp.sendRedirect(req.getContextPath() + "/homeempleados.jsp");
+                    break;
+                default:
+                    resp.sendRedirect(req.getContextPath() + "/error.jsp");
+                    break;
             }
         } else {
             req.setAttribute("mensaje", "Correo o contraseña incorrectos");

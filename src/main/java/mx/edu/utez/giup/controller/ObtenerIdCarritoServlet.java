@@ -6,11 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import mx.edu.utez.giup.model.Carrito;
 
 import java.io.IOException;
 
-@WebServlet(name = "CarritoServlet", value = "/ObtenerIdCarrito")
-public class CarritoServlet extends HttpServlet {
+@WebServlet("/ObtenerIdCarrito")
+public class ObtenerIdCarritoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false); // Obtener la sesión actual sin crear una nueva si no existe

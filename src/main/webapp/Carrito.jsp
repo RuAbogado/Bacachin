@@ -1,15 +1,26 @@
+<%@ page import="mx.edu.utez.giup.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda</title>
     <link rel="stylesheet" href="css/Carrito.css" />
+
+    <%
+        // Aquí obtenemos el tipo de usuario desde la sesión y lo asignamos a una variable de JavaScript
+        User user = (User) session.getAttribute("user");
+        String tipoUsuario = user != null ? user.getTipo() : "cliente"; // Puedes ajustar el valor por defecto si es necesario
+    %>
+    <script type="text/javascript">
+        // Inyectar el tipo de usuario desde la sesión en una variable JS
+        var tipoUsuario = "<%= tipoUsuario %>";
+        console.log("Tipo de usuario:", tipoUsuario); // Para depuración
+    </script>
 </head>
 <body>
 <header>

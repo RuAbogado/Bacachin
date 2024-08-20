@@ -10,10 +10,22 @@ const countProducts = document.querySelector('#contador-productos');
 const cartEmpty = document.querySelector('.cart-empty');
 const cartTotal = document.querySelector('.cart-total');
 
-// Función para obtener el ID del carrito
+// `tipoUsuario` ya está disponible como una variable global inyectada desde el JSP
+console.log("Tipo de usuario:", tipoUsuario);
+
+// Función para obtener el ID del carrito según el tipo de usuario
 const obtenerIdCarrito = async () => {
     try {
-        const response = await fetch('/GIUP_war/ObtenerIdCarrito', {
+        let url = '/GIUP_war/ObtenerIdCarrito';  // Por defecto para cliente
+
+        // Modificar la URL del endpoint según el tipo de usuario
+        if (tipoUsuario === 'empleado') {
+            url = '/GIUP_war/ObtenerIdCarritoEmpleado';
+        } else if (tipoUsuario === 'admin') {
+            url = '/GIUP_war/ObtenerIdCarritoAdmin';
+        }
+
+        const response = await fetch(url, {
             method: 'GET',
             credentials: 'include'
         });
@@ -22,7 +34,7 @@ const obtenerIdCarrito = async () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const idCarrito = await response.text(); // Asumiendo que el servidor devuelve el ID como texto
+        const idCarrito = await response.text();
         console.log("ID_Carrito obtenido:", idCarrito);
         return idCarrito;
     } catch (error) {
@@ -38,7 +50,16 @@ const obtenerDetallesDelCarrito = async () => {
 
         if (!idCarrito) return;
 
-        const response = await fetch(`/GIUP_war/ObtenerDetallesCarrito?idCarrito=${idCarrito}`, {
+        let url = `/GIUP_war/ObtenerDetallesCarrito`;  // Por defecto para cliente
+
+        // Modificar la URL del endpoint según el tipo de usuario
+        if (tipoUsuario === 'empleado') {
+            url = `/GIUP_war/ObtenerDetallesCarritoEmpleado?idCarrito=${idCarrito}`;
+        } else if (tipoUsuario === 'admin') {
+            url = `/GIUP_war/ObtenerDetallesCarritoAdmin?idCarrito=${idCarrito}`;
+        }
+
+        const response = await fetch(url, {
             method: 'GET',
             credentials: 'include'
         });
@@ -50,12 +71,17 @@ const obtenerDetallesDelCarrito = async () => {
         const detallesCarrito = await response.json();
         console.log("Detalles del carrito:", detallesCarrito);
 
-        // Asegúrate de que cada detalle del carrito incluya el nombre y el precio
-        allProducts = detallesCarrito.map(detalle => ({
-            title: detalle.producto.nombre,  // Asegúrate de que este campo sea correcto
-            quantity: detalle.cantidad,
-            price: detalle.producto.precio  // Asegúrate de que este campo sea correcto
-        }));
+        // Itera sobre cada detalle y ajusta la estructura según lo que se recibe
+        allProducts = detallesCarrito.map(detalle => {
+            console.log("Detalle actual:", detalle);  // Esto imprimirá cada detalle en la consola
+
+            // Mapea los detalles directamente
+            return {
+                title: detalle.nombreProducto,   // Aquí accedemos directamente a nombreProducto
+                quantity: detalle.cantidad,
+                price: detalle.precioProducto    // Aquí accedemos directamente a precioProducto
+            };
+        });
 
         showHTML();
     } catch (error) {
@@ -67,8 +93,18 @@ const obtenerDetallesDelCarrito = async () => {
 const enviarProductoAlCarrito = async (product) => {
     const idProducto = obtenerIdProductoPorTitulo(product.title); // Implementa esta función para obtener el ID del producto
     const idCarrito = await obtenerIdCarrito(); // Obtén el ID del carrito
+
+    // Ajusta la URL según el tipo de usuario
+    let url = '/GIUP_war/AgregarProductoCarrito';  // Por defecto para cliente
+
+    if (tipoUsuario === 'empleado') {
+        url = '/GIUP_war/AgregarProductoCarritoEmpleado';
+    } else if (tipoUsuario === 'admin') {
+        url = '/GIUP_war/AgregarProductoCarritoAdmin';
+    }
+
     const data = {
-        idCarrito: idCarrito,
+        ID_Carrito: idCarrito, // Usa exactamente el mismo nombre de variable que espera el servidor
         idProducto: idProducto,
         quantity: product.quantity
     };
@@ -76,7 +112,7 @@ const enviarProductoAlCarrito = async (product) => {
     console.log("Datos enviados al servidor:", data);
 
     try {
-        const response = await fetch("/GIUP_war/AgregarProductoCarrito", {
+        const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -85,6 +121,7 @@ const enviarProductoAlCarrito = async (product) => {
         });
 
         const result = await response.json();
+        console.log(result.status)
         if (result.status === "success") {
             console.log("Producto agregado al carrito exitosamente.");
         } else {
@@ -227,14 +264,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         <img src="img/${producto.Imagen}" alt="${producto.Nombre}" />
                     </figure>
                     <div class="info-product">
-                        <h2>${producto.Nombre}</h2>
-                        <p class="price">$${producto.Precio}</p>
-                        <button class="btn-add-cart">Añadir al carrito</button>
-                    </div>
-                `;
+                    <h2>${producto.Nombre}</h2>
+                    <p class="price">$${producto.Precio}</p>
+                    <button class="btn-add-cart">Añadir al carrito</button>
+                </div>
+            `;
                 container.appendChild(item);
             });
-
             // Cargar detalles del carrito después de cargar los productos
             obtenerDetallesDelCarrito();
         })

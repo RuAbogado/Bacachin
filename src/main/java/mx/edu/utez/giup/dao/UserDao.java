@@ -41,6 +41,40 @@ public class UserDao {
         return user;
     }
 
+    // Método para obtener el ID de un empleado
+    public int getEmpleadoId(int userId) {
+        int idEmpleado = 0;
+        try (Connection con = DatabaseConnectionManager.getConnection()) {
+            String sql = "SELECT ID_Empleado FROM Empleados WHERE ID_Usuario = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                idEmpleado = rs.getInt("ID_Empleado");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idEmpleado;
+    }
+
+    // Método para obtener el ID de un administrador
+    public int getAdminId(int userId) {
+        int idAdmin = 0;
+        try (Connection con = DatabaseConnectionManager.getConnection()) {
+            String sql = "SELECT ID_Admin FROM Administradores WHERE ID_Usuario = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                idAdmin = rs.getInt("ID_Admin");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idAdmin;
+    }
+
     // Método para registrar un nuevo usuario
     public boolean registerUser(User user) throws SQLException {
         boolean isRegistered = false;
