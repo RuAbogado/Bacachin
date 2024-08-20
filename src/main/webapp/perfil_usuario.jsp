@@ -48,7 +48,7 @@
 <script src="js/main.js"></script>
 <script>
     const cargarDatosUsuario = () => {
-        fetch(`GIUP_war/getUsuario?id=${idUsuario}`)
+        fetch(`GIUP_war/getUsuario?ID_usuario=${usuarioId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar los datos del usuario');
