@@ -68,7 +68,7 @@
 <article>
   <div class="flex-grow-1" id="content" >
     <div id="inicio" style="">
-      <iframe src="inicioCliente.jsp" width="100%" height="560px"></iframe>
+      <iframe src="inicioCliente.jsp" width="100%" height="900px"></iframe>
 
     </div>
 
