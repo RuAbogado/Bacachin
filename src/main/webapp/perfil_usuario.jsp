@@ -47,7 +47,7 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script>
     function cargarDatosUsuario() {
-        fetch('GIUP_war/getUsuario') // No se pasa ID porque siempre es 4
+        fetch('getUsuario') // No se pasa ID porque siempre es 4
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
