@@ -16,7 +16,7 @@ import java.sql.SQLException;
 @WebServlet("/DetalleVenta")
 public class DetalleVentaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -61,8 +61,6 @@ public class DetalleVentaServlet extends HttpServlet {
             out.println("Error: " + e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
                 if (conn != null) conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
