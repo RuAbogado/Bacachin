@@ -1,4 +1,3 @@
-<%@ page import="mx.edu.utez.giup.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,11 +9,6 @@
     <link rel="icon" type="image/png" href="img/icons/icono.png" />
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <%
-        // Obteniendo el usuario de la sesión
-        User usuario = (User) session.getAttribute("user");
-        int usuarioId = usuario != null ? usuario.getId() : -1;
-    %>
 </head>
 
 <body>
@@ -52,8 +46,8 @@
 <script src="vendor/bootstrap/js/popper.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script>
-    function cargarDatosUsuario(usuarioId) {
-        fetch(`GIUP_war/getUsuario?ID_Usuario=${usuarioId}`)
+    function cargarDatosUsuario() {
+        fetch('GIUP_war/getUsuario') // No se pasa ID porque siempre es 4
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -71,14 +65,8 @@
             .catch(error => console.error('Error:', error));
     }
 
-    // Llamar a la función cargarDatosUsuario después de que el DOM esté listo
     document.addEventListener("DOMContentLoaded", function() {
-        const usuarioId = <%= usuarioId %>; // Obtenemos el ID del usuario desde la variable JSP
-        if (usuarioId !== -1) {
-            cargarDatosUsuario(usuarioId);
-        } else {
-            console.error("Error: No se pudo obtener el ID del usuario.");
-        }
+        cargarDatosUsuario();  // Llamada a la función después de que el DOM esté listo
     });
 </script>
 </body>
