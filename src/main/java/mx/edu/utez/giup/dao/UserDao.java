@@ -105,15 +105,15 @@ public class UserDao {
     }
 
     // Método para obtener el tipo de usuario por correo y contraseña
-    public String getTipoUsuario(String correo, String contraseña) {
+    public String getTipoUsuario(String Correo, String Contraseña) {
         String tipo = null;
         String query = "SELECT Tipo FROM Usuarios WHERE Correo = ? AND Contraseña = SHA2(?, 256)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, correo);
-            statement.setString(2, contraseña);
+            statement.setString(1, Correo);
+            statement.setString(2, Contraseña);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

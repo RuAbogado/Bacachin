@@ -165,21 +165,21 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div>
-                            <span>Nombres: </span><span id="nombre" class="font-weight-bold"></span>
+                            <span>Nombres: </span><span id="Nombre" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Apellidos: </span><span id="apellido" class="font-weight-bold"></span>
+                            <span>Apellidos: </span><span id="Apellido" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Nombre usuario: </span><span id="nombre_usuario" class="font-weight-bold"></span>
+                            <span>Nombre usuario: </span><span id="Nombre_Usuario" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>Teléfono: </span><span id="telefono" class="font-weight-bold"></span>
+                            <span>Teléfono: </span><span id="Telefono" class="font-weight-bold"></span>
                         </div>
                         <div>
-                            <span>E-mail: </span><span id="email-usuario" class="font-weight-bold"></span>
+                            <span>E-mail: </span><span id="Correo" class="font-weight-bold"></span>
                         </div>
-                        <p class="estado mt-3">Estado: <span id="estado-usuario"></span></p>
+                        <p class="Estado mt-3">Estado: <span id="Estado"></span></p>
                         <button class="boton-modificar" onclick="habilitarEdicion()">Modificar Todos</button>
                         <button class="boton-guardar" onclick="guardarCambios()" style="display:none;">Guardar
                             Cambios</button>
@@ -219,26 +219,27 @@
                 const doc = parser.parseFromString(data, 'text/html');
 
                 // Suponiendo que el HTML de respuesta tiene los datos en elementos específicos
-                const nombre = doc.querySelector('#nombre').textContent;
-                const apellido = doc.querySelector('#apellido').textContent;
-                const nombreUsuario = doc.querySelector('#nombre_usuario').textContent;
-                const telefono = doc.querySelector('#telefono').textContent;
-                const correo = doc.querySelector('#correo').textContent; // Asegúrate de que el nombre coincida con tu respuesta
+                const Nombre = doc.querySelector('#Nombre').textContent;
+                const Apellido = doc.querySelector('#Apellido').textContent;
+                const Nombre_Usuario = doc.querySelector('#Nombre_Usuario').textContent;
+                const Telefono = doc.querySelector('#Telefono').textContent;
+                const Correo = doc.querySelector('#Correo').textContent; // Asegúrate de que el nombre coincida con tu respuesta
 
                 // Actualizar el DOM
-                document.getElementById("nombre").textContent = nombre;
-                document.getElementById("apellido").textContent = apellido;
-                document.getElementById("nombre_usuario").textContent = nombreUsuario;
-                document.getElementById("telefono").textContent = telefono;
-                document.getElementById("email-usuario").textContent = correo;
+                document.getElementById("Nombre").textContent = data.Nombre;
+                document.getElementById("Apellido").textContent = data.Apellido;
+                document.getElementById("Nombre_Usuario").textContent = data.Nombre_Usuario;
+                document.getElementById("Telefono").textContent = data.Telefono;
+                document.getElementById("Correo").textContent = data.Correo;
+                document.getElementById("Estado").textContent = data.Estado;
 
                 // Guardar los datos originales
                 datosOriginales = {
-                    nombre,
-                    apellido,
-                    nombreUsuario,
-                    telefono,
-                    correo
+                    Nombre,
+                    Apellido,
+                    Nombre_Usuario,
+                    Telefono,
+                    Estado
                 };
             })
             .catch(error => {
@@ -250,7 +251,7 @@
 
 
     const habilitarEdicion = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
+        const campos = ['Nombre', 'Apellido', 'Nombre_Usuario', 'Telefono', 'Correo'];
         campos.forEach(campo => {
             const span = document.getElementById(campo);
             let input = document.createElement('input');
@@ -266,7 +267,7 @@
     };
 
     const cancelarCambios = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
+        const campos = ['Nombre', 'Apellido', 'Nombre_Usuario', 'Telefono', 'Correo'];
         campos.forEach(campo => {
             const input = document.getElementById(`input-${campo}`);
             const span = document.createElement('span');
@@ -281,7 +282,7 @@
     };
 
     const guardarCambios = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
+        const campos = ['Nombre', 'Apellido', 'Nombre_Usuario', 'Telefono', 'Correo'];
         let datosActualizados = {};
 
         campos.forEach(campo => {

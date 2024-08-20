@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: rubengo
-  Date: 13/08/24
-  Time: 2:30 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,59 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitudes Empleados</title>
     <link href="css/clientes.css" rel="stylesheet">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            background-color: #60410d;
-            color: white;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #60410d;
-        }
-        .cliente-tituloprincipal {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #30303F;
-            margin-top: 60px;
-            margin-bottom: 70px;
-        }
-
-        #clientesContainer table {
-            background-color: #ffffff;
-        }
-    </style>
+    <link href="css/productos.css" rel="stylesheet">
 </head>
 <body>
-<h2 class="cliente-tituloprincipal">Solicitudes</h2>
-<form id="reporteForm" method="post">
-    <button id="Estatus" onclick="Estatus(123)">Estatus</button>
+<h2 class="Categorias">Solicitudes</h2>
 
-</form>
-<!-- Contenedor para la tabla de clientes -->
+<!-- Contenedor para la tabla de solicitudes -->
 <div id="clientesContainer">
-    <jsp:include page="/ListarSolicitudes" />
+    <!-- Incluye el contenido generado por el servlet ListarSolicitudesEmpleados -->
+    <jsp:include page="/ListarSolicitudesEmpleados" />
 </div>
+
 <script>
+    function Estatus(value, ID_Solicitud) {
+        switch(value) {
+            case 'cancelar':
+                console.log("Solicitud " + ID_Solicitud + " cancelada.");
+                break;
+            case 'proceso':
+                console.log("Solicitud " + ID_Solicitud + " en proceso.");
+                break;
+            case 'terminada':
+                console.log("Solicitud " + ID_Solicitud + " terminada.");
+                break;
+            default:
+                console.log("Ningún estado seleccionado para la solicitud " + ID_Solicitud + ".");
+                break;
+        }
+
+        // Aquí podrías agregar lógica para enviar la actualización del estado al servidor si es necesario
+    }
+
+    function mostrarDetalleVenta(ID_Solicitud) {
+        // Realiza una petición AJAX para obtener los detalles de la venta
+        fetch('localhost:8080/GIUP_war/DetalleVenta?ID_Solicitud=' + ID_Solicitud)
+            .then(response => response.text())
+            .then(data => {
+                // Aquí puedes mostrar los detalles en un modal o en un div
+                alert('Detalles de la venta:\\n' + data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
 </script>
 </body>
 </html>

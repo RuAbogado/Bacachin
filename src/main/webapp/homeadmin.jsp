@@ -42,9 +42,9 @@
           </a>
         </li>
         <li>
-          <a href="#" class="nav-link text-white" data-target="ventas">
+          <a href="#" class="nav-link text-white" data-target="solicitudes">
             <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-            Ventas
+            Solicitudes
           </a>
         </li>
         <li>
@@ -106,12 +106,12 @@
 <article>
   <div class="flex-grow-1" id="content" >
     <div id="inicio" style="">
-      <iframe src="inicio.jsp" width="100%" height="560px"></iframe>
+      <iframe src="inicio.jsp" width="100%" height="900px"></iframe>
 
     </div>
 
-    <div id="ventas" style="display:none;">
-      <iframe src="ventas.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
+    <div id="solicitudes" style="display:none;">
+      <iframe src="solicitudes.jsp" width="100%" height="100%" sandbox="allow-scripts"></iframe>
     </div>
 
 
