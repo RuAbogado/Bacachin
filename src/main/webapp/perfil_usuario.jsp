@@ -20,13 +20,21 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div>
-                            <p><strong>Nombres:</strong> <span id="nombre"></span></p>
-                            <p><strong>Apellidos:</strong> <span id="apellido"></span></p>
-                            <p><strong>Nombre usuario:</strong> <span id="nombre_usuario"></span></p>
-                            <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
-                            <p><strong>E-mail:</strong> <span id="email-usuario"></span></p>
-                            <p><strong>Estado:</strong> <span id="estado-usuario"></span></p>
+                            <span>Nombres: </span><span id="Nombre" class="font-weight-bold"></span>
                         </div>
+                        <div>
+                            <span>Apellidos: </span><span id="Apellido" class="font-weight-bold"></span>
+                        </div>
+                        <div>
+                            <span>Nombre usuario: </span><span id="Nombre_Usuario" class="font-weight-bold"></span>
+                        </div>
+                        <div>
+                            <span>Teléfono: </span><span id="Telefono" class="font-weight-bold"></span>
+                        </div>
+                        <div>
+                            <span>E-mail: </span><span id="Correo" class="font-weight-bold"></span>
+                        </div>
+                        <p class="estado mt-3">Estado: <span id="Estado"></span></p>
 
                     </div>
             </div>
