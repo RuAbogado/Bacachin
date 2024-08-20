@@ -20,23 +20,15 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div>
-                            <span>Nombres: </span><span id="nombre" class="font-weight-bold"></span>
+                            <p><strong>Nombres:</strong> <span id="nombre"></span></p>
+                            <p><strong>Apellidos:</strong> <span id="apellido"></span></p>
+                            <p><strong>Nombre usuario:</strong> <span id="nombre_usuario"></span></p>
+                            <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
+                            <p><strong>E-mail:</strong> <span id="email-usuario"></span></p>
+                            <p><strong>Estado:</strong> <span id="estado-usuario"></span></p>
                         </div>
-                        <div>
-                            <span>Apellidos: </span><span id="apellido" class="font-weight-bold"></span>
-                        </div>
-                        <div>
-                            <span>Nombre usuario: </span><span id="nombre_usuario" class="font-weight-bold"></span>
-                        </div>
-                        <div>
-                            <span>Teléfono: </span><span id="telefono" class="font-weight-bold"></span>
-                        </div>
-                        <div>
-                            <span>E-mail: </span><span id="email-usuario" class="font-weight-bold"></span>
-                        </div>
-                        <p class="estado mt-3">Estado: <span id="estado-usuario"></span></p>
+
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -48,26 +40,20 @@
 <script src="js/main.js"></script>
 <script>
     const cargarDatosUsuario = () => {
-        fetch(`GIUP_war/getUsuario?ID_usuario=${usuarioId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al cargar los datos del usuario');
-                }
-                return response.json();
-            })
-            .then(data => {
-                document.getElementById("nombre").textContent = data.nombre;
-                document.getElementById("apellido").textContent = data.apellido;
-                document.getElementById("nombre_usuario").textContent = data.nombre_usuario;
-                document.getElementById("telefono").textContent = data.telefono;
-                document.getElementById("email-usuario").textContent = data.correo;
-                document.getElementById("estado-usuario").textContent = data.estado; // Estado del usuario
-            })
-            .catch(error => {
-                console.error('Error al cargar los datos del usuario:', error);
-                alert('Error al cargar los datos del usuario. Por favor, inténtalo de nuevo más tarde.');
-            });
-    };
+        function cargarDatosUsuario(usuarioId) {
+            fetch(`GIUP_war/getUsuario?ID_Usuario=${usuarioId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("nombre").textContent = data.nombre;
+                    document.getElementById("apellido").textContent = data.apellido;
+                    document.getElementById("nombre_usuario").textContent = data.nombre_usuario;
+                    document.getElementById("telefono").textContent = data.telefono;
+                    document.getElementById("email-usuario").textContent = data.correo;
+                    document.getElementById("estado-usuario").textContent = data.estado;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        ;
 
 </script>
 </body>
