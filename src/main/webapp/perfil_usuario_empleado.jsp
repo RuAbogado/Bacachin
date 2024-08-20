@@ -59,25 +59,6 @@
             position: relative;
         }
 
-        .boton-modificar,
-        .boton-guardar,
-        .boton-cancelar {
-            background-color: #8B4513;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 20px;
-        }
-
-        .boton-modificar:hover,
-        .boton-guardar:hover,
-        .boton-cancelar:hover {
-            background-color: #5D3A00;
-        }
-
         .wrap-input100 {
             width: 100%;
             position: relative;
@@ -115,36 +96,6 @@
             color: #666;
         }
 
-        .login100-form-btn {
-            font-family: 'Poppins-Medium', sans-serif;
-            font-size: 16px;
-            color: #fff;
-            line-height: 1.2;
-            text-transform: uppercase;
-            width: 48%;
-            height: 45px;
-            border-radius: 5px;
-            background: #8B4513;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 25px;
-            transition: all 0.4s;
-            border: none;
-            margin-top: 20px;
-        }
-
-        .login100-form-btn:hover {
-            background: #5D3A00;
-            color: #fff;
-        }
-
-        .container-login100-form-btn {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-        }
-
         .close-icon {
             position: absolute;
             top: 10px;
@@ -180,11 +131,6 @@
                             <span>E-mail: </span><span id="email-usuario" class="font-weight-bold"></span>
                         </div>
                         <p class="estado mt-3">Estado: <span id="estado-usuario"></span></p>
-                        <button class="boton-modificar" onclick="habilitarEdicion()">Modificar Todos</button>
-                        <button class="boton-guardar" onclick="guardarCambios()" style="display:none;">Guardar
-                            Cambios</button>
-                        <button class="boton-cancelar" onclick="cancelarCambios()" style="display:none;">Cancelar
-                            Cambios</button>
                     </div>
                 </div>
             </div>
@@ -196,7 +142,6 @@
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-
     const usuarioId = ID_Usuario; // ID del usuario que quieres cargar
     let datosOriginales = {};
 
@@ -227,52 +172,6 @@
                 alert(`Error al cargar los datos del usuario: ${error.message}`);
             });
     };
-
-    const habilitarEdicion = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
-        campos.forEach(campo => {
-            const span = document.getElementById(campo);
-            let input = document.createElement('input');
-            input.id = `input-${campo}`;
-            input.type = 'text';
-            input.value = span.textContent;
-            input.classList.add('input100');
-            span.parentNode.replaceChild(input, span);
-        });
-        document.querySelector('.boton-modificar').style.display = 'none';
-        document.querySelector('.boton-guardar').style.display = 'inline-block';
-        document.querySelector('.boton-cancelar').style.display = 'inline-block';
-    };
-
-    const cancelarCambios = () => {
-        const campos = ['nombre', 'apellido', 'nombre_usuario', 'telefono', 'email-usuario'];
-        campos.forEach(campo => {
-            const input = document.getElementById(`input-${campo}`);
-            const span = document.createElement('span');
-            span.id = campo;
-            span.classList.add('font-weight-bold');
-            span.textContent = datosOriginales[campo];
-            input.parentNode.replaceChild(span, input);
-        });
-        document.querySelector('.boton-modificar').style.display = 'inline-block';
-        document.querySelector('.boton-guardar').style.display = 'none';
-        document.querySelector('.boton-cancelar').style.display = 'none';
-    };
-
-    const guardarCambios = () => {
-        const nombre = document.getElementById('input-nombre').value;
-        const apellido = document.getElementById('input-apellido').value;
-        const nombreUsuario = document.getElementById('input-nombre_usuario').value;
-        const telefono = document.getElementById('input-telefono').value;
-        const correo = document.getElementById('input-email-usuario').value;
-
-        // Lógica para guardar los cambios, por ejemplo, enviar los datos al servidor
-
-        datosOriginales = { nombre, apellido, nombreUsuario, telefono, correo };
-
-        cancelarCambios();
-    };
-
 </script>
 </body>
 
