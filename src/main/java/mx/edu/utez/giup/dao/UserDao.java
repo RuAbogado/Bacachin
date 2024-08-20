@@ -75,14 +75,14 @@ public class UserDao {
         return idAdmin;
     }
 
-    // Método para registrar un nuevo usuario
-    public boolean registerUser(User user) throws SQLException {
-        boolean isRegistered = false;
+    // Método para registrar un nuevo usuario y devolver su ID
+    public int registerUser(User user) throws SQLException {
+        int userId = -1;
         String query = "INSERT INTO Usuarios (Nombre, Apellido, Nombre_Usuario, Telefono, Correo, Contraseña, Estado, Codigo_RE, Tipo) " +
                 "VALUES (?, ?, ?, ?, ?, SHA2(?, 256), ?, ?, ?)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getNombre());
             statement.setString(2, user.getApellido());
@@ -96,12 +96,17 @@ public class UserDao {
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                isRegistered = true;
+                // Obtener el ID generado automáticamente
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        userId = generatedKeys.getInt(1);
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new SQLException("Error al registrar el usuario: " + e.getMessage(), e);
         }
-        return isRegistered;
+        return userId;
     }
 
     // Método para obtener el tipo de usuario por correo y contraseña

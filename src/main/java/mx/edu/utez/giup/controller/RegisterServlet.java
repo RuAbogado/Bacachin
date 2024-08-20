@@ -14,6 +14,7 @@ import java.sql.SQLException;
 @WebServlet(name = "RegisterServlet", urlPatterns = "/Register")
 public class RegisterServlet extends HttpServlet {
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nombre = req.getParameter("nombre");
         String apellido = req.getParameter("apellido");
@@ -29,17 +30,21 @@ public class RegisterServlet extends HttpServlet {
         user.setTelefono(telefono);
         user.setCorreo(correo);
         user.setPassword(contraseña);
-        user.setEstado(true);  // or set as per your logic
-        user.setCodigo("x");  // generate or set the code as per your logic
-        user.setTipo("cliente");
+        user.setEstado(true);  // Configurar el estado por defecto como activo
+        user.setCodigo("x");  // Configuración del código predeterminado
+        user.setTipo("cliente");  // Establecer el tipo de usuario como "cliente"
 
         UserDao userDao = new UserDao();
-        try {
-            boolean isRegistered = userDao.registerUser(user);
 
-            if (isRegistered) {
+        try {
+            // Registrar el usuario y obtener el ID generado
+            int userId = userDao.registerUser(user);
+
+            if (userId > 0) {
+                // Si el usuario se registró con éxito
                 resp.sendRedirect("index.jsp");
             } else {
+                // Si hubo un problema durante el registro
                 req.setAttribute("errorMessage", "Error en el registro. Por favor, intente nuevamente.");
                 req.getRequestDispatcher("registro.jsp").forward(req, resp);
             }
@@ -58,6 +63,7 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }

@@ -18,6 +18,7 @@ import java.sql.SQLException;
 public class RegisterEmpleadosServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Obtener los datos del formulario
         String nombre = req.getParameter("nombre");
         String apellido = req.getParameter("apellido");
         String usuario = req.getParameter("usuario");
@@ -25,6 +26,7 @@ public class RegisterEmpleadosServlet extends HttpServlet {
         String correo = req.getParameter("correo");
         String contraseña = req.getParameter("contraseña");
 
+        // Crear y configurar el objeto User
         User user = new User();
         user.setNombre(nombre);
         user.setApellido(apellido);
@@ -32,15 +34,17 @@ public class RegisterEmpleadosServlet extends HttpServlet {
         user.setTelefono(telefono);
         user.setCorreo(correo);
         user.setPassword(contraseña);
-        user.setEstado(true);  // or set as per your logic
-        user.setCodigo("x");  // generate or set the code as per your logic
-        user.setTipo("empleado");
+        user.setEstado(true);  // Asignar estado activo (true) al usuario
+        user.setCodigo("x");  // Generar o establecer el código según tu lógica
+        user.setTipo("empleado");  // Asignar tipo "empleado"
 
         UserDao userDao = new UserDao();
 
+        // Capturar los datos del empleado
         int salario = Integer.parseInt(req.getParameter("salario"));
         Date fecha = Date.valueOf(req.getParameter("fecha"));
 
+        // Crear y configurar el objeto Empleado
         Empleado empleado = new Empleado();
         empleado.setFecha_Contratacion(fecha);
         empleado.setSalario(salario);
@@ -48,9 +52,14 @@ public class RegisterEmpleadosServlet extends HttpServlet {
         EmpleadoDao empleadoDao = new EmpleadoDao();
 
         try {
-            boolean isRegistered = userDao.registerUser(user);
+            // Registrar el usuario y obtener el ID generado
+            int userId = userDao.registerUser(user);
 
-            if (isRegistered) {
+            if (userId > 0) {
+                // Si el usuario se registró con éxito, asociar al empleado
+                empleado.setID_Usuario(userId);  // Aquí asignamos el ID de usuario al empleado
+                empleadoDao.registrarEmpleado(empleado);
+
                 resp.sendRedirect("homeadmin.jsp");
             } else {
                 req.setAttribute("errorMessage", "Error en el registro. Por favor, intente nuevamente.");
