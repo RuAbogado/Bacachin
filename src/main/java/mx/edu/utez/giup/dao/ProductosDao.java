@@ -71,12 +71,31 @@ public class ProductosDao {
         return productosList;
     }
 
-    // Método para eliminar un producto
-    public boolean eliminarProducto(int idProducto) {
-        String query = "DELETE FROM Productos WHERE ID_Producto = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, idProducto);
-            int rowsAffected = stmt.executeUpdate();
+    // Método para deshabilitar una productos por ID
+    public boolean deshabilitarProducto(int ID_Producto) {
+        String query = "UPDATE Productos SET Estado = '0' WHERE ID_Producto = ?";
+        try (Connection conn = DatabaseConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, ID_Producto);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Método para habilitar una productos por ID
+    public boolean habilitarProducto(int ID_Producto) {
+        String query = "UPDATE Productos SET Estado = '1' WHERE ID_Producto = ?";
+        try (Connection conn = DatabaseConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, ID_Producto);
+
+            int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();

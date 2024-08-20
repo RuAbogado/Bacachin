@@ -10,8 +10,8 @@ import mx.edu.utez.giup.dao.ProductosDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/EliminarProducto")
-public class EliminarProductoServlet extends HttpServlet {
+@WebServlet("/deshabilitarProducto")
+public class deshabilitarProductoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class EliminarProductoServlet extends HttpServlet {
         int idProducto = Integer.parseInt(request.getParameter("ID_Producto"));
 
         ProductosDao productosDao = new ProductosDao();
-        boolean success = productosDao.eliminarProducto(idProducto);
+        boolean success = productosDao.deshabilitarProducto(idProducto);
 
         if (success) {
             out.print("{\"success\":true}");

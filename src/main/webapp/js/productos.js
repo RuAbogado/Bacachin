@@ -15,7 +15,7 @@ spanCerrarProducto.onclick = function() {
 
 // Cerrar modal cuando se hace clic fuera de él
 window.onclick = function(event) {
-    if (event.target == modalProducto) {
+    if (event.target === modalProducto) {
         modalProducto.style.display = "none";
     }
 }
@@ -96,3 +96,116 @@ formAgregarProducto.addEventListener('submit', async function(event) {
         alert('Error en la solicitud.');
     }
 });
+
+// Deshabilitar una categoría
+function DeshabilitarProducto(ID_Producto) {
+    if (!confirm('¿Estás seguro de que quieres deshabilitar esta categoría?')) {
+        return;
+    }
+
+    fetch('deshabilitarProducto', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `ID_Producto=${encodeURIComponent(ID_Producto)}`
+    })
+        .then(response => response.json()) // Se espera una respuesta en formato JSON
+        .then(data => {
+            if (!data.success) {
+                alert('Error al deshabilitar el producto.');
+            } else {
+                window.location.reload();
+                alert('El producto se deshabilitó correctamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+}
+
+// habilitar una categoría
+function HabilitarProducto(ID_Producto) {
+    if (!confirm('¿Estás seguro de que quieres habilitar esta categoría?')) {
+        return;
+    }
+
+    fetch('habilitarProducto', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `ID_Producto=${encodeURIComponent(ID_Producto)}`
+    })
+        .then(response => response.json()) // Se espera una respuesta en formato JSON
+        .then(data => {
+            if (!data.success) {
+                alert('Error al habilitar el producto.');
+            } else {
+                window.location.reload();
+                alert('El producto se habilitó correctamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+}
+
+// Habilitar una categoría
+function HabilitarCategoria(Categorias_id) {
+    if (!confirm('¿Estás seguro de que quieres habilitar esta categoría?')) {
+        return;
+    }
+
+
+    fetch('habilitarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `ID_Categoria=${encodeURIComponent(Categorias_id)}`
+    })
+        .then(response => response.json()) // Se espera una respuesta en formato JSON
+        .then(data => {
+            if (!data.success) {
+                alert('Error al habilitar la categoría.');
+            } else {
+                window.location.reload();
+                alert('La categoría se habilitó correctamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+}
+
+// habilitar una marca
+function HabilitarMarca(Marcas_ID) {
+    if (!confirm('¿Estás seguro de que quieres habilitar esta Marca?')) {
+        return;
+    }
+
+    fetch('habilitarMarca', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `ID_Marcas=${encodeURIComponent(Marcas_ID)}`
+    })
+        .then(response => response.json()) // Se espera una respuesta en formato JSON
+        .then(data => {
+            if (!data.success) {
+                alert('Error al habilitar la marca.');
+            } else {
+                window.location.reload();
+                alert('La marca se habilitó correctamente.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error en la solicitud.');
+        });
+}

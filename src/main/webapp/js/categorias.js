@@ -137,6 +137,3 @@ function HabilitarCategoria(ID_Categoria) {
         });
 }
 
-function mostrarFormulario(categoria) {
-    modalProducto.style.display = "block";
-}

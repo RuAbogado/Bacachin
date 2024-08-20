@@ -24,7 +24,7 @@ public class ListarProductosServlet extends HttpServlet {
         ResultSet rs = null;
         try {
             conn = DatabaseConnectionManager.getConnection();
-            String sql = "SELECT Productos.ID_Producto, Productos.ID_Categoria, Productos.Nombre, Productos.Descripcion, Productos.Precio, Productos.Stock, Productos.Fecha_Creacion, Productos.ID_Marca, Productos.Estado, Productos.Imagen, Categorias.ID_Categoria AS Categoria_ID, Categorias.Nombre AS Categoria_Nombre, Categorias.Estado AS Categorias_Estado FROM Productos JOIN Categorias ON Productos.ID_Categoria = Categorias.ID_Categoria";
+            String sql = "SELECT Productos.ID_Producto, Productos.ID_Categoria, Productos.Nombre, Productos.Descripcion, Productos.Precio, Productos.Stock, Productos.Fecha_Creacion, Productos.ID_Marca, Productos.Estado, Productos.Imagen, Categorias.ID_Categoria AS Categoria_ID, Categorias.Nombre AS Categoria_Nombre, Categorias.Estado AS Categorias_Estado, Marcas.ID_Marcas AS Marcas_ID, Marcas.Nombre AS Marcas_Nombre, Marcas.Estado AS Marcas_Estado FROM Productos JOIN Categorias ON Productos.ID_Categoria = Categorias.ID_Categoria JOIN Marcas ON Productos.ID_Marca = Marcas.ID_Marcas";
             ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = ps.executeQuery();
             rs.beforeFirst();
@@ -57,29 +57,47 @@ public class ListarProductosServlet extends HttpServlet {
                     out.println("<td>" + rs.getString("Precio") + "</td>");
                     out.println("<td>" + rs.getString("Stock") + "</td>");
                     out.println("<td>" + rs.getString("Fecha_Creacion") + "</td>");
-                    out.println("<td>" + rs.getString("ID_Marca") + "</td>");
+                    out.println("<td>" + rs.getString("Marcas_Nombre") + "</td>");
                     //estado del producto
                     int Categorias_Estado = rs.getInt("Categorias_Estado");
                     int estado = rs.getInt("Estado");
-                    if (estado == 1 && Categorias_Estado == 1) {
-                        out.println("<td>Habilitada</td>");
-                    }else if (estado == 0 && Categorias_Estado == 1) {
-                        out.println("<td>Deshabilitada</td>");
-                    }else if (Categorias_Estado == 0) {
-                        out.println("<td>Categoria Deshabilitada</td>");
+                    int Marcas_Estado = rs.getInt("Marcas_Estado");
+                    if (estado == 1 && Categorias_Estado == 1 && Marcas_Estado == 1) {
+                        out.println("<td>Habilitado</td>");
                     }else {
-                        out.println("<td>error en la solicitud</td>");
+                        if (estado == 0 && Categorias_Estado == 1 && Marcas_Estado == 1) {
+                            out.println("<td>Deshabilitado</td>");
+                        }else {
+                            if (Categorias_Estado == 0 && Marcas_Estado == 1) {
+                                out.println("<td>Categoria Deshabilitada</td>");
+                            }else {
+                                if (Marcas_Estado == 0) {
+                                    out.println("<td>Marca Deshabilitada</td>");
+                                }else {
+                                    out.println("<td>error en la solicitud</td>");
+                                }
+                            }
+                        }
                     }
                     int Categorias_id = rs.getInt("Categoria_id");
                     int ID_Producto = rs.getInt("ID_Producto");
-                    if (estado == 1 && Categorias_Estado == 1) {
+                    int Marcas_ID = rs.getInt("ID_Marca");
+                    if (estado == 1 && Categorias_Estado == 1 && Marcas_Estado == 1) {
                         out.println("<td><button type=\"button\" onclick=\"DeshabilitarProducto(" + ID_Producto + ")\">Deshabilitar Producto</button></td>");
-                    }else if (estado == 0 && Categorias_Estado == 1) {
-                        out.println("<td><button type=\"button\" onclick=\"HabilitarProducto(" + ID_Producto + ")\">Habilitar Producto</button></td>");
-                    }else if (Categorias_Estado==0){
-                        out.println("<td><button type=\"button\" onclick=\"HabilitarCategoria(" + Categorias_id + ")\">Habilitar Categoria</button></td>");
                     }else {
-                        out.println("<td>error en la solicitud</td>");
+                        if (estado == 0 && Categorias_Estado == 1 && Marcas_Estado == 1) {
+                            out.println("<td><button type=\"button\" onclick=\"HabilitarProducto(" + ID_Producto + ")\">Habilitar Producto</button></td>");
+                        } else {
+                            if (Categorias_Estado == 0 && Marcas_Estado == 1) {
+                                out.println("<td><button type=\"button\" onclick=\"HabilitarCategoria(" + Categorias_id + ")\">Habilitar Categoria</button></td>");
+                            } else {
+                                if (Marcas_Estado == 0) {
+                                    out.println("<td><button type=\"button\" onclick=\"HabilitarMarca(" + Marcas_ID + ")\">Habilitar Marca</button></td>");
+                                }else {
+                                    out.println("<td>error en la solicitud</td>");
+                                }
+                            }
+                        }
                     }
 
                     out.println("</tr>");
