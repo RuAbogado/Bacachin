@@ -23,7 +23,7 @@ public class ListarClientesServlet extends HttpServlet {
         ResultSet rs = null;
         try {
             conn = DatabaseConnectionManager.getConnection();
-            String sql = "SELECT ID_Usuario, Nombre, Apellido, Correo, Telefono FROM Usuarios WHERE Tipo = 'cliente'";
+            String sql = "SELECT ID_Usuario, Nombre, Apellido, Correo, Telefono,Estado FROM Usuarios WHERE Tipo = 'cliente'";
             ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = ps.executeQuery();
             if (!rs.next()) {
@@ -39,7 +39,8 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<th>Apellido</th>");
             out.println("<th>Email</th>");
             out.println("<th>Teléfono</th>");
-            out.println("<th>Acciones</th>");  // Nueva columna para el botón de deshabilitar
+            out.println("<th>Estado</th>");
+            out.println("<th>Modificar Estado</th>");
             out.println("</tr>");
             out.println("</thead>");
             out.println("<tbody>");
@@ -50,8 +51,23 @@ public class ListarClientesServlet extends HttpServlet {
                 out.println("<td>" + rs.getString("Apellido") + "</td>");
                 out.println("<td>" + rs.getString("Correo") + "</td>");
                 out.println("<td>" + rs.getString("Telefono") + "</td>");
-                // Columna del botón de deshabilitar
-                out.println("<td><button class='deshabilitar-btn' onclick='deshabilitarUsuario(" + rs.getInt("ID_Usuario") + ")'>Deshabilitar</button></td>");
+                int estado = rs.getInt("Estado");
+                if (estado == 1) {
+                    out.println("<td>Habilitado</td>");
+                }else if (estado == 0) {
+                    out.println("<td>Deshabilitado</td>");
+                }else {
+                    out.println("<td>error en la solicitud</td>");
+                }
+
+                int ID_Usuario = rs.getInt("ID_Usuario");
+                if (estado == 1) {
+                    out.println("<td><button type=\"button\" onclick=\"DeshabilitarUsuario(" + ID_Usuario + ")\">Deshabilitar</button></td>");
+                }else if (estado == 0) {
+                    out.println("<td><button type=\"button\" onclick=\"HabilitarUsuario(" + ID_Usuario + ")\">Habilitar</button></td>");
+                }else {
+                    out.println("<td>error en la solicitud</td>");
+                }
                 out.println("</tr>");
             }
             out.println("</tbody>");

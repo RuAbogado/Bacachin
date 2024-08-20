@@ -38,5 +38,35 @@ public class EmpleadoDao {
         }
     }
 
-    // Puedes añadir más métodos aquí para actualizar, eliminar o consultar empleados
+    // Método para deshabilitar una categoría por ID
+    public static boolean deshabilitarUsuarios(int ID_Usuario) {
+        String query = "UPDATE Usuarios SET Estado = '0' WHERE ID_Usuario = ?";
+        try (Connection conn = DatabaseConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, ID_Usuario);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Método para deshabilitar una categoría por ID
+    public static boolean habilitarUsuarios(int ID_Usuario) {
+        String query = "UPDATE Usuarios SET Estado = '1' WHERE ID_Usuario = ?";
+        try (Connection conn = DatabaseConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, ID_Usuario);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
