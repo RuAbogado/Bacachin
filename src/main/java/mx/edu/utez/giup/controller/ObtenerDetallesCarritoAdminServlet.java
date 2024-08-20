@@ -8,42 +8,42 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mx.edu.utez.giup.dao.DetalleCarritoAdminDao;
-import mx.edu.utez.giup.model.CarritoAdmin;
 import mx.edu.utez.giup.model.DetalleCarritoAdmin;
 
 import java.io.IOException;
 import java.util.List;
-
 @WebServlet("/ObtenerDetallesCarritoAdmin")
 public class ObtenerDetallesCarritoAdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Establecer el tipo de contenido como JSON
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
-        CarritoAdmin carrito = (CarritoAdmin) session.getAttribute("carritoAdmin"); // Obtener el carrito desde la sesión
+        Integer idCarritoAdmin = (Integer) session.getAttribute("ID_CarritoAdmin");
 
-        if (carrito == null) {
+        if (idCarritoAdmin == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"error\": \"No se ha encontrado el carrito en la sesión.\"}");
+            response.getWriter().write("{\"error\": \"No se ha encontrado el ID del carrito en la sesión.\"}");
             return;
         }
 
-        int idCarrito = carrito.getID_Carrito_admin();
-
-        // Instanciar el DAO para obtener los detalles del carrito
         DetalleCarritoAdminDao detalleCarritoDao = new DetalleCarritoAdminDao();
-        List<DetalleCarritoAdmin> detalles = detalleCarritoDao.getDetallesByCarritoId(idCarrito);
+        List<DetalleCarritoAdmin> detalles = null;
 
-        // Convertir la lista de detalles a JSON
+        try {
+            detalles = detalleCarritoDao.getDetallesByCarritoId(idCarritoAdmin);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\": \"Error al obtener los detalles del carrito: " + e.getMessage() + "\"}");
+            return;
+        }
+
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(detalles);
-
-        // Enviar la respuesta JSON
         response.getWriter().write(json);
     }
 }
