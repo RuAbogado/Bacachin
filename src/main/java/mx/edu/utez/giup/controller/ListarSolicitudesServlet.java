@@ -32,9 +32,9 @@ public class ListarSolicitudesServlet extends HttpServlet {
             out.println("<table id='clientTable'>");
             out.println("<thead>");
             out.println("<tr>");
-            out.println("<th>Ventas</th>");
+            out.println("<th>Venta</th>");
             out.println("<th>cliente</th>");
-            out.println("<th>solicitud</th>");
+            out.println("<th>Estado</th>");
             out.println("<th>Fecha</th>");
             out.println("<th>Total</th>");
             out.println("</tr>");
