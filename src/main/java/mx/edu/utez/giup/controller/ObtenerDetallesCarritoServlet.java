@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import mx.edu.utez.giup.dao.DetalleCarritoDao;
 import mx.edu.utez.giup.model.Carrito;
 import mx.edu.utez.giup.model.DetalleCarrito;
+import mx.edu.utez.giup.model.Productos; // Asegúrate de que esta importación está presente
 
 import java.io.IOException;
 import java.util.List;
@@ -38,6 +39,12 @@ public class ObtenerDetallesCarritoServlet extends HttpServlet {
         // Instanciar el DAO para obtener los detalles del carrito
         DetalleCarritoDao detalleCarritoDao = new DetalleCarritoDao();
         List<DetalleCarrito> detalles = detalleCarritoDao.getDetallesByCarritoId(idCarrito);
+
+        // Cargar los productos completamente (nombre, precio, etc.) en cada detalle
+        for (DetalleCarrito detalle : detalles) {
+            Productos producto = detalleCarritoDao.getProductoById(detalle.getIdProducto());
+            detalle.setProducto(producto);
+        }
 
         // Convertir la lista de detalles a JSON
         ObjectMapper objectMapper = new ObjectMapper();

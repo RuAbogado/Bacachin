@@ -118,4 +118,34 @@ public class DetalleCarritoDao {
         }
         return isDeleted;
     }
+
+    public Productos getProductoById(int idProducto) {
+        Productos producto = null;
+        String sql = "SELECT * FROM Productos WHERE ID_Producto = ?";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, idProducto);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                producto = new Productos();
+                producto.setID_Producto(resultSet.getInt("ID_Producto")); // Corregido el método
+                producto.setID_Categoria(resultSet.getInt("ID_Categoria"));
+                producto.setNombre(resultSet.getString("Nombre"));
+                producto.setDescripcion(resultSet.getString("Descripcion"));
+                producto.setPrecio(resultSet.getFloat("Precio"));
+                producto.setStock(resultSet.getInt("Stock"));
+                producto.setFecha_Creacion(resultSet.getDate("Fecha_Creacion"));
+                producto.setID_Marca(resultSet.getInt("ID_Marca"));
+                producto.setImagen(resultSet.getString("Imagen"));
+                producto.setEstado(resultSet.getBoolean("Estado"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return producto;
+    }
 }

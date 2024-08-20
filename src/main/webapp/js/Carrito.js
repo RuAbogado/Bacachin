@@ -75,11 +75,25 @@ const obtenerDetallesDelCarrito = async () => {
         allProducts = detallesCarrito.map(detalle => {
             console.log("Detalle actual:", detalle);  // Esto imprimirá cada detalle en la consola
 
-            // Mapea los detalles directamente
+            // Verifica si las propiedades están directamente en detalle (caso de admin)
+            // o si están dentro de un objeto producto (caso de cliente)
+            let title, price;
+            if (detalle.nombreProducto && detalle.precioProducto) {
+                // Caso de admin
+                title = detalle.nombreProducto;
+                price = detalle.precioProducto;
+            } else if (detalle.producto) {
+                // Caso de cliente
+                title = detalle.producto.nombre;
+                price = detalle.producto.precio;
+            } else {
+                throw new Error("El formato de los detalles del carrito no es reconocido");
+            }
+
             return {
-                title: detalle.nombreProducto,   // Aquí accedemos directamente a nombreProducto
+                title: title,
                 quantity: detalle.cantidad,
-                price: detalle.precioProducto    // Aquí accedemos directamente a precioProducto
+                price: price
             };
         });
 
