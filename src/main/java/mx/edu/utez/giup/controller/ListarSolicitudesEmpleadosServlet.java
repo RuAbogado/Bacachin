@@ -5,7 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import mx.edu.utez.giup.dao.DetalleSolicitudDao;
 import mx.edu.utez.giup.dao.SolicitudesDao;
+import mx.edu.utez.giup.model.DetalleSolicitud;
 import mx.edu.utez.giup.model.Solicitudes;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             SolicitudesDao solicitudesDao = new SolicitudesDao();
+            DetalleSolicitudDao detalleSolicitudDao = new DetalleSolicitudDao();
             List<Solicitudes> solicitudesList = solicitudesDao.obtenerTodasLasSolicitudes();
 
             if (solicitudesList.isEmpty()) {
@@ -30,7 +33,7 @@ public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
             out.println("<thead>");
             out.println("<tr>");
             out.println("<th>Solicitud</th>");
-            out.println("<th>Total</th>");
+            out.println("<th>Total Productos</th>");
             out.println("<th>Fecha</th>");
             out.println("<th>Estado</th>");
             out.println("<th>Descripción</th>");
@@ -39,9 +42,16 @@ public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
             out.println("<tbody>");
 
             for (Solicitudes solicitud : solicitudesList) {
+                List<DetalleSolicitud> detalles = detalleSolicitudDao.getDetallesBySolicitudId(solicitud.getID_Solicitud());
+
+                int totalProductos = 0;
+                for (DetalleSolicitud detalle : detalles) {
+                    totalProductos += detalle.getCantidad();
+                }
+
                 out.println("<tr>");
                 out.println("<td>" + solicitud.getID_Solicitud() + "</td>");
-                out.println("<td>" + solicitud.getCantidad() + "</td>");
+                out.println("<td>" + totalProductos + "</td>");
                 out.println("<td>" + solicitud.getFecha_Solicitud() + "</td>");
                 out.println("<td>");
                 out.println("<select name='estado_" + solicitud.getID_Solicitud() + "' onchange='Estatus(this.value, " + solicitud.getID_Solicitud() + ")'>");

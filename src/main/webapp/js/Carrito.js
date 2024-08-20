@@ -9,6 +9,7 @@ const valorTotal = document.querySelector('.total-pagar');
 const countProducts = document.querySelector('#contador-productos');
 const cartEmpty = document.querySelector('.cart-empty');
 const cartTotal = document.querySelector('.cart-total');
+const btnSendRequest = document.querySelector('.btn-send-request');
 
 // `tipoUsuario` ya está disponible como una variable global inyectada desde el JSP
 console.log("Tipo de usuario:", tipoUsuario);
@@ -157,10 +158,12 @@ const showHTML = () => {
         cartEmpty.classList.remove('hidden');
         rowProduct.classList.add('hidden');
         cartTotal.classList.add('hidden');
+        btnSendRequest.classList.add('hidden'); // Ocultar botón si el carrito está vacío
     } else {
         cartEmpty.classList.add('hidden');
         rowProduct.classList.remove('hidden');
         cartTotal.classList.remove('hidden');
+        btnSendRequest.classList.remove('hidden'); // Mostrar botón si hay productos en el carrito
     }
 
     rowProduct.innerHTML = '';
@@ -247,10 +250,8 @@ productsList.addEventListener('click', e => {
 // Event Listener para eliminar productos del carrito
 rowProduct.addEventListener('click', async (e) => {
     if (e.target.classList.contains('icon-close')) {
-        const product = e.target.parentElement;
-        const title = product.querySelector('.titulo-producto-carrito').textContent;
-
-        // Encuentra el producto en la lista
+        const product= e.target.parentElement;
+        const title = product.querySelector('.titulo-producto-carrito').textContent;    // Encuentra el producto en la lista
         const productToRemove = allProducts.find(p => p.title === title);
 
         if (productToRemove) {
@@ -293,10 +294,9 @@ rowProduct.addEventListener('click', async (e) => {
 // Cargar productos al inicio
 document.addEventListener("DOMContentLoaded", function() {
     fetch("/GIUP_war/CargarProductos")
-        .then(response => response.json())
+.then(response => response.json())
         .then(data => {
             console.log("Productos cargados:", data);
-
             const container = document.querySelector(".container-items");
             container.innerHTML = ''; // Limpiar contenido previo
 
@@ -304,15 +304,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 const item = document.createElement("div");
                 item.className = "item";
                 item.innerHTML = `
-                <figure>
-                    <img src="img/${producto.Imagen}" alt="${producto.Nombre}" />
-                </figure>
-                <div class="info-product">
-                    <h2>${producto.Nombre}</h2>
-                    <p class="price">$${producto.Precio}</p>
-                    <button class="btn-add-cart">Añadir al carrito</button>
-                </div>
-                `;
+            <figure>
+                <img src="img/${producto.Imagen}" alt="${producto.Nombre}" />
+            </figure>
+            <div class="info-product">
+                <h2>${producto.Nombre}</h2>
+                <p class="price">$${producto.Precio}</p>
+                <button class="btn-add-cart">Añadir al carrito</button>
+            </div>
+            `;
                 container.appendChild(item);
             });
             // Cargar detalles del carrito después de cargar los productos
@@ -320,3 +320,62 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(error => console.error('Error:', error));
 });
+
+// Función para enviar la solicitud
+const enviarSolicitud = async () => {
+    try {
+        const idCliente = 1; // Deberías obtener esto de manera dinámica según tu aplicación
+        if (!idCliente || allProducts.length === 0) {
+            console.error('El carrito está vacío o no se pudo obtener el ID del cliente.');
+            return;
+        }
+
+        const productos = allProducts.map(producto => ({
+            ID_Producto: obtenerIdProductoPorTitulo(producto.title),
+            Cantidad: producto.quantity,
+            Precio: producto.price
+        }));
+
+        const data = {
+            ID_Cliente: idCliente,
+            productos: productos
+        };
+
+        console.log("Enviando solicitud con los siguientes datos:", JSON.stringify(data));
+
+        const response = await fetch('/GIUP_war/EnviarSolicitud', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+            console.log('Solicitud enviada con éxito.');
+            allProducts = []; // Vaciar el carrito
+            showHTML(); // Actualizar la vista del carrito
+            alert("Solicitud enviada con éxito");
+        } else {
+            console.error('Error al enviar la solicitud:', result.message);
+        }
+    } catch (error) {
+        console.error('Error al enviar la solicitud:', error);
+    }
+};
+
+// Añadir Event Listener para el botón "Enviar Solicitud"
+btnSendRequest.addEventListener('click', enviarSolicitud);
+
+// Verificación de que el botón existe y se seleccionó correctamente
+if (!btnSendRequest) {
+    console.error('El botón para enviar la solicitud no se encontró.');
+} else {
+    console.log('Botón de enviar solicitud encontrado:', btnSendRequest);
+}

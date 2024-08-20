@@ -5,16 +5,17 @@ import java.time.LocalDate;
 public class Solicitudes {
     private int ID_Solicitud;
     private int ID_Cliente;
-    private int ID_Producto;
-    private int Cantidad;
     private LocalDate Fecha_Solicitud;
     private String Estado;
 
-    public Solicitudes(int ID_Solicitud, int ID_Cliente, int ID_Producto, int Cantidad, LocalDate Fecha_Solicitud, String Estado) {
+    // Constructor sin argumentos
+    public Solicitudes() {
+    }
+
+    // Constructor con todos los campos
+    public Solicitudes(int ID_Solicitud, int ID_Cliente, LocalDate Fecha_Solicitud, String Estado) {
         this.ID_Solicitud = ID_Solicitud;
         this.ID_Cliente = ID_Cliente;
-        this.ID_Producto = ID_Producto;
-        this.Cantidad = Cantidad;
         this.Fecha_Solicitud = Fecha_Solicitud;
         this.Estado = Estado;
     }
@@ -33,22 +34,6 @@ public class Solicitudes {
 
     public void setID_Cliente(int ID_Cliente) {
         this.ID_Cliente = ID_Cliente;
-    }
-
-    public int getID_Producto() {
-        return ID_Producto;
-    }
-
-    public void setID_Producto(int ID_Producto) {
-        this.ID_Producto = ID_Producto;
-    }
-
-    public int getCantidad() {
-        return Cantidad;
-    }
-
-    public void setCantidad(int Cantidad) {
-        this.Cantidad = Cantidad;
     }
 
     public LocalDate getFecha_Solicitud() {
