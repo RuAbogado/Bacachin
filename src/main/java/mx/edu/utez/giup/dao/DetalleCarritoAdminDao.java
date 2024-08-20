@@ -4,15 +4,13 @@ import mx.edu.utez.giup.model.DetalleCarritoAdmin;
 import mx.edu.utez.giup.utis.DatabaseConnectionManager;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DetalleCarritoAdminDao {
 
-    // Método para obtener los detalles del carrito de admin por ID de carrito
+
     public List<DetalleCarritoAdmin> getDetallesByCarritoId(int idCarritoAdmin) {
         List<DetalleCarritoAdmin> detalles = new ArrayList<>();
-        String sql = "SELECT dc.*, p.Nombre, p.Precio FROM Detalle_carrito_admin dc JOIN Productos p ON dc.ID_Producto = p.ID_Producto WHERE dc.ID_Carrito_admin = ?";
+        String sql = "SELECT * FROM Detalle_carrito_admin WHERE ID_Carrito_admin = ?";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -26,48 +24,76 @@ public class DetalleCarritoAdminDao {
                 detalle.setIdCarritoAdmin(resultSet.getInt("ID_Carrito_admin"));
                 detalle.setIdProducto(resultSet.getInt("ID_Producto"));
                 detalle.setCantidad(resultSet.getInt("Cantidad"));
-
-                // Setear los detalles del producto
-                detalle.setNombreProducto(resultSet.getString("Nombre"));
-                detalle.setPrecioProducto(resultSet.getFloat("Precio"));
-
                 detalles.add(detalle);
             }
         } catch (SQLException e) {
-            System.err.println("Error al obtener los detalles del carrito de admin: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return detalles;
     }
 
-    // Método para agregar o actualizar un detalle del carrito de admin
-    public void agregarOActualizarDetalleCarrito(DetalleCarritoAdmin detalleCarritoAdmin) {
-        String sqlInsert = "INSERT INTO Detalle_carrito_admin (ID_Carrito_admin, ID_Producto, Cantidad) VALUES (?, ?, ?)";
-        String sqlUpdate = "UPDATE Detalle_carrito_admin SET Cantidad = ? WHERE ID_Carrito_admin = ? AND ID_Producto = ?";
+    // Método para obtener un detalle del carrito por ID de carrito y ID de producto
+    public DetalleCarritoAdmin obtenerDetallePorCarritoYProducto(int idCarritoAdmin, int idProducto) {
+        DetalleCarritoAdmin detalle = null;
+        String sql = "SELECT * FROM Detalle_carrito_admin WHERE ID_Carrito_admin = ? AND ID_Producto = ?";
 
-        try (Connection connection = DatabaseConnectionManager.getConnection()) {
-            // Intentar actualizar primero
-            try (PreparedStatement statementUpdate = connection.prepareStatement(sqlUpdate)) {
-                statementUpdate.setInt(1, detalleCarritoAdmin.getCantidad());
-                statementUpdate.setInt(2, detalleCarritoAdmin.getIdCarritoAdmin());
-                statementUpdate.setInt(3, detalleCarritoAdmin.getIdProducto());
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-                int rowsUpdated = statementUpdate.executeUpdate();
+            statement.setInt(1, idCarritoAdmin);
+            statement.setInt(2, idProducto);
 
-                // Si no se actualizó ninguna fila, intentar insertar
-                if (rowsUpdated == 0) {
-                    try (PreparedStatement statementInsert = connection.prepareStatement(sqlInsert)) {
-                        statementInsert.setInt(1, detalleCarritoAdmin.getIdCarritoAdmin());
-                        statementInsert.setInt(2, detalleCarritoAdmin.getIdProducto());
-                        statementInsert.setInt(3, detalleCarritoAdmin.getCantidad());
+            ResultSet resultSet = statement.executeQuery();
 
-                        statementInsert.executeUpdate();
-                    }
-                }
+            if (resultSet.next()) {
+                detalle = new DetalleCarritoAdmin();
+                detalle.setIdDetalleCarritoAdmin(resultSet.getInt("ID_DetalleCarritoAdmin"));
+                detalle.setIdCarritoAdmin(resultSet.getInt("ID_Carrito_admin"));
+                detalle.setIdProducto(resultSet.getInt("ID_Producto"));
+                detalle.setCantidad(resultSet.getInt("Cantidad"));
             }
 
         } catch (SQLException e) {
-            System.err.println("Error al agregar o actualizar detalle del carrito de admin: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return detalle;
+    }
+
+    // Método para actualizar la cantidad de un producto en el carrito
+    public void actualizarCantidad(int idCarritoAdmin, int idProducto, int nuevaCantidad) {
+        String sql = "UPDATE Detalle_carrito_admin SET Cantidad = ? WHERE ID_Carrito_admin = ? AND ID_Producto = ?";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, nuevaCantidad);
+            statement.setInt(2, idCarritoAdmin);
+            statement.setInt(3, idProducto);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para insertar un nuevo detalle en el carrito
+    public void insertarDetalle(DetalleCarritoAdmin detalle) {
+        String sql = "INSERT INTO Detalle_carrito_admin (ID_Carrito_admin, ID_Producto, Cantidad) VALUES (?, ?, ?)";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, detalle.getIdCarritoAdmin());
+            statement.setInt(2, detalle.getIdProducto());
+            statement.setInt(3, detalle.getCantidad());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

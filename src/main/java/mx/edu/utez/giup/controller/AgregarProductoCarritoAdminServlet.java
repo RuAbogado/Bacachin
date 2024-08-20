@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-
-
 @WebServlet("/AgregarProductoCarritoAdmin")
 public class AgregarProductoCarritoAdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -32,6 +30,7 @@ public class AgregarProductoCarritoAdminServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            // Leer el cuerpo de la solicitud
             StringBuilder sb = new StringBuilder();
             try (BufferedReader reader = request.getReader()) {
                 String line;
@@ -40,10 +39,12 @@ public class AgregarProductoCarritoAdminServlet extends HttpServlet {
                 }
             }
 
+            // Parsear JSON para obtener los datos
             JsonObject jsonObject = JsonParser.parseString(sb.toString()).getAsJsonObject();
             int idProducto = jsonObject.get("idProducto").getAsInt();
             int cantidad = jsonObject.get("quantity").getAsInt();
 
+            // Obtener el ID del carrito de admin desde la sesión
             HttpSession session = request.getSession();
             Integer idCarritoAdmin = (Integer) session.getAttribute("ID_CarritoAdmin");
 
@@ -52,9 +53,20 @@ public class AgregarProductoCarritoAdminServlet extends HttpServlet {
                 return;
             }
 
-            DetalleCarritoAdmin detalleCarritoAdmin = new DetalleCarritoAdmin(idCarritoAdmin, idProducto, cantidad);
-            detalleCarritoAdminDao.agregarOActualizarDetalleCarrito(detalleCarritoAdmin);
+            // Verificar si el producto ya está en el carrito
+            DetalleCarritoAdmin detalleExistente = detalleCarritoAdminDao.obtenerDetallePorCarritoYProducto(idCarritoAdmin, idProducto);
 
+            if (detalleExistente != null) {
+                // Si el producto ya está en el carrito, actualizar la cantidad
+                int nuevaCantidad = detalleExistente.getCantidad() + cantidad;
+                detalleCarritoAdminDao.actualizarCantidad(idCarritoAdmin, idProducto, nuevaCantidad);
+            } else {
+                // Si el producto no está en el carrito, insertar un nuevo detalle
+                DetalleCarritoAdmin detalleCarritoAdmin = new DetalleCarritoAdmin(idCarritoAdmin, idProducto, cantidad);
+                detalleCarritoAdminDao.insertarDetalle(detalleCarritoAdmin);
+            }
+
+            // Respuesta de éxito
             out.write("{\"status\":\"success\"}");
         } catch (Exception e) {
             e.printStackTrace();
