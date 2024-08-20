@@ -1,24 +1,22 @@
 package mx.edu.utez.giup.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Solicitudes {
-
     private int ID_Solicitud;
     private int ID_Cliente;
     private int ID_Producto;
     private int Cantidad;
-    private int Fecha_Solicitud;
+    private LocalDate Fecha_Solicitud;
     private String Estado;
 
-
-    public Solicitudes(int ID_Solicitud, int ID_Cliente, int ID_Producto, int cantidad, int fecha_Solicitud, String estado) {
+    public Solicitudes(int ID_Solicitud, int ID_Cliente, int ID_Producto, int Cantidad, LocalDate Fecha_Solicitud, String Estado) {
         this.ID_Solicitud = ID_Solicitud;
         this.ID_Cliente = ID_Cliente;
         this.ID_Producto = ID_Producto;
-        Cantidad = cantidad;
-        Fecha_Solicitud = fecha_Solicitud;
-        Estado = estado;
+        this.Cantidad = Cantidad;
+        this.Fecha_Solicitud = Fecha_Solicitud;
+        this.Estado = Estado;
     }
 
     public int getID_Solicitud() {
@@ -49,23 +47,23 @@ public class Solicitudes {
         return Cantidad;
     }
 
-    public void setCantidad(int cantidad) {
-        Cantidad = cantidad;
+    public void setCantidad(int Cantidad) {
+        this.Cantidad = Cantidad;
     }
 
-    public int getFecha_Solicitud() {
+    public LocalDate getFecha_Solicitud() {
         return Fecha_Solicitud;
     }
 
-    public void setFecha_Solicitud(int fecha_Solicitud) {
-        Fecha_Solicitud = fecha_Solicitud;
+    public void setFecha_Solicitud(LocalDate Fecha_Solicitud) {
+        this.Fecha_Solicitud = Fecha_Solicitud;
     }
 
     public String getEstado() {
         return Estado;
     }
 
-    public void setEstado(String estado) {
-        Estado = estado;
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
     }
 }

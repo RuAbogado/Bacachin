@@ -1,36 +1,31 @@
 package mx.edu.utez.giup.controller;
 
-import mx.edu.utez.giup.utis.DatabaseConnectionManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import mx.edu.utez.giup.dao.SolicitudesDao;
+import mx.edu.utez.giup.model.Solicitudes;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/ListarSolicitudesEmpleados")
 public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = DatabaseConnectionManager.getConnection();
-            String sql = "SELECT * FROM Ventas";
-            ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            rs = ps.executeQuery();
-            if (!rs.next()) {
+        try (PrintWriter out = response.getWriter()) {
+
+            SolicitudesDao solicitudesDao = new SolicitudesDao();
+            List<Solicitudes> solicitudesList = solicitudesDao.obtenerTodasLasSolicitudes();
+
+            if (solicitudesList.isEmpty()) {
                 out.println("<p>No hay Solicitudes.</p>");
                 return;
             }
-            rs.beforeFirst();
+
             out.println("<table id='clientTable'>");
             out.println("<thead>");
             out.println("<tr>");
@@ -42,52 +37,40 @@ public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
             out.println("</tr>");
             out.println("</thead>");
             out.println("<tbody>");
-            while (rs.next()) {
+
+            for (Solicitudes solicitud : solicitudesList) {
                 out.println("<tr>");
-                out.println("<td>" + rs.getInt("ID_Solicitud") + "</td>");
-                out.println("<td>" + rs.getString("Total") + "</td>");
-                out.println("<td>" + rs.getString("Fecha_Venta") + "</td>");
+                out.println("<td>" + solicitud.getID_Solicitud() + "</td>");
+                out.println("<td>" + solicitud.getCantidad() + "</td>");
+                out.println("<td>" + solicitud.getFecha_Solicitud() + "</td>");
                 out.println("<td>");
-                out.println("<select name='estado_" + rs.getInt("ID_Solicitud") + "' onchange='Estatus(this.value, " + rs.getInt("ID_Solicitud") + ")'>");
+                out.println("<select name='estado_" + solicitud.getID_Solicitud() + "' onchange='Estatus(this.value, " + solicitud.getID_Solicitud() + ")'>");
                 out.println("<option value=''>Selecciona un estado</option>");
-                out.println("<option value='cancelar'" + ("Cancelar".equals(rs.getString("Estado")) ? " selected" : "") + ">Cancelar</option>");
-                out.println("<option value='proceso'" + ("Proceso".equals(rs.getString("Estado")) ? " selected" : "") + ">Proceso</option>");
-                out.println("<option value='terminada'" + ("Terminada".equals(rs.getString("Estado")) ? " selected" : "") + ">Terminada</option>");
+                out.println("<option value='Cancelar'" + ("Cancelar".equals(solicitud.getEstado()) ? " selected" : "") + ">Cancelar</option>");
+                out.println("<option value='Proceso'" + ("Proceso".equals(solicitud.getEstado()) ? " selected" : "") + ">Proceso</option>");
+                out.println("<option value='Terminada'" + ("Terminada".equals(solicitud.getEstado()) ? " selected" : "") + ">Terminada</option>");
                 out.println("</select>");
                 out.println("</td>");
                 out.println("<td>");
-                out.println("<button type='button' onclick='mostrarDetalleVenta(" + rs.getInt("ID_Solicitud") + ")'>Detalle Venta</button>");
+                out.println("<button type='button' onclick='mostrarDetalleVenta(" + solicitud.getID_Solicitud() + ")'>Detalle Venta</button>");
                 out.println("</td>");
                 out.println("</tr>");
             }
+
             out.println("</tbody>");
             out.println("</table>");
 
             // Código JavaScript para manejar el botón de "Detalle Venta"
             out.println("<script>");
             out.println("function mostrarDetalleVenta(ID_Solicitud) {");
-            out.println("  // Realiza una petición AJAX para obtener los detalles de la venta");
-            out.println("  fetch('/DetalleVenta?ID_solicitud=' + ID_Solicitud)");
+            out.println("  fetch('/DetalleVenta?ID_Solicitud=' + ID_Solicitud)");
             out.println("    .then(response => response.text())");
             out.println("    .then(data => {");
-            out.println("      // Aquí puedes mostrar los detalles en un modal o en un div");
             out.println("      alert('Detalles de la venta:\\n' + data);");
             out.println("    })");
             out.println("    .catch(error => console.error('Error:', error));");
             out.println("}");
             out.println("</script>");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            out.println("Error: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
