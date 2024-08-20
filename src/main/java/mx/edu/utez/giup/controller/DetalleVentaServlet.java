@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -26,35 +27,34 @@ public class DetalleVentaServlet extends HttpServlet {
         try {
             conn = DatabaseConnectionManager.getConnection();
 
+            // Consulta para obtener el nombre del cliente
+            String clienteSql = "SELECT c.Nombre FROM Clientes c JOIN Solicitudes s ON c.ID_Cliente = s.ID_Cliente WHERE s.ID_Solicitud = ?";
+            ps = conn.prepareStatement(clienteSql);
+            ps.setInt(1, ID_Solicitud);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                out.println("<h3>Cliente: " + rs.getString("Nombre") + "</h3>");
+            }
+
             // Consulta para obtener los detalles de la venta
-            String sql = "SELECT ID_DetalleCarrito, ID_Carrito, ID_Producto, Cantidad FROM Detalle_carrito WHERE ID_Solicitud = ?";
-            ps = conn.prepareStatement(sql);
+            String detallesSql = "SELECT p.Nombre, ds.Cantidad, ds.Precio FROM Detalles_Solicitudes ds " +
+                    "JOIN Productos p ON ds.ID_Producto = p.ID_Producto " +
+                    "WHERE ds.ID_Solicitud = ?";
+            ps = conn.prepareStatement(detallesSql);
             ps.setInt(1, ID_Solicitud);
             rs = ps.executeQuery();
 
+            out.println("<table>");
+            out.println("<tr><th>Producto</th><th>Cantidad</th><th>Precio</th></tr>");
             while (rs.next()) {
-                out.println("<div class='producto'>");
-                out.println("ID Detalle Carrito: " + rs.getInt("ID_DetalleCarrito"));
-                out.println("ID Carrito: " + rs.getInt("ID_Carrito"));
-                out.println("ID Producto: " + rs.getInt("ID_Producto"));
-                out.println("Cantidad: " + rs.getInt("Cantidad"));
-                out.println("---------");
-                out.println("</div>");
+                out.println("<tr>");
+                out.println("<td>" + rs.getString("Nombre") + "</td>");
+                out.println("<td>" + rs.getInt("Cantidad") + "</td>");
+                out.println("<td>" + rs.getBigDecimal("Precio") + "</td>");
+                out.println("</tr>");
             }
-
-            // Consulta para obtener los detalles de la venta de empleados
-            sql = "SELECT ID_DetalleCarrito, ID_Carrito, ID_Producto, Cantidad FROM Detalle_carrito_empleado WHERE ID_Solicitud = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, ID_Solicitud);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                out.println("ID Detalle Carrito Empleado: " + rs.getInt("ID_DetalleCarrito"));
-                out.println("ID Carrito: " + rs.getInt("ID_Carrito"));
-                out.println("ID Producto: " + rs.getInt("ID_Producto"));
-                out.println("Cantidad: " + rs.getInt("Cantidad"));
-                out.println("---------");
-            }
+            out.println("</table>");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,4 +68,3 @@ public class DetalleVentaServlet extends HttpServlet {
         }
     }
 }
-

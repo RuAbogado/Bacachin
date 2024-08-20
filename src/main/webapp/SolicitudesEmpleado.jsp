@@ -51,10 +51,15 @@
     function mostrarDetalleVenta(ID_Solicitud) {
         // Realiza una petición AJAX para obtener los detalles de la venta
         fetch('/GIUP_war/DetalleVenta?ID_Solicitud=' + ID_Solicitud)
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
             .then(data => {
                 // Aquí puedes mostrar los detalles en un modal o en un div
-                alert('Detalles de la venta:\\n' + data);
+                alert('Detalles de la venta:\n' + data);
             })
             .catch(error => console.error('Error:', error));
     }
