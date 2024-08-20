@@ -8,10 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mx.edu.utez.giup.dao.DetalleCarritoAdminDao;
+import mx.edu.utez.giup.dao.ProductosDao;
 import mx.edu.utez.giup.model.DetalleCarritoAdmin;
+import mx.edu.utez.giup.model.Productos;
 
 import java.io.IOException;
 import java.util.List;
+
 @WebServlet("/ObtenerDetallesCarritoAdmin")
 public class ObtenerDetallesCarritoAdminServlet extends HttpServlet {
 
@@ -31,10 +34,26 @@ public class ObtenerDetallesCarritoAdminServlet extends HttpServlet {
         }
 
         DetalleCarritoAdminDao detalleCarritoDao = new DetalleCarritoAdminDao();
+        ProductosDao productosDao = new ProductosDao();
         List<DetalleCarritoAdmin> detalles = null;
 
         try {
+            // Obtén los detalles del carrito
             detalles = detalleCarritoDao.getDetallesByCarritoId(idCarritoAdmin);
+
+            // Adjunta el nombre y el precio del producto a cada detalle
+            for (DetalleCarritoAdmin detalle : detalles) {
+                Productos producto = productosDao.getProductoById(detalle.getIdProducto());
+                if (producto != null) {
+                    detalle.setNombreProducto(producto.getNombre());
+                    detalle.setPrecioProducto(producto.getPrecio());
+                } else {
+                    // Manejar el caso donde el producto no se encuentra
+                    detalle.setNombreProducto("Producto no encontrado");
+                    detalle.setPrecioProducto(0.0f);
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -42,6 +61,7 @@ public class ObtenerDetallesCarritoAdminServlet extends HttpServlet {
             return;
         }
 
+        // Convierte la lista de detalles a JSON y envíala como respuesta
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(detalles);
         response.getWriter().write(json);
