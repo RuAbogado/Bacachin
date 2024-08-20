@@ -24,24 +24,32 @@ public class ProductosDao {
         }
     }
 
-    // Método para agregar un producto
-    public boolean agregarProducto(Productos producto) {
+    public int agregarProductoYObtenerID(Productos producto) {
         String query = "INSERT INTO Productos (ID_Categoria, Nombre, Descripcion, Precio, Stock, Fecha_creacion, ID_Marca, Imagen, Estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, producto.getID_Categoria());
             stmt.setString(2, producto.getNombre());
             stmt.setString(3, producto.getDescripcion());
-            stmt.setFloat(4, producto.getPrecio());  // Cambiado a float
+            stmt.setFloat(4, producto.getPrecio());
             stmt.setInt(5, producto.getStock());
             stmt.setDate(6, producto.getFecha_Creacion());
-            stmt.setInt(7, producto.getID_Marca());  // Cambiado a int ID_Marca
+            stmt.setInt(7, producto.getID_Marca());
             stmt.setString(8, producto.getImagen());
             stmt.setBoolean(9, producto.getEstado());
+
             int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+
+            if (rowsAffected > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+            return -1;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
     }
 
