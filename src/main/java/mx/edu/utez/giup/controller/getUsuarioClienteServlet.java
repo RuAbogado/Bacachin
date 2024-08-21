@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet("/getUsuarioEmpleado")
+@WebServlet("/getUsuarioCliente")
 public class getUsuarioClienteServlet extends HttpServlet {
 
     @Override
