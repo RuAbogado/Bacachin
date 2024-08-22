@@ -16,6 +16,7 @@ import java.util.List;
 
 @WebServlet("/ListarSolicitudesEmpleados")
 public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -25,14 +26,14 @@ public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
             List<Solicitudes> solicitudesList = solicitudesDao.obtenerTodasLasSolicitudes();
 
             if (solicitudesList.isEmpty()) {
-                out.println("<p>No hay Solicitudes.</p>");
+                out.println("<p>No hay solicitudes.</p>");
                 return;
             }
 
-            out.println("<table id='clientTable'>");
+            out.println("<table id='clientTable' border='1'>");
             out.println("<thead>");
             out.println("<tr>");
-            out.println("<th>Solicitud</th>");
+            out.println("<th>ID Solicitud</th>");
             out.println("<th>Total Productos</th>");
             out.println("<th>Fecha</th>");
             out.println("<th>Estado</th>");
@@ -70,15 +71,33 @@ public class ListarSolicitudesEmpleadosServlet extends HttpServlet {
             out.println("</tbody>");
             out.println("</table>");
 
-            // Código JavaScript para manejar el botón de "Detalle Venta"
+            // Div para mostrar el detalle de la venta
+            out.println("<div id='detalleVentaDiv'></div>");
+
+            // Código JavaScript para manejar el botón de "Detalle Venta" y la actualización de estado
             out.println("<script>");
-            out.println("function mostrarDetalleVenta(ID_Solicitud) {");
-            out.println("  fetch('/DetalleVenta?ID_Solicitud=' + ID_Solicitud)");
+            out.println("function Estatus(value, ID_Solicitud) {");
+            out.println("    fetch('/GIUP_war/ActualizarEstadoSolicitud', {");
+            out.println("        method: 'POST',");
+            out.println("        headers: {");
+            out.println("            'Content-Type': 'application/x-www-form-urlencoded',");
+            out.println("        },");
+            out.println("        body: 'ID_Solicitud=' + ID_Solicitud + '&estado=' + encodeURIComponent(value)");
+            out.println("    })");
             out.println("    .then(response => response.text())");
             out.println("    .then(data => {");
-            out.println("      alert('Detalles de la venta:\\n' + data);");
+            out.println("        console.log('Estado actualizado: ' + data);");
             out.println("    })");
             out.println("    .catch(error => console.error('Error:', error));");
+            out.println("}");
+
+            out.println("function mostrarDetalleVenta(ID_Solicitud) {");
+            out.println("    fetch('/DetalleVenta?ID_Solicitud=' + ID_Solicitud)");
+            out.println("        .then(response => response.text())");
+            out.println("        .then(data => {");
+            out.println("            document.getElementById('detalleVentaDiv').innerHTML = data;");
+            out.println("        })");
+            out.println("        .catch(error => console.error('Error:', error));");
             out.println("}");
             out.println("</script>");
         }

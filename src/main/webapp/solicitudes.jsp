@@ -10,14 +10,37 @@
 <body>
 <h2 class="Categorias">Solicitudes</h2>
 
+<!-- Formulario de búsqueda -->
+<div id="searchContainer">
+    <form id="searchForm">
+        <input type="text" id="productName" name="productName" placeholder="Buscar por nombre del producto" required>
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
 <!-- Contenedor para la tabla de solicitudes -->
 <div id="clientesContainer">
     <!-- Incluye el contenido generado por el servlet ListarSolicitudesEmpleados -->
-    <jsp:include page="/ListarSolicitudesEmpleados" />
+    <jsp:include page="/ListarSolicitudesAdmin" />
 </div>
 
 <!-- Mueve el script aquí al final del cuerpo para asegurar que el DOM esté completamente cargado -->
 <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitar el envío del formulario
+
+        const productName = document.getElementById('productName').value;
+
+        // Realizar la búsqueda llamando al servlet correspondiente
+        fetch('/GIUP_war/BuscarSolicitudes?productName=' + encodeURIComponent(productName))
+            .then(response => response.text())
+            .then(data => {
+                // Actualizar el contenido del contenedor con los resultados
+                document.getElementById('clientesContainer').innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
     function Estatus(value, ID_Solicitud) {
         switch(value) {
             case 'Cancelar':

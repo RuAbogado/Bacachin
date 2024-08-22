@@ -13,58 +13,91 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.math.BigDecimal;
 
 @WebServlet("/DetalleVenta")
 public class DetalleVentaServlet extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int ID_Solicitud = Integer.parseInt(request.getParameter("ID_Solicitud"));
 
+        String idSolicitudParam = request.getParameter("ID_Solicitud");
+
+        if (idSolicitudParam == null || idSolicitudParam.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                    "El ID de la solicitud es requerido. Asegúrese de que el parámetro 'ID_Solicitud' esté presente en la solicitud.");
+            return;
+        }
+
+        int idSolicitud;
         try {
-            conn = DatabaseConnectionManager.getConnection();
+            idSolicitud = Integer.parseInt(idSolicitudParam);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                    "El ID de la solicitud debe ser un número válido. El formato proporcionado no es correcto.");
+            return;
+        }
 
-            // Consulta para obtener el nombre del cliente
-            String clienteSql = "SELECT c.Nombre FROM Clientes c JOIN Solicitudes s ON c.ID_Cliente = s.ID_Cliente WHERE s.ID_Solicitud = ?";
-            ps = conn.prepareStatement(clienteSql);
-            ps.setInt(1, ID_Solicitud);
-            rs = ps.executeQuery();
+        try (Connection conn = DatabaseConnectionManager.getConnection();
+             PrintWriter out = response.getWriter()) {
 
-            if (rs.next()) {
-                out.println("<h3>Cliente: " + rs.getString("Nombre") + "</h3>");
+            // Consulta para obtener el nombre del cliente y el ID del usuario
+            String clienteSql = "SELECT c.Nombre, s.ID_Usuario FROM Clientes c " +
+                    "JOIN Solicitudes s ON c.ID_Cliente = s.ID_Cliente WHERE s.ID_Solicitud = ?";
+            try (PreparedStatement ps = conn.prepareStatement(clienteSql)) {
+                ps.setInt(1, idSolicitud);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        String clienteNombre = rs.getString("Nombre");
+                        int idUsuario = rs.getInt("ID_Usuario");
+                        out.println("<h3>Cliente: " + clienteNombre + "</h3>");
+                        out.println("<p>ID Usuario: " + idUsuario + "</p>");
+                    } else {
+                        out.println("<p>No se encontró el cliente para la solicitud con ID: " + idSolicitud + "</p>");
+                        return;
+                    }
+                }
             }
 
-            // Consulta para obtener los detalles de la venta
-            String detallesSql = "SELECT p.Nombre, ds.Cantidad, ds.Precio FROM Detalles_Solicitudes ds " +
+            // Consulta para obtener los detalles de la venta y calcular el total
+            String detallesSql = "SELECT p.Nombre, ds.Cantidad, p.Precio FROM Detalles_Solicitudes ds " +
                     "JOIN Productos p ON ds.ID_Producto = p.ID_Producto " +
                     "WHERE ds.ID_Solicitud = ?";
-            ps = conn.prepareStatement(detallesSql);
-            ps.setInt(1, ID_Solicitud);
-            rs = ps.executeQuery();
+            BigDecimal totalCompra = BigDecimal.ZERO;
 
-            out.println("<table>");
-            out.println("<tr><th>Producto</th><th>Cantidad</th><th>Precio</th></tr>");
-            while (rs.next()) {
-                out.println("<tr>");
-                out.println("<td>" + rs.getString("Nombre") + "</td>");
-                out.println("<td>" + rs.getInt("Cantidad") + "</td>");
-                out.println("<td>" + rs.getBigDecimal("Precio") + "</td>");
-                out.println("</tr>");
+            try (PreparedStatement ps = conn.prepareStatement(detallesSql)) {
+                ps.setInt(1, idSolicitud);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        out.println("<table border='1'>");
+                        out.println("<tr><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Total</th></tr>");
+                        do {
+                            int cantidad = rs.getInt("Cantidad");
+                            BigDecimal precio = rs.getBigDecimal("Precio");
+                            BigDecimal totalProducto = precio.multiply(BigDecimal.valueOf(cantidad));
+                            totalCompra = totalCompra.add(totalProducto);
+
+                            out.println("<tr>");
+                            out.println("<td>" + rs.getString("Nombre") + "</td>");
+                            out.println("<td>" + cantidad + "</td>");
+                            out.println("<td>" + precio + "</td>");
+                            out.println("<td>" + totalProducto + "</td>");
+                            out.println("</tr>");
+                        } while (rs.next());
+                        out.println("</table>");
+                    } else {
+                        out.println("<p>No se encontraron detalles de venta para la solicitud con ID: " + idSolicitud + "</p>");
+                    }
+                }
             }
-            out.println("</table>");
+
+            // Mostrar el total de la compra
+            out.println("<h4>Total de la compra: " + totalCompra + "</h4>");
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            out.println("Error: " + e.getMessage());
-        } finally {
-            try {
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            log("Error al obtener detalles de la venta", e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    "Ocurrió un error al obtener los detalles de la venta. Por favor, intente nuevamente más tarde.");
         }
     }
 }

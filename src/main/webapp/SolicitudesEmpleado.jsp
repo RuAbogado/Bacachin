@@ -16,21 +16,24 @@
     <jsp:include page="/ListarSolicitudesEmpleados" />
 </div>
 
+<!-- Modal para mostrar detalles de la venta -->
+<div id="detalleModal" style="display:none;">
+    <div id="modalContent"></div>
+    <button onclick="cerrarModal()">Cerrar</button>
+</div>
+
 <script>
     function Estatus(value, ID_Solicitud) {
-        switch(value) {
-            case 'Cancelar':
-                console.log("Solicitud " + ID_Solicitud + " cancelada.");
-                break;
-            case 'Proceso':
-                console.log("Solicitud " + ID_Solicitud + " en proceso.");
-                break;
-            case 'Terminada':
-                console.log("Solicitud " + ID_Solicitud + " terminada.");
-                break;
-            default:
-                console.log("Ningún estado seleccionado para la solicitud " + ID_Solicitud + ".");
-                break;
+        const estados = {
+            'Cancelar': "cancelada",
+            'Proceso': "en proceso",
+            'Terminada': "terminada"
+        };
+
+        if (estados[value]) {
+            console.log(`Solicitud ${ID_Solicitud} ${estados[value]}.`);
+        } else {
+            console.log(`Ningún estado seleccionado para la solicitud ${ID_Solicitud}.`);
         }
 
         // Enviar la actualización del estado al servidor
@@ -49,7 +52,6 @@
     }
 
     function mostrarDetalleVenta(ID_Solicitud) {
-        // Realiza una petición AJAX para obtener los detalles de la venta
         fetch('/GIUP_war/DetalleVenta?ID_Solicitud=' + ID_Solicitud)
             .then(response => {
                 if (!response.ok) {
@@ -58,10 +60,15 @@
                 return response.text();
             })
             .then(data => {
-                // Aquí puedes mostrar los detalles en un modal o en un div
-                alert('Detalles de la venta:\n' + data);
+                // Mostrar detalles en un modal
+                document.getElementById('modalContent').innerHTML = data;
+                document.getElementById('detalleModal').style.display = 'block';
             })
             .catch(error => console.error('Error:', error));
+    }
+
+    function cerrarModal() {
+        document.getElementById('detalleModal').style.display = 'none';
     }
 </script>
 </body>

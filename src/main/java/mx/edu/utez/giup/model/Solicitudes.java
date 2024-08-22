@@ -7,17 +7,23 @@ public class Solicitudes {
     private int ID_Cliente;
     private LocalDate Fecha_Solicitud;
     private String Estado;
+    private int Cantidad;
+    private double Precio;
+    private String NombreProducto;
 
     // Constructor sin argumentos
     public Solicitudes() {
     }
 
     // Constructor con todos los campos
-    public Solicitudes(int ID_Solicitud, int ID_Cliente, LocalDate Fecha_Solicitud, String Estado) {
+    public Solicitudes(int ID_Solicitud, int ID_Cliente, LocalDate Fecha_Solicitud, String Estado, int Cantidad, double Precio, String NombreProducto) {
         this.ID_Solicitud = ID_Solicitud;
         this.ID_Cliente = ID_Cliente;
         this.Fecha_Solicitud = Fecha_Solicitud;
         this.Estado = Estado;
+        this.Cantidad = Cantidad;
+        this.Precio = Precio;
+        this.NombreProducto = NombreProducto;
     }
 
     public int getID_Solicitud() {
@@ -50,5 +56,34 @@ public class Solicitudes {
 
     public void setEstado(String Estado) {
         this.Estado = Estado;
+    }
+
+    public int getCantidad() {
+        return Cantidad;
+    }
+
+    public void setCantidad(int Cantidad) {
+        this.Cantidad = Cantidad;
+    }
+
+    public double getPrecio() {
+        return Precio;
+    }
+
+    public void setPrecio(double Precio) {
+        this.Precio = Precio;
+    }
+
+    public String getNombreProducto() {
+        return NombreProducto;
+    }
+
+    public void setNombreProducto(String NombreProducto) {
+        this.NombreProducto = NombreProducto;
+    }
+
+    // Método para calcular el total de la compra
+    public double calcularTotal() {
+        return this.Cantidad * this.Precio;
     }
 }
