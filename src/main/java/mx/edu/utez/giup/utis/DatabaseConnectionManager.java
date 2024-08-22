@@ -6,9 +6,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseConnectionManager {
-    private static final String JDBC_URL = "jdbc:mysql://monorail.proxy.rlwy.net:54743/GIUP";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "pIHRdbjgWdnjjwtqPnZgjhGzpYbuZuhQ";
+    private static final String JDBC_URL = "jdbc:mysql://db-giup.cfnfiqcge09f.us-east-1.rds.amazonaws.com:3306/GIUP";
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "Mexico189";
 
     private static final HikariConfig config = new HikariConfig();
     private static final HikariDataSource dataSource;
