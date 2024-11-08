@@ -6,23 +6,29 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseConnectionManager {
-    private static final String JDBC_URL = "jdbc:mysql://db-giup.cfnfiqcge09f.us-east-1.rds.amazonaws.com:3306/GIUP";
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "Mexico189";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/giup"; // URL actualizada para localhost
+    private static final String USERNAME = "root"; // Cambia "root" si tu usuario de MySQL es diferente
+    private static final String PASSWORD = "12345678"; // Reemplaza con tu contraseña de MySQL
 
     private static final HikariConfig config = new HikariConfig();
     private static final HikariDataSource dataSource;
 
     static {
-        try { Class.forName("com.mysql.cj.jdbc.Driver"); }
-        catch (ClassNotFoundException e) { throw new RuntimeException("Error", e); }
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Error al cargar el driver de MySQL", e);
+        }
+
         config.setJdbcUrl(JDBC_URL);
         config.setUsername(USERNAME);
         config.setPassword(PASSWORD);
-// Ajustes del pool
+
+        // Configuración del pool de conexiones
         config.setMinimumIdle(5);
         config.setMaximumPoolSize(10);
-        config.setConnectionTimeout(30000); // 30 seconds
+        config.setConnectionTimeout(30000); // 30 segundos
+
         dataSource = new HikariDataSource(config);
     }
 
@@ -31,7 +37,6 @@ public class DatabaseConnectionManager {
     }
 
     private DatabaseConnectionManager() {
-// Private constructor to prevent instantiation
+        // Constructor privado para prevenir la instanciación
     }
-
 }
